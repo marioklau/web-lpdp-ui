@@ -383,7 +383,7 @@ async function generateTextPdf(
     doc.setFontSize(8);
     doc.setTextColor(150);
     doc.text(
-      `Dokumen ini diterbitkan melalui Layanan Surat LPDP UI — Halaman ${i}/${pageCount}`,
+      `Dokumen ini diterbitkan melalui Layanan Pengajuan Dana LPDP UI — Halaman ${i}/${pageCount}`,
       pageWidth / 2,
       pageHeight - 24,
       { align: 'center' },

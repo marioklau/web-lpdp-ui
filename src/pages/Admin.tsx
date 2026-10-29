@@ -41,7 +41,6 @@ import {
   isFirebaseConfigured,
   signInAdmin,
   signOutAdmin,
-  updateLetterSubmissionStatus,
   watchAdmin,
 } from '@/lib/firebase';
 import { useLocalStorage } from '@/lib/useLocalStorage';
@@ -70,7 +69,7 @@ const tabs: { id: Tab; label: string; icon: typeof User }[] = [
   { id: 'awardee', label: 'Awardee', icon: Users },
   { id: 'berita', label: 'Berita', icon: Newspaper },
   { id: 'template', label: 'Template Surat', icon: FileText },
-  { id: 'pengajuan', label: 'Pengajuan Surat', icon: Inbox },
+  { id: 'pengajuan', label: 'Pengajuan Dana', icon: Inbox },
   { id: 'aspirasi', label: 'Aspirasi', icon: MessageSquareText },
 ];
 
@@ -162,30 +161,6 @@ export default function AdminPage() {
     [localAspirations, remoteAspirations],
   );
 
-  const updateStatus = async (
-    id: string,
-    status: LetterSubmission['status'],
-  ) => {
-    setLocalSubmissions((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, status } : item)),
-    );
-    setRemoteSubmissions((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, status } : item)),
-    );
-
-    if (!isFirebaseConfigured) {
-      setInboxNote('Status diperbarui dan disimpan di browser ini.');
-      return;
-    }
-
-    const saved = await updateLetterSubmissionStatus(id, status);
-    setInboxNote(
-      saved
-        ? 'Status berhasil diperbarui di Firebase.'
-        : 'Status diperbarui lokal, tetapi gagal disimpan ke Firebase. Periksa login dan aturan Firestore.',
-    );
-  };
-
   const deleteSubmission = async (id: string) => {
     const submission = submissions.find((item) => item.id === id);
     const title = submission?.templateTitle ?? 'pengajuan ini';
@@ -211,8 +186,8 @@ export default function AdminPage() {
     setRemoteSubmissions((prev) => prev.filter((item) => item.id !== id));
     setInboxNote(
       isFirebaseConfigured
-        ? 'Pengajuan surat berhasil dihapus dari Firebase.'
-        : 'Pengajuan surat dihapus dari browser ini.',
+        ? 'Pengajuan dana berhasil dihapus dari Firebase.'
+        : 'Pengajuan dana dihapus dari browser ini.',
     );
   };
 
@@ -332,7 +307,6 @@ export default function AdminPage() {
                 error={inboxError}
                 note={inboxNote}
                 onRefresh={loadInbox}
-                onUpdateStatus={updateStatus}
                 onDelete={deleteSubmission}
               />
             )}

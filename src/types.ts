@@ -90,7 +90,6 @@ export interface LetterSubmission {
   templateId: string;
   templateTitle: string;
   fields: Record<string, string>;
-  status: 'diajukan' | 'disetujui' | 'ditolak';
   createdAt: string;
 }
 

@@ -1,4 +1,4 @@
-import { Check, RefreshCw, Trash2, X } from 'lucide-react';
+import { RefreshCw, Trash2 } from 'lucide-react';
 import {
   EmptyState,
   SectionHeader,
@@ -42,26 +42,6 @@ function formatDate(value: string): string {
   return Number.isNaN(date.getTime()) ? value : date.toLocaleString('id-ID');
 }
 
-function StatusPill({ status }: { status: LetterSubmission['status'] }) {
-  const styles = {
-    diajukan: 'bg-gold-100 text-gold-800',
-    disetujui: 'bg-emerald-100 text-emerald-700',
-    ditolak: 'bg-red-100 text-red-700',
-  };
-  const labels = {
-    diajukan: 'Menunggu',
-    disetujui: 'Disetujui',
-    ditolak: 'Ditolak',
-  };
-  return (
-    <span
-      className={`rounded-full px-3 py-1 text-xs font-medium ${styles[status]}`}
-    >
-      {labels[status]}
-    </span>
-  );
-}
-
 function Notice({
   tone,
   message,
@@ -82,7 +62,6 @@ export function SubmissionsTab({
   error,
   note,
   onRefresh,
-  onUpdateStatus,
   onDelete,
 }: {
   submissions: LetterSubmission[];
@@ -90,7 +69,6 @@ export function SubmissionsTab({
   error: string;
   note: string;
   onRefresh: () => void;
-  onUpdateStatus: (id: string, status: LetterSubmission['status']) => void;
   onDelete: (id: string) => void;
 }) {
   const { letterTemplates } = useContent();
@@ -98,8 +76,8 @@ export function SubmissionsTab({
   return (
     <div>
       <SectionHeader
-        title="Pengajuan Surat"
-        desc="Pengajuan dari pengunjung dan statusnya."
+        title="Pengajuan Dana"
+        desc="Pengajuan dana yang dikirim pengunjung."
         action={
           <button className={btnGhost} onClick={onRefresh} disabled={loading}>
             <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
@@ -112,7 +90,7 @@ export function SubmissionsTab({
       {note && <Notice tone="info" message={note} />}
 
       {submissions.length === 0 && !loading ? (
-        <EmptyState message="Belum ada pengajuan surat." />
+        <EmptyState message="Belum ada pengajuan dana." />
       ) : (
         <div className="space-y-3">
           {submissions.map((submission) => {
@@ -138,25 +116,6 @@ export function SubmissionsTab({
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <StatusPill status={submission.status} />
-                  {submission.status === 'diajukan' && (
-                    <>
-                      <button
-                        onClick={() =>
-                          onUpdateStatus(submission.id, 'disetujui')
-                        }
-                        className="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-emerald-700"
-                      >
-                        <Check className="h-3.5 w-3.5" /> Setujui
-                      </button>
-                      <button
-                        onClick={() => onUpdateStatus(submission.id, 'ditolak')}
-                        className="inline-flex items-center gap-1 rounded-lg bg-red-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-red-700"
-                      >
-                        <X className="h-3.5 w-3.5" /> Tolak
-                      </button>
-                    </>
-                  )}
                   <button
                     onClick={() => onDelete(submission.id)}
                     className="inline-flex items-center gap-1 rounded-lg border border-red-200 px-2.5 py-1.5 text-xs font-semibold text-red-600 transition hover:bg-red-50"

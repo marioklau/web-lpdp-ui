@@ -17,7 +17,6 @@ import {
   orderBy,
   query,
   setDoc,
-  updateDoc,
 } from 'firebase/firestore';
 import type {
   Aspiration,
@@ -130,7 +129,6 @@ export async function submitLetter(
   try {
     const ref = await addDoc(collection(db, SUBMISSIONS_COLLECTION), {
       ...data,
-      status: 'diajukan',
       createdAt,
     });
     return {
@@ -138,7 +136,6 @@ export async function submitLetter(
       templateId: data.templateId,
       templateTitle: data.templateTitle,
       fields: data.fields,
-      status: 'diajukan',
       createdAt,
     };
   } catch (error) {
@@ -160,27 +157,12 @@ export async function fetchLetterSubmissions(): Promise<LetterSubmission[] | nul
         templateId: String(data.templateId ?? ''),
         templateTitle: String(data.templateTitle ?? ''),
         fields: (data.fields ?? {}) as Record<string, string>,
-        status: (data.status ?? 'diajukan') as LetterSubmission['status'],
         createdAt: String(data.createdAt ?? ''),
       };
     });
   } catch (error) {
     console.error('Gagal membaca pengajuan surat', error);
     return null;
-  }
-}
-
-export async function updateLetterSubmissionStatus(
-  id: string,
-  status: LetterSubmission['status'],
-): Promise<boolean> {
-  if (!db) return false;
-  try {
-    await updateDoc(doc(db, SUBMISSIONS_COLLECTION, id), { status });
-    return true;
-  } catch (error) {
-    console.error('Gagal memperbarui status pengajuan', error);
-    return false;
   }
 }
 

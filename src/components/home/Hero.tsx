@@ -50,7 +50,7 @@ export default function Hero({ onNavigate }: HeroProps) {
                 onClick={() => onNavigate('surat')}
                 className="inline-flex items-center gap-2 rounded-lg border border-navy-600 px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-navy-800"
               >
-                Layanan Surat
+                Layanan Pengajuan Dana
               </button>
             </div>
           </div>

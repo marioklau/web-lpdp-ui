@@ -29,7 +29,7 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
-    // Pengunjung boleh membuat pengajuan, hanya admin yang boleh membaca/mengubah.
+    // Pengunjung boleh membuat pengajuan, hanya admin yang boleh membaca/menghapus.
     match /letterSubmissions/{submissionId} {
       allow create: if request.resource.data.templateId is string
         && request.resource.data.templateId.size() <= 128
@@ -37,13 +37,9 @@ service cloud.firestore {
         && request.resource.data.templateTitle.size() <= 256
         && request.resource.data.fields is map
         && request.resource.data.fields.size() <= 60
-        && request.resource.data.status == 'diajukan'
         && request.resource.data.createdAt is string
         && request.resource.data.createdAt.size() <= 40;
       allow read, delete: if isAdmin();
-      allow update: if isAdmin()
-        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
-        && request.resource.data.status in ['diajukan', 'disetujui', 'ditolak'];
     }
 
     // Pengunjung boleh mengirim aspirasi, hanya admin yang boleh membaca.

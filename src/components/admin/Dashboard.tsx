@@ -30,13 +30,11 @@ export default function Dashboard({
     loading,
   } = useContent();
 
-  const pending = submissions.filter((item) => item.status === 'diajukan').length;
-
   const cards = [
     {
-      label: 'Pengajuan Surat',
+      label: 'Pengajuan Dana',
       value: submissions.length,
-      sub: `${pending} menunggu`,
+      sub: 'total masuk',
     },
     {
       label: 'Aspirasi Masuk',

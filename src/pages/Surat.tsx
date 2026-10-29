@@ -6,8 +6,6 @@ import {
   ArrowLeft,
   ArrowRight,
   CheckCircle2,
-  Clock,
-  XCircle,
   AlertTriangle,
   Image as ImageIcon,
   Trash2,
@@ -205,7 +203,6 @@ export default function SuratPage() {
       templateId: template.id,
       templateTitle: template.title,
       fields,
-      status: 'diajukan',
       createdAt: new Date().toISOString(),
     };
 
@@ -299,14 +296,14 @@ export default function SuratPage() {
         <div className="mx-auto mb-10 max-w-2xl text-center">
           <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-gold-600">
             <FileText className="h-4 w-4" />
-            Layanan Surat
+            Layanan Pengajuan Dana
           </span>
           <h1 className="mt-3 font-serif text-3xl font-semibold text-navy-900 sm:text-4xl">
-            Pengajuan Surat Resmi
+            Pengajuan Dana Beasiswa
           </h1>
           <p className="mt-4 text-navy-600">
-            Ajukan surat resmi dalam empat langkah sederhana. Hasil dapat diunduh
-            sebagai PDF.
+            Ajukan dana beasiswa dalam empat langkah sederhana. Hasil dapat
+            diunduh sebagai PDF.
           </p>
         </div>
 
@@ -653,7 +650,7 @@ export default function SuratPage() {
               <p className="mx-auto mt-2 max-w-md text-navy-600">
                 {persistIssue
                   ? 'Pengajuan belum terkirim ke server, tetapi data masih tersimpan di browser ini.'
-                  : 'Surat Anda telah diajukan dengan status menunggu persetujuan admin. Anda dapat mengunduh PDF draf di bawah ini.'}
+                  : 'Pengajuan dana Anda telah tersimpan. Anda dapat mengunduh PDF pengajuan di bawah ini.'}
               </p>
 
               {persistIssue && (
@@ -662,11 +659,6 @@ export default function SuratPage() {
                   <span>{persistIssue}</span>
                 </div>
               )}
-
-              <div className="mt-6 inline-flex items-center gap-2 rounded-full bg-gold-100 px-4 py-1.5 text-sm font-medium text-gold-800">
-                <Clock className="h-4 w-4" />
-                Status: Menunggu Persetujuan
-              </div>
 
               <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
                 <button
@@ -689,7 +681,7 @@ export default function SuratPage() {
         {submissions.length > 0 && (
           <div className="mt-8 rounded-2xl border border-navy-100 bg-white p-6 shadow-soft">
             <h3 className="mb-4 font-serif text-lg font-semibold text-navy-900">
-              Riwayat Pengajuan
+              Riwayat Pengajuan Dana
             </h3>
             <div className="space-y-3">
               {submissions.map((submission) => (
@@ -705,7 +697,6 @@ export default function SuratPage() {
                       {new Date(submission.createdAt).toLocaleString('id-ID')}
                     </p>
                   </div>
-                  <StatusBadge status={submission.status} />
                 </div>
               ))}
             </div>
@@ -728,34 +719,5 @@ export default function SuratPage() {
         </p>
       </div>
     </main>
-  );
-}
-
-function StatusBadge({ status }: { status: LetterSubmission['status'] }) {
-  const map = {
-    diajukan: {
-      label: 'Menunggu',
-      icon: Clock,
-      cls: 'bg-gold-100 text-gold-800',
-    },
-    disetujui: {
-      label: 'Disetujui',
-      icon: CheckCircle2,
-      cls: 'bg-emerald-100 text-emerald-700',
-    },
-    ditolak: {
-      label: 'Ditolak',
-      icon: XCircle,
-      cls: 'bg-red-100 text-red-700',
-    },
-  };
-  const { label, icon: Icon, cls } = map[status];
-  return (
-    <span
-      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${cls}`}
-    >
-      <Icon className="h-3.5 w-3.5" />
-      {label}
-    </span>
   );
 }

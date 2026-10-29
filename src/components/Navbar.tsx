@@ -10,7 +10,7 @@ interface NavbarProps {
 const links: { id: Page; label: string }[] = [
   { id: 'home', label: 'Beranda' },
   { id: 'peta', label: 'Peta Awardee' },
-  { id: 'surat', label: 'Layanan Surat' },
+  { id: 'surat', label: 'Layanan Pengajuan Dana' },
   { id: 'admin', label: 'Admin' },
 ];
 
