@@ -1,0 +1,6 @@
+.env
+.bolt/
+documents/
+node_modules/
+dist/
+*.log
