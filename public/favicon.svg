@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="LPDP UI">
+  <rect width="64" height="64" rx="14" fill="#0a1638"/>
+  <path d="M32 14 8 26l24 12 21-10.5V40h3V26L32 14Z" fill="#e2ac34"/>
+  <path d="M18 33.5V42c0 5 6.3 8.5 14 8.5S46 47 46 42v-8.5l-14 7-14-7Z" fill="#eac566"/>
+  <circle cx="32" cy="40" r="3" fill="#0a1638"/>
+</svg>

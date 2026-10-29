@@ -1,0 +1,62 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Admin bisa ditambahkan lewat custom claim `admin`, dokumen
+    // config/admin berisi field `uids`, atau daftar bootstrap di bawah.
+    // Dokumen config/admin dibuat manual lewat Firebase Console.
+    function isAdmin() {
+      return request.auth != null
+        && (
+          request.auth.token.admin == true
+          || request.auth.uid in [
+            'KULwbZ60JhVm3EWrFjPGK7SFFqi2'
+          ]
+          || (
+            exists(/databases/$(database)/documents/config/admin)
+            && request.auth.uid in get(/databases/$(database)/documents/config/admin).data.get('uids', [])
+          )
+        );
+    }
+
+    match /config/admin {
+      allow read, write: if false;
+    }
+
+    // Seluruh konten situs disimpan dalam satu dokumen.
+    match /site/content {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Pengunjung boleh membuat pengajuan, hanya admin yang boleh membaca/mengubah.
+    match /letterSubmissions/{submissionId} {
+      allow create: if request.resource.data.templateId is string
+        && request.resource.data.templateId.size() <= 128
+        && request.resource.data.templateTitle is string
+        && request.resource.data.templateTitle.size() <= 256
+        && request.resource.data.fields is map
+        && request.resource.data.fields.size() <= 30
+        && request.resource.data.status == 'diajukan'
+        && request.resource.data.createdAt is string
+        && request.resource.data.createdAt.size() <= 40;
+      allow read, delete: if isAdmin();
+      allow update: if isAdmin()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
+        && request.resource.data.status in ['diajukan', 'disetujui', 'ditolak'];
+    }
+
+    // Pengunjung boleh mengirim aspirasi, hanya admin yang boleh membaca.
+    match /aspirations/{aspirationId} {
+      allow create: if request.resource.data.name is string
+        && request.resource.data.name.size() <= 200
+        && request.resource.data.email is string
+        && request.resource.data.email.size() <= 320
+        && request.resource.data.message is string
+        && request.resource.data.message.size() <= 5000
+        && request.resource.data.createdAt is string
+        && request.resource.data.createdAt.size() <= 40;
+      allow read, delete: if isAdmin();
+    }
+  }
+}
