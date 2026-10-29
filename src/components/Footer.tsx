@@ -1,4 +1,4 @@
-import { GraduationCap, Mail, MapPin, Phone } from 'lucide-react';
+import { GraduationCap, Link2, MapPin } from 'lucide-react';
 import type { Page } from '@/types';
 
 interface FooterProps {
@@ -20,13 +20,13 @@ export default function Footer({ onNavigate }: FooterProps) {
               </span>
             </div>
             <p className="text-sm text-navy-300 max-w-md leading-relaxed">
-              Landing page kampanye kandidat Pengurus Ikatan Keluarga Besar LPDP
-              Universitas Indonesia. Bersama membangun jejaring alumni yang
-              berdaya dan berdampak.
+              Landing page kampanye AKSARA, Calon Lurah Kelurahan LPDP UI 2026.
+              Bersama menghadirkan kepemimpinan yang aspiratif, kolaboratif,
+              solutif, adaptif, responsif, dan amanah.
             </p>
             <p className="mt-4 text-xs text-navy-400">
-              Data yang ditampilkan berupa contoh (placeholder) dan belum
-              merupakan data resmi.
+              Data statistik dan peta masih berupa contoh (placeholder) dan
+              belum merupakan data resmi.
             </p>
           </div>
 
@@ -58,13 +58,16 @@ export default function Footer({ onNavigate }: FooterProps) {
                 <MapPin className="h-4 w-4 mt-0.5 text-gold-400 shrink-0" />
                 <span>Kampus UI, Depok, Jawa Barat</span>
               </li>
-              <li className="flex items-center gap-2">
-                <Mail className="h-4 w-4 text-gold-400 shrink-0" />
-                <span>pengurus@lpdp-ui.id</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-gold-400 shrink-0" />
-                <span>+62 21 0000 0000</span>
+              <li className="flex items-start gap-2">
+                <Link2 className="h-4 w-4 mt-0.5 text-gold-400 shrink-0" />
+                <a
+                  href="https://bit.ly/47uIMTB"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="break-all hover:text-gold-300 transition-colors"
+                >
+                  Pendaftaran DPT: bit.ly/47uIMTB
+                </a>
               </li>
             </ul>
           </div>
@@ -72,10 +75,10 @@ export default function Footer({ onNavigate }: FooterProps) {
 
         <div className="mt-10 pt-6 border-t border-navy-800/60 flex flex-col sm:flex-row justify-between gap-3 text-xs text-navy-400">
           <span>
-            © {new Date().getFullYear()} Kampanye Pengurus LPDP UI. Dibuat untuk
-            tujuan demonstrasi.
+            © {new Date().getFullYear()} AKSARA — Calon Lurah Kelurahan LPDP UI.
+            Dibuat untuk tujuan demonstrasi.
           </span>
-          <span>Desain & pengembangan oleh tim kampanye.</span>
+          <span>Desain & pengembangan oleh tim AKSARA.</span>
         </div>
       </div>
     </footer>

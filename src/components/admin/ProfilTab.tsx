@@ -113,14 +113,23 @@ export default function ProfilTab() {
             title="Klik untuk mengganti foto"
             className="group relative block h-40 w-32 overflow-hidden rounded-xl border border-navy-100"
           >
-            <img
-              src={form.photoUrl || candidate.photoUrl}
-              alt={form.name || 'Foto kandidat'}
-              className="h-full w-full object-cover"
-            />
+            {form.photoUrl || candidate.photoUrl ? (
+              <img
+                src={form.photoUrl || candidate.photoUrl}
+                alt={form.name || 'Foto kandidat'}
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <span className="flex h-full w-full flex-col items-center justify-center gap-1 bg-navy-900 text-[11px] font-semibold text-gold-300">
+                <Upload className="h-5 w-5" />
+                Tanpa Foto
+              </span>
+            )}
             <span className="absolute inset-0 flex flex-col items-center justify-center gap-1 bg-navy-900/60 text-[11px] font-semibold text-white opacity-0 transition group-hover:opacity-100">
               <Upload className="h-5 w-5" />
-              Ganti Foto
+              {form.photoUrl || candidate.photoUrl
+                ? 'Ganti Foto'
+                : 'Unggah Foto'}
             </span>
           </button>
           <input

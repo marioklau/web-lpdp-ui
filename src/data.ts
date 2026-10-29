@@ -19,69 +19,69 @@ import type {
 // ---------------------------------------------------------------------------
 
 export const CANDIDATE: Candidate = {
-  name: 'Dr. Arif Pratama, M.Si.',
-  position: 'Kandidat Pengurus Ikatan Keluarga Besar LPDP UI',
+  name: 'AKSARA',
+  position: 'Calon Lurah Kelurahan LPDP UI 2026',
   tagline:
-    'Membangun jejaring alumni yang berdaya, kolaboratif, dan berdampak untuk Indonesia.',
-  photoUrl:
-    'https://images.pexels.com/photos/34299170/pexels-photo-34299170.jpeg?auto=compress&cs=tinysrgb&h=900',
-  bio: 'Awardee LPDP, dosen, dan peneliti dengan komitmen memperkuat ekosistem beasiswa dan keilmuan di Indonesia.',
+    'Aspirasi Didengar, Kolaborasi Diperkuat, Dampak Diwujudkan.',
+  photoUrl: '',
+  bio: 'Kelurahan LPDP UI bukan sekadar wadah berkumpulnya para penerima beasiswa, melainkan rumah bersama tempat aspirasi didengarkan, potensi dikembangkan, solidaritas diperkuat, dan kontribusi diwujudkan.',
 };
 
 export const VISION_MISSION: VisionMission = {
   vision:
-    'Menjadikan IKMASA LPDP UI sebagai rumah bagi para awardee dan alumni yang menggerakkan kolaborasi lintas disiplin, memberi dampak nyata bagi masyarakat, serta menjaga nilai-nilai keilmuan dan kepemimpinan.',
+    'Mewujudkan Kelurahan LPDP UI sebagai rumah bersama yang inklusif, kolaboratif, inovatif, dan berdaya saing melalui kepemimpinan yang aspiratif, responsif, serta berintegritas untuk menghadirkan kebermanfaatan nyata bagi seluruh awardee dan masyarakat.',
   missions: [
-    'Memperkuat jejaring alumni lintas program studi dan angkatan melalui forum rutin dan platform digital.',
-    'Mendorong kolaborasi riset dan pengabdian masyarakat berbasis komunitas awardee LPDP UI.',
-    'Menyediakan layanan administrasi yang cepat, transparan, dan mudah diakses bagi seluruh anggota.',
-    'Membangun pendampingan karier dan beasiswa bagi awardee aktif serta alumni.',
-    'Meningkatkan keterbukaan data keanggotaan dan distribusi awardee di seluruh provinsi Indonesia.',
+    'Aspiratif — Membangun ruang komunikasi terbuka, partisipatif, dan inklusif untuk menghimpun serta memperjuangkan aspirasi seluruh awardee LPDP UI tanpa membedakan program studi, angkatan, maupun latar belakang.',
+    'Kolaboratif — Memperkuat solidaritas, kekeluargaan, jejaring lintas disiplin, dan sinergi antarsesama awardee melalui kegiatan akademik, sosial, profesional, serta pengabdian masyarakat.',
+    'Solutif — Menghadirkan program dan layanan yang relevan untuk menjawab kebutuhan, tantangan akademik, kesejahteraan, serta pengembangan kapasitas awardee melalui solusi yang konkret dan berkelanjutan.',
+    'Adaptif — Mendorong budaya inovasi, kreativitas, literasi digital, dan pengembangan diri agar Kelurahan LPDP UI mampu beradaptasi dengan dinamika pendidikan, teknologi, serta kebutuhan awardee.',
+    'Responsif — Mewujudkan kepengurusan yang komunikatif, mudah diakses, cepat tanggap, dan peduli terhadap kebutuhan maupun permasalahan awardee melalui mekanisme komunikasi serta tindak lanjut yang jelas.',
+    'Amanah — Menjalankan kepemimpinan yang berintegritas, transparan, akuntabel, dan bertanggung jawab dengan mengedepankan kepentingan bersama serta memastikan setiap program memiliki hasil yang terukur.',
   ],
 };
 
 export const PROGRAMS: Program[] = [
   {
     id: 'p1',
-    title: 'Forum Alumni Nusantara',
+    title: 'AKSARA Mendengar',
     description:
-      'Ruang silaturahmi rutin antar-angkatan dan lintas provinsi untuk memperkuat solidaritas dan kolaborasi.',
-    icon: 'Users',
+      'Forum aspirasi, survei kebutuhan, dan kanal komunikasi awardee.',
+    icon: 'MessageSquareText',
   },
   {
     id: 'p2',
-    title: 'Riset Kolaboratif',
+    title: 'AKSARA Connect',
     description:
-      'Mendorong proyek riset bersama lintas disiplin yang berdampak pada kebijakan publik dan masyarakat.',
-    icon: 'FlaskConical',
+      'Networking, mentoring, serta kolaborasi lintas angkatan dan program studi.',
+    icon: 'Handshake',
   },
   {
     id: 'p3',
-    title: 'Layanan Surat Cepat',
+    title: 'AKSARA Care',
     description:
-      'Layanan pengajuan surat resmi digital dengan alur jelas, transparan, dan dapat diunduh sebagai PDF.',
-    icon: 'FileText',
+      'Solidaritas, dukungan sosial, dan kepedulian terhadap sesama awardee.',
+    icon: 'HeartHandshake',
   },
   {
     id: 'p4',
-    title: 'Peta Awardee Indonesia',
+    title: 'AKSARA Academy',
     description:
-      'Visualisasi distribusi awardee LPDP UI di seluruh provinsi untuk perencanaan program yang tepat sasaran.',
-    icon: 'Map',
+      'Sharing akademik, riset, publikasi, dan pengembangan kompetensi.',
+    icon: 'GraduationCap',
   },
   {
     id: 'p5',
-    title: 'Pendampingan Karier',
+    title: 'AKSARA Impact',
     description:
-      'Mentoring dan workshop karier, beasiswa lanjutan, serta peluang profesional bagi anggota.',
-    icon: 'Briefcase',
+      'Pengabdian masyarakat, inovasi sosial, dan kontribusi nyata.',
+    icon: 'Globe2',
   },
   {
     id: 'p6',
-    title: 'Jurnal & Publikasi',
+    title: 'AKSARA Transparan',
     description:
-      'Wadah publikasi karya ilmiah dan gagasan alumni untuk memperluas dampak keilmuan.',
-    icon: 'BookOpen',
+      'Publikasi kegiatan, laporan kinerja, dan evaluasi kepengurusan.',
+    icon: 'ShieldCheck',
   },
 ];
 
@@ -273,31 +273,31 @@ export const STATS: StatItem[] = [
 export const NEWS: NewsItem[] = [
   {
     id: 'n1',
-    title: 'Silaturahmi Alumni LPDP UI Angkatan 2020–2024',
+    title: 'Pendaftaran DPT Pemilu Lurah Kelurahan LPDP UI 2026 Dibuka',
     excerpt:
-      'Pertemuan tahunan untuk memperkuat jejaring dan merancang program kolaborasi lintas angkatan.',
-    date: '12 Oktober 2026',
-    category: 'Kegiatan',
+      'Suaramu menentukan masa depan Kelurahan LPDP UI! Pastikan namamu sudah terdaftar dalam Daftar Pemilih Tetap (DPT) melalui https://bit.ly/47uIMTB sebelum menentukan pilihan. Jangan cuma jadi penonton, jadilah bagian dari perubahan. Satu suara, satu harapan, untuk Kelurahan LPDP UI yang lebih baik. Dari Awardee, Oleh Awardee, untuk Awardee!',
+    date: '29 Oktober 2026',
+    category: 'Pengumuman',
     imageUrl:
       'https://images.pexels.com/photos/6684408/pexels-photo-6684408.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
   },
   {
     id: 'n2',
-    title: 'Peluncuran Platform Digital Layanan Surat',
+    title: 'AKSARA — Gerakan Bersama untuk Kelurahan LPDP UI 2026',
     excerpt:
-      'Kini pengajuan surat resmi dapat dilakukan secara daring dengan alur yang jelas dan transparan.',
-    date: '28 September 2026',
-    category: 'Pengumuman',
+      'Kami percaya bahwa Kelurahan LPDP UI bukan sekadar wadah berkumpulnya para penerima beasiswa, melainkan rumah bersama tempat aspirasi didengarkan, potensi dikembangkan, solidaritas diperkuat, dan kontribusi diwujudkan. Melalui semangat AKSARA, kami berkomitmen menghadirkan kepemimpinan yang aspiratif, kolaboratif, solutif, adaptif, responsif, dan amanah.',
+    date: '20 Oktober 2026',
+    category: 'Kampanye',
     imageUrl:
       'https://images.pexels.com/photos/16420473/pexels-photo-16420473.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
   },
   {
     id: 'n3',
-    title: 'Workshop Penulisan Proposal Riset Kolaboratif',
+    title: 'Enam Program Unggulan AKSARA',
     excerpt:
-      'Membekali awardee aktif dengan keterampilan menyusun proposal riset berdampak.',
-    date: '15 September 2026',
-    category: 'Workshop',
+      'AKSARA Mendengar, AKSARA Connect, AKSARA Care, AKSARA Academy, AKSARA Impact, dan AKSARA Transparan dirancang untuk menghadirkan solusi konkret, memperkuat kolaborasi lintas angkatan, serta mewujudkan dampak nyata bagi seluruh awardee dan masyarakat.',
+    date: '12 Oktober 2026',
+    category: 'Program',
     imageUrl:
       'https://images.pexels.com/photos/5538594/pexels-photo-5538594.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
   },

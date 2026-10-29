@@ -5,6 +5,12 @@ import {
   Map,
   Briefcase,
   BookOpen,
+  MessageSquareText,
+  Handshake,
+  HeartHandshake,
+  GraduationCap,
+  Globe2,
+  ShieldCheck,
   type LucideIcon,
 } from 'lucide-react';
 import { useContent } from '@/lib/contentContext';
@@ -16,6 +22,12 @@ const iconMap: Record<string, LucideIcon> = {
   Map,
   Briefcase,
   BookOpen,
+  MessageSquareText,
+  Handshake,
+  HeartHandshake,
+  GraduationCap,
+  Globe2,
+  ShieldCheck,
 };
 
 export default function Programs() {
@@ -32,8 +44,9 @@ export default function Programs() {
             Agenda Nyata, Bukan Janji
           </h2>
           <p className="mt-4 text-navy-600">
-            Enam program prioritas yang dirancang untuk memperkuat jejaring,
-            layanan, dan dampak alumni LPDP UI.
+            Enam program unggulan AKSARA untuk menghadirkan solusi konkret,
+            memperkuat kolaborasi lintas angkatan, dan mewujudkan dampak nyata
+            bagi Kelurahan LPDP UI.
           </p>
         </div>
 

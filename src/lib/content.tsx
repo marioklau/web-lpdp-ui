@@ -10,7 +10,7 @@ import {
 import type { LetterTemplate, SiteContent } from '@/types';
 import { LETTER_TEMPLATES } from '@/data';
 
-const CACHE_KEY = 'lpdp_site_content_v1';
+const CACHE_KEY = 'lpdp_site_content_v2';
 const CONTENT_KEYS: (keyof SiteContent)[] = [
   'candidate',
   'visionMission',
@@ -194,8 +194,8 @@ export function ContentProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const name = content.candidate.name.trim();
     document.title = name
-      ? `${name} — Kandidat Pengurus LPDP UI`
-      : 'Kandidat Pengurus LPDP UI';
+      ? `${name} — Calon Lurah Kelurahan LPDP UI 2026`
+      : 'Calon Lurah Kelurahan LPDP UI 2026';
   }, [content.candidate.name]);
 
   async function persist<K extends keyof SiteContent>(

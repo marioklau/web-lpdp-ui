@@ -39,7 +39,7 @@ export default function Navbar({ page, onNavigate }: NavbarProps) {
                 LPDP UI
               </span>
               <span className="text-[10px] sm:text-xs text-gold-300 tracking-wider uppercase">
-                Kampanye Pengurus
+                AKSARA · Calon Lurah 2026
               </span>
             </span>
           </button>

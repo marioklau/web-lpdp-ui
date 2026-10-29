@@ -4,7 +4,7 @@ import {
   Send,
   CheckCircle2,
   MessageSquareText,
-  Mail,
+  Link2,
 } from 'lucide-react';
 import { isFirebaseConfigured, submitAspiration } from '@/lib/firebase';
 import { useLocalStorage } from '@/lib/useLocalStorage';
@@ -75,8 +75,8 @@ export default function AspirationContact() {
               Sampaikan Aspirasi Anda
             </h2>
             <p className="mt-4 text-navy-600 leading-relaxed max-w-lg">
-              Setiap masukan membangun kami mendengarkan. Sampaikan ide,
-              kritik, atau harapan Anda untuk pengurus LPDP UI mendatang.
+              Aspirasi Didengar. Sampaikan ide, kritik, atau harapan Anda untuk
+              Kelurahan LPDP UI 2026.
             </p>
 
             <div className="mt-8 space-y-4">
@@ -89,17 +89,26 @@ export default function AspirationContact() {
                     Saluran Aspirasi Terbuka
                   </p>
                   <p className="text-sm text-navy-600">
-                    Form di samping akan terkirim ke pengurus.
+                    Form ini terkirim langsung ke tim AKSARA.
                   </p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <span className="grid place-items-center h-10 w-10 rounded-xl bg-navy-900 text-gold-300 shrink-0">
-                  <Mail className="h-5 w-5" />
+                  <Link2 className="h-5 w-5" />
                 </span>
                 <div>
-                  <p className="text-sm font-semibold text-navy-900">Email</p>
-                  <p className="text-sm text-navy-600">pengurus@lpdp-ui.id</p>
+                  <p className="text-sm font-semibold text-navy-900">
+                    Pendaftaran DPT
+                  </p>
+                  <a
+                    href="https://bit.ly/47uIMTB"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="break-all text-sm text-navy-600 hover:text-gold-600 transition-colors"
+                  >
+                    bit.ly/47uIMTB
+                  </a>
                 </div>
               </div>
             </div>
