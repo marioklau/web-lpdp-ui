@@ -7,6 +7,7 @@ import type {
   ProvinceData,
   NewsItem,
   LetterDocument,
+  LetterFormField,
   LetterTemplate,
 } from '@/types';
 
@@ -415,6 +416,58 @@ const DOKUMEN_SIMAK: LetterDocument[] = [
   },
 ];
 
+const SCHOLARSHIP_FIELDS: LetterFormField[] = [
+  { key: 'nama', label: 'Nama', group: 'Data Pemohon', required: true },
+  { key: 'kampus', label: 'Kampus', group: 'Data Pemohon', required: true },
+  { key: 'negara', label: 'Negara', group: 'Data Pemohon', required: true },
+  {
+    key: 'jenisDana',
+    label: 'Jenis Dana Pengajuan',
+    group: 'Data Pemohon',
+    required: true,
+    readOnly: true,
+    defaultValue: '{{type}}',
+  },
+  {
+    key: 'jumlah',
+    label: 'Jumlah',
+    group: 'Data Pemohon',
+    required: true,
+    readOnly: true,
+    defaultValue: '{{amount}}',
+  },
+  {
+    key: 'namaBank',
+    label: 'Nama Bank',
+    group: 'Data Bank',
+    required: true,
+  },
+  {
+    key: 'namaAccount',
+    label: 'Nama Account',
+    group: 'Data Bank',
+    required: true,
+  },
+  {
+    key: 'nomorRekening',
+    label: 'Nomor Rekening',
+    group: 'Data Bank',
+    required: true,
+  },
+  {
+    key: 'bicSwift',
+    label: 'BIC / Swift Code',
+    group: 'Data Bank',
+    required: false,
+  },
+  {
+    key: 'iban',
+    label: 'IBAN / ABA / BSB',
+    group: 'Data Bank',
+    required: false,
+  },
+];
+
 export const LETTER_TEMPLATES: LetterTemplate[] = [
   {
     id: 'dana-hidup',
@@ -422,6 +475,9 @@ export const LETTER_TEMPLATES: LetterTemplate[] = [
     title: 'Form Pengajuan Dana Beasiswa — Dana Hidup Bulanan',
     description: 'Pengajuan dana hidup bulanan beserta dokumen pendukung.',
     amount: 'Rp 15.000.000,-',
+    format: 'form',
+    formTitle: 'FORM PENGAJUAN DANA BEASISWA',
+    fields: SCHOLARSHIP_FIELDS.map((field) => ({ ...field })),
     documents: DOKUMEN_HIDUP,
     bodyTemplate: buildScholarshipForm(DOKUMEN_HIDUP),
   },
@@ -431,6 +487,9 @@ export const LETTER_TEMPLATES: LetterTemplate[] = [
     title: 'Form Pengajuan Dana Beasiswa — Dana Kedatangan',
     description: 'Pengajuan dana kedatangan beserta dokumen pendukung.',
     amount: 'Rp 10.000.000,-',
+    format: 'form',
+    formTitle: 'FORM PENGAJUAN DANA BEASISWA',
+    fields: SCHOLARSHIP_FIELDS.map((field) => ({ ...field })),
     documents: DOKUMEN_KEDATANGAN,
     bodyTemplate: buildScholarshipForm(DOKUMEN_KEDATANGAN),
   },
@@ -440,6 +499,9 @@ export const LETTER_TEMPLATES: LetterTemplate[] = [
     title: 'Form Pengajuan Dana Beasiswa — Dana Pendaftaran SIMAK UI',
     description: 'Pengajuan dana pendaftaran SIMAK UI beserta dokumen pendukung.',
     amount: 'Rp 1.350.000,-',
+    format: 'form',
+    formTitle: 'FORM PENGAJUAN DANA BEASISWA',
+    fields: SCHOLARSHIP_FIELDS.map((field) => ({ ...field })),
     documents: DOKUMEN_SIMAK,
     bodyTemplate: buildScholarshipForm(DOKUMEN_SIMAK),
   },
@@ -449,6 +511,9 @@ export const LETTER_TEMPLATES: LetterTemplate[] = [
     title: 'Form Pengajuan Dana Beasiswa — Dana Tunjangan Buku',
     description: 'Pengajuan dana tunjangan buku beserta dokumen pendukung.',
     amount: 'Rp 10.000.000,-',
+    format: 'form',
+    formTitle: 'FORM PENGAJUAN DANA BEASISWA',
+    fields: SCHOLARSHIP_FIELDS.map((field) => ({ ...field })),
     documents: DOKUMEN_HIDUP,
     bodyTemplate: buildScholarshipForm(DOKUMEN_HIDUP),
   },

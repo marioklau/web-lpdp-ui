@@ -22,8 +22,15 @@ import {
 import { isFirebaseConfigured, submitLetter } from '@/lib/firebase';
 import { useContent } from '@/lib/contentContext';
 import { useLocalStorage } from '@/lib/useLocalStorage';
+import {
+  extractPlaceholders,
+  groupTemplateFields,
+  resolveFieldDefault,
+  resolveTemplateFields,
+} from '@/lib/letterTemplate';
 import type {
   LetterDocument,
+  LetterFormField,
   LetterTemplate,
   LetterSubmission,
 } from '@/types';
@@ -32,58 +39,12 @@ type Step = 0 | 1 | 2 | 3 | 4;
 
 const stepLabels = ['Pilih Jenis', 'Isi Formulir', 'Periksa Data', 'Selesai'];
 
-const FIELD_LABELS: Record<string, string> = {
-  nama: 'Nama',
-  namaBank: 'Nama Bank',
-  namaAccount: 'Nama Account',
-  nomorRekening: 'Nomor Rekening',
-  bicSwift: 'BIC / Swift Code',
-  iban: 'IBAN / ABA / BSB',
-  kampus: 'Kampus',
-  negara: 'Negara',
-  jenisDana: 'Jenis Dana Pengajuan',
-  jumlah: 'Jumlah',
-  tanggal: 'Tanggal',
-  keperluan: 'Keperluan',
-  [ATTACHMENT_FIELD]: 'Dokumen Pendukung',
-};
-
-const PRIMARY_FIELDS = ['nama', 'kampus', 'negara', 'jenisDana', 'jumlah'];
-const BANK_FIELDS = [
-  'namaBank',
-  'namaAccount',
-  'nomorRekening',
-  'bicSwift',
-  'iban',
-];
-
-const FIXED_FIELDS = new Set(['jenisDana', 'jumlah']);
-const OPTIONAL_FIELDS = new Set([
-  'tanggal',
-  'bicSwift',
-  'iban',
-  ATTACHMENT_FIELD,
-]);
 const LEGACY_ATTACHMENT: LetterDocument = {
   key: ATTACHMENT_FIELD,
   label: 'Dokumen Pendukung',
   required: false,
   numbered: false,
 };
-
-function humanizeField(key: string): string {
-  return key.replace(/([A-Z])/g, ' $1').replace(/^./, (char) => char.toUpperCase());
-}
-
-function fieldLabel(key: string, documents: LetterDocument[]): string {
-  const document = documents.find((item) => item.key === key);
-  return document?.label ?? FIELD_LABELS[key] ?? humanizeField(key);
-}
-
-function extractPlaceholders(bodyTemplate: string): string[] {
-  const matches = [...bodyTemplate.matchAll(/{{\s*(\w+)\s*}}/g)];
-  return [...new Set(matches.map((match) => match[1]))];
-}
 
 export default function SuratPage() {
   const { letterTemplates } = useContent();
@@ -120,31 +81,19 @@ export default function SuratPage() {
     [placeholders, documentKeys],
   );
 
-  const primaryKeys = useMemo(
-    () => PRIMARY_FIELDS.filter((key) => fieldKeys.includes(key)),
-    [fieldKeys],
+  const formFields = useMemo(
+    () => (template ? resolveTemplateFields(template) : []),
+    [template],
   );
-  const bankKeys = useMemo(
-    () => BANK_FIELDS.filter((key) => fieldKeys.includes(key)),
-    [fieldKeys],
-  );
-  const otherKeys = useMemo(
-    () =>
-      fieldKeys.filter(
-        (key) =>
-          key !== ATTACHMENT_FIELD &&
-          !PRIMARY_FIELDS.includes(key) &&
-          !BANK_FIELDS.includes(key),
-      ),
-    [fieldKeys],
+  const fieldGroups = useMemo(
+    () => groupTemplateFields(formFields),
+    [formFields],
   );
 
   const uploadItems = useMemo(() => {
     if (documents.length) return documents;
     return fieldKeys.includes(ATTACHMENT_FIELD) ? [LEGACY_ATTACHMENT] : [];
   }, [documents, fieldKeys]);
-
-  const labelFor = (key: string) => fieldLabel(key, documents);
 
   const selectTemplate = (selected: LetterTemplate) => {
     const initial: Record<string, string> = {};
@@ -154,8 +103,9 @@ export default function SuratPage() {
     selected.documents?.forEach((document) => {
       initial[document.key] = '';
     });
-    initial.jenisDana = selected.type;
-    initial.jumlah = selected.amount;
+    resolveTemplateFields(selected).forEach((field) => {
+      initial[field.key] = resolveFieldDefault(field, selected);
+    });
 
     setTemplate(selected);
     setFields(initial);
@@ -167,7 +117,6 @@ export default function SuratPage() {
   };
 
   const handleFieldChange = (key: string, value: string) => {
-    if (FIXED_FIELDS.has(key)) return;
     setFields((prev) => ({ ...prev, [key]: value }));
   };
 
@@ -197,11 +146,11 @@ export default function SuratPage() {
       return;
     }
 
-    const missingFields = fieldKeys.filter(
-      (key) =>
-        key !== ATTACHMENT_FIELD &&
-        !OPTIONAL_FIELDS.has(key) &&
-        !fields[key]?.trim(),
+    const missingFields = formFields.filter(
+      (field) =>
+        field.required !== false &&
+        !field.readOnly &&
+        !fields[field.key]?.trim(),
     );
     const requiredDocuments = documents.filter(
       (document) => document.required !== false,
@@ -214,7 +163,7 @@ export default function SuratPage() {
       const messages: string[] = [];
       if (missingFields.length) {
         messages.push(
-          `Mohon isi: ${missingFields.map((key) => labelFor(key)).join(', ')}`,
+          `Mohon isi: ${missingFields.map((field) => field.label).join(', ')}`,
         );
       }
       if (missingDocuments.length) {
@@ -292,21 +241,21 @@ export default function SuratPage() {
     setPersistIssue('');
   };
 
-  const renderTextField = (key: string) => {
-    const value = fields[key] || '';
-    const isWide = key === 'keperluan';
+  const renderTextField = (field: LetterFormField) => {
+    const value = fields[field.key] || '';
+    const isWide = field.type === 'textarea';
 
     return (
-      <div key={key} className={isWide ? 'sm:col-span-2' : ''}>
+      <div key={field.key} className={isWide ? 'sm:col-span-2' : ''}>
         <label className="mb-1.5 block text-sm font-medium text-navy-800">
-          {labelFor(key)}
-          {OPTIONAL_FIELDS.has(key) && !FIXED_FIELDS.has(key) && (
+          {field.label}
+          {field.required === false && (
             <span className="ml-1 text-xs font-normal text-navy-400">
               (opsional)
             </span>
           )}
         </label>
-        {FIXED_FIELDS.has(key) ? (
+        {field.readOnly ? (
           <div className="space-y-1">
             <input
               value={value}
@@ -317,23 +266,27 @@ export default function SuratPage() {
               Sudah ditetapkan dan tidak dapat diubah.
             </p>
           </div>
-        ) : key === 'keperluan' ? (
+        ) : isWide ? (
           <textarea
             value={value}
-            onChange={(event) => handleFieldChange(key, event.target.value)}
+            onChange={(event) =>
+              handleFieldChange(field.key, event.target.value)
+            }
             rows={3}
             maxLength={1000}
             className="w-full resize-none rounded-lg border border-navy-200 bg-white px-4 py-2.5 text-sm text-navy-900 outline-none transition focus:border-navy-500 focus:ring-2 focus:ring-navy-500/20"
-            placeholder={`Masukkan ${labelFor(key).toLowerCase()}`}
+            placeholder={`Masukkan ${field.label.toLowerCase()}`}
           />
         ) : (
           <input
             type="text"
             value={value}
-            onChange={(event) => handleFieldChange(key, event.target.value)}
+            onChange={(event) =>
+              handleFieldChange(field.key, event.target.value)
+            }
             maxLength={200}
             className="w-full rounded-lg border border-navy-200 bg-white px-4 py-2.5 text-sm text-navy-900 outline-none transition focus:border-navy-500 focus:ring-2 focus:ring-navy-500/20"
-            placeholder={`Masukkan ${labelFor(key).toLowerCase()}`}
+            placeholder={`Masukkan ${field.label.toLowerCase()}`}
           />
         )}
       </div>
@@ -434,35 +387,23 @@ export default function SuratPage() {
                 </div>
               )}
 
-              {primaryKeys.length > 0 && (
-                <section>
+              {fieldGroups.map((group, groupIndex) => (
+                <section
+                  key={`${group.name}-${groupIndex}`}
+                  className={
+                    groupIndex > 0
+                      ? 'mt-6 border-t border-navy-100 pt-6'
+                      : undefined
+                  }
+                >
                   <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-gold-600">
-                    Data Pemohon
+                    {group.name}
                   </h3>
                   <div className="grid gap-4 sm:grid-cols-2">
-                    {primaryKeys.map(renderTextField)}
+                    {group.fields.map(renderTextField)}
                   </div>
                 </section>
-              )}
-
-              {bankKeys.length > 0 && (
-                <section className="mt-6 border-t border-navy-100 pt-6">
-                  <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-gold-600">
-                    Data Bank
-                  </h3>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    {bankKeys.map(renderTextField)}
-                  </div>
-                </section>
-              )}
-
-              {otherKeys.length > 0 && (
-                <section className="mt-6 border-t border-navy-100 pt-6">
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    {otherKeys.map(renderTextField)}
-                  </div>
-                </section>
-              )}
+              ))}
 
               {uploadItems.length > 0 && (
                 <section className="mt-6 border-t border-navy-100 pt-6">
@@ -627,19 +568,17 @@ export default function SuratPage() {
               </p>
 
               <div className="mb-6 grid gap-3 sm:grid-cols-2">
-                {fieldKeys
-                  .filter((key) => key !== ATTACHMENT_FIELD)
-                  .map((key) => (
-                    <div
-                      key={key}
-                      className="rounded-lg border border-navy-100 bg-navy-50 px-4 py-3"
-                    >
-                      <p className="text-xs text-navy-500">{labelFor(key)}</p>
-                      <p className="mt-0.5 break-words text-sm font-medium text-navy-900">
-                        {fields[key] || '—'}
-                      </p>
-                    </div>
-                  ))}
+                {formFields.map((field) => (
+                  <div
+                    key={field.key}
+                    className="rounded-lg border border-navy-100 bg-navy-50 px-4 py-3"
+                  >
+                    <p className="text-xs text-navy-500">{field.label}</p>
+                    <p className="mt-0.5 break-words text-sm font-medium text-navy-900">
+                      {fields[field.key] || '—'}
+                    </p>
+                  </div>
+                ))}
               </div>
 
               {uploadItems.some((document) =>

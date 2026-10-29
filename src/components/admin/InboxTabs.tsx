@@ -6,7 +6,8 @@ import {
 } from '@/components/admin/ui';
 import { isImageDataUrl } from '@/lib/attachment';
 import { useContent } from '@/lib/contentContext';
-import type { Aspiration, LetterSubmission } from '@/types';
+import { resolveTemplateFields } from '@/lib/letterTemplate';
+import type { Aspiration, LetterFormField, LetterSubmission } from '@/types';
 
 const FIELD_LABELS: Record<string, string> = {
   nama: 'Nama',
@@ -25,9 +26,11 @@ const FIELD_LABELS: Record<string, string> = {
 function fieldLabel(
   key: string,
   documents: { key: string; label: string }[] | undefined,
+  fields: LetterFormField[],
 ): string {
   return (
     documents?.find((document) => document.key === key)?.label ??
+    fields.find((field) => field.key === key)?.label ??
     FIELD_LABELS[key] ??
     key.replace(/([A-Z])/g, ' $1')
   );
@@ -112,7 +115,15 @@ export function SubmissionsTab({
         <EmptyState message="Belum ada pengajuan surat." />
       ) : (
         <div className="space-y-3">
-          {submissions.map((submission) => (
+          {submissions.map((submission) => {
+            const template = letterTemplates.find(
+              (item) => item.id === submission.templateId,
+            );
+            const templateFields = template
+              ? resolveTemplateFields(template)
+              : [];
+
+            return (
             <div
               key={submission.id}
               className="rounded-xl border border-navy-100 p-4"
@@ -160,10 +171,11 @@ export function SubmissionsTab({
               <div className="mt-3 grid grid-cols-2 gap-2 text-xs sm:grid-cols-3">
                 {Object.entries(submission.fields).map(([key, value]) => {
                   const isAttachment = isImageDataUrl(value);
-                  const documents = letterTemplates.find(
-                    (template) => template.id === submission.templateId,
-                  )?.documents;
-                  const label = fieldLabel(key, documents);
+                  const label = fieldLabel(
+                    key,
+                    template?.documents,
+                    templateFields,
+                  );
 
                   return (
                     <div
@@ -196,7 +208,8 @@ export function SubmissionsTab({
                 })}
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>

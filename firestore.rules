@@ -36,7 +36,7 @@ service cloud.firestore {
         && request.resource.data.templateTitle is string
         && request.resource.data.templateTitle.size() <= 256
         && request.resource.data.fields is map
-        && request.resource.data.fields.size() <= 30
+        && request.resource.data.fields.size() <= 60
         && request.resource.data.status == 'diajukan'
         && request.resource.data.createdAt is string
         && request.resource.data.createdAt.size() <= 40;

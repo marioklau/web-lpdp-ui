@@ -4,6 +4,12 @@ import {
   ATTACHMENT_TEXT_PLACEHOLDER,
   isImageDataUrl,
 } from '@/lib/attachment';
+import {
+  DEFAULT_FORM_TITLE,
+  groupTemplateFields,
+  resolveTemplateFields,
+  resolveTemplateFormat,
+} from '@/lib/letterTemplate';
 import type { LetterTemplate } from '@/types';
 
 const PAGE_WIDTH = 612;
@@ -126,117 +132,100 @@ function drawContainedImage(
   return height;
 }
 
+function drawFormTitle(doc: jsPDF, title: string) {
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(12);
+  doc.setTextColor(0);
+  doc.text(title, PAGE_WIDTH / 2, 41, { align: 'center' });
+}
+
 function drawScholarshipForm(
   doc: jsPDF,
   template: LetterTemplate,
   fields: Record<string, string>,
-) {
+): number {
   const x0 = CONTENT_LEFT;
   const x1 = CONTENT_RIGHT;
-  const labelRight = 104.2;
-  const colonRight = 118;
-  const valueRight = 284.4;
-  const gapRight = 298.2;
-  const y0 = 54.4;
-  const y1 = 81.4;
-  const y2 = 95.8;
-  const y3 = 109.6;
-  const y4 = 189.2;
+  const labelWidth = 150;
+  const padding = 7;
+  const valueWidth = x1 - x0 - labelWidth - padding * 2;
+  const title = template.formTitle?.trim() || DEFAULT_FORM_TITLE;
+  const groups = groupTemplateFields(resolveTemplateFields(template));
+  const bottomLimit = PAGE_HEIGHT - 60;
 
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(12);
-  doc.setTextColor(0);
-  doc.text('FORM PENGAJUAN DANA BEASISWA', PAGE_WIDTH / 2, 41, {
-    align: 'center',
+  drawFormTitle(doc, title);
+  let y = 54.4;
+
+  const startNewPage = () => {
+    doc.addPage();
+    drawFormTitle(doc, title);
+    y = 54.4;
+  };
+
+  groups.forEach((group) => {
+    const headerHeight = 18;
+    if (y + headerHeight > bottomLimit) startNewPage();
+
+    doc.setFillColor(238, 242, 251);
+    doc.rect(x0, y, x1 - x0, headerHeight, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(31, 58, 138);
+    doc.text(group.name.toUpperCase(), x0 + padding, y + 12.5);
+    y += headerHeight;
+
+    group.fields.forEach((field) => {
+      const value = valueOf(fields, field.key) || '—';
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(10.2);
+      const labelLines = doc.splitTextToSize(
+        field.label,
+        labelWidth - padding * 2,
+      ) as string[];
+      doc.setFont('helvetica', 'normal');
+      const valueLines = doc.splitTextToSize(value, valueWidth) as string[];
+      const rowHeight =
+        Math.max(labelLines.length, valueLines.length) * 12 + 10;
+
+      if (y + rowHeight > bottomLimit) startNewPage();
+
+      doc.setDrawColor(0);
+      doc.setLineWidth(0.6);
+      doc.rect(x0, y, x1 - x0, rowHeight);
+      doc.line(x0 + labelWidth, y, x0 + labelWidth, y + rowHeight);
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(10.2);
+      doc.setTextColor(0);
+      labelLines.forEach((line, index) => {
+        doc.text(line, x0 + padding, y + 15 + index * 12);
+      });
+
+      doc.setFont('helvetica', 'normal');
+      valueLines.forEach((line, index) => {
+        doc.text(line, x0 + labelWidth + padding, y + 15 + index * 12);
+      });
+
+      y += rowHeight;
+    });
   });
 
-  doc.setDrawColor(0);
-  doc.setLineWidth(0.6);
-  doc.rect(x0, y0, x1 - x0, y4 - y0);
-  doc.line(labelRight, y0, labelRight, y4);
-  doc.line(colonRight, y0, colonRight, y4);
-  doc.line(valueRight, y0, valueRight, y4);
-  doc.line(gapRight, y0, gapRight, y4);
-  doc.line(x0, y1, gapRight, y1);
-  doc.line(x0, y2, gapRight, y2);
-  doc.line(x0, y3, gapRight, y3);
-
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(10.8);
-
-  const labelCenter = (x0 + labelRight) / 2;
-  doc.text('Nama', labelCenter, 65.2, { align: 'center' });
-  doc.text('Kampus', labelCenter, 92.4, { align: 'center' });
-  doc.text('Negara', labelCenter, 106.2, { align: 'center' });
-  doc.text('Jenis Dana', labelCenter, 120.4, { align: 'center' });
-  doc.text('Pengajuan', labelCenter, 133.8, { align: 'center' });
-  doc.text('dan', labelCenter, 147.2, { align: 'center' });
-  doc.text('Jumlahnya', labelCenter, 160.6, { align: 'center' });
-
-  const name = valueOf(fields, 'nama') || '—';
-  const nameWidth = valueRight - 123.6 - 3;
-  let nameSize = 10.8;
-  doc.setFontSize(nameSize);
-  let nameLines = doc.splitTextToSize(name, nameWidth) as string[];
-  while (nameLines.length > 2 && nameSize > 8) {
-    nameSize -= 0.3;
-    doc.setFontSize(nameSize);
-    nameLines = doc.splitTextToSize(name, nameWidth) as string[];
+  const note = template.formNote?.trim();
+  if (note) {
+    doc.setFont('helvetica', 'italic');
+    doc.setFontSize(9.5);
+    doc.setTextColor(70);
+    const noteLines = doc.splitTextToSize(note, x1 - x0) as string[];
+    if (y + 12 + noteLines.length * 12 > bottomLimit) startNewPage();
+    y += 14;
+    noteLines.forEach((line) => {
+      doc.text(line, x0, y);
+      y += 12;
+    });
+    doc.setTextColor(0);
   }
-  doc.text(':', 109.9, 65.2);
-  nameLines.slice(0, 2).forEach((line, index) => {
-    doc.text(line, 123.6, 65.2 + index * 13.4);
-  });
 
-  doc.text(':', 109.9, 92.4);
-  drawFittedText(
-    doc,
-    valueOf(fields, 'kampus') || '—',
-    123.6,
-    92.4,
-    nameWidth,
-  );
-
-  doc.text(':', 109.9, 106.2);
-  drawFittedText(
-    doc,
-    valueOf(fields, 'negara') || '—',
-    123.6,
-    106.2,
-    nameWidth,
-  );
-
-  doc.text(':', 109.9, 120.4);
-  drawFittedText(
-    doc,
-    valueOf(fields, 'jenisDana') || template.type,
-    123.6,
-    120.4,
-    nameWidth,
-  );
-
-  drawFittedText(
-    doc,
-    valueOf(fields, 'jumlah') || template.amount,
-    123.6,
-    147,
-    nameWidth,
-  );
-
-  const bankX = 303.3;
-  const bankWidth = x1 - bankX - 4;
-  const bankRows: [string, string][] = [
-    ['Nama Bank', valueOf(fields, 'namaBank')],
-    ['Nama Account', valueOf(fields, 'namaAccount')],
-    ['Nomor Rekening', valueOf(fields, 'nomorRekening')],
-    ['BIC / Swift Code', valueOf(fields, 'bicSwift')],
-    ['IBAN / ABA / BSB', valueOf(fields, 'iban')],
-  ];
-
-  bankRows.forEach(([label, value], index) => {
-    const line = value ? `${label} : ${value}` : `${label} :`;
-    drawFittedText(doc, line, bankX, 65.2 + index * 13.4, bankWidth);
-  });
+  return y;
 }
 
 async function generateScholarshipPdf(
@@ -246,47 +235,56 @@ async function generateScholarshipPdf(
 ) {
   const doc = new jsPDF({ unit: 'pt', format: 'letter' });
   const documents = template.documents ?? [];
-
-  drawScholarshipForm(doc, template, fields);
-  drawAttachmentBorder(doc, 189.2);
-
+  const formBottom = drawScholarshipForm(doc, template, fields);
   const images = await Promise.all(
     documents.map((document) => loadAttachment(fields[document.key])),
   );
+  const entries = documents
+    .map((document, index) => ({ document, index, image: images[index] }))
+    .filter((entry) => entry.image || entry.document.required !== false);
 
-  documents.forEach((document, index) => {
-    const image = images[index];
-    if (!image && document.required === false) return;
+  if (entries.length) {
+    let attachmentTop = formBottom + 12;
+    if (attachmentTop > PAGE_HEIGHT - 280) {
+      doc.addPage();
+      drawFormTitle(doc, template.formTitle?.trim() || DEFAULT_FORM_TITLE);
+      attachmentTop = 54;
+    }
 
-    if (index === 0) {
-      drawSectionHeading(doc, document.label, index, document.numbered !== false, 205.2);
+    drawAttachmentBorder(doc, attachmentTop);
+    let firstEntry = true;
+
+    entries.forEach(({ document, index, image }) => {
+      if (!firstEntry) {
+        doc.addPage();
+        drawAttachmentBorder(doc, 27);
+      }
+
+      const headingY = firstEntry ? attachmentTop + 18 : 55;
+      const imageTop = firstEntry ? attachmentTop + 36 : 72;
+      const maxImageHeight = PAGE_HEIGHT - 14 - imageTop - 10;
+
+      drawSectionHeading(
+        doc,
+        document.label,
+        index,
+        document.numbered !== false,
+        headingY,
+      );
       if (image) {
         drawContainedImage(
           doc,
           fields[document.key],
           image,
-          221,
+          imageTop,
           500,
-          550,
+          maxImageHeight,
         );
       }
-      return;
-    }
 
-    doc.addPage();
-    drawAttachmentBorder(doc, 27);
-    drawSectionHeading(doc, document.label, index, document.numbered !== false, 55);
-    if (image) {
-      drawContainedImage(
-        doc,
-        fields[document.key],
-        image,
-        72,
-        500,
-        696,
-      );
-    }
-  });
+      firstEntry = false;
+    });
+  }
 
   doc.save(filename || `surat-${template.id}.pdf`);
 }
@@ -401,7 +399,7 @@ export async function generateLetterPdf(
   fields: Record<string, string>,
   filename?: string,
 ): Promise<void> {
-  if (template.documents?.length) {
+  if (resolveTemplateFormat(template) === 'form') {
     await generateScholarshipPdf(template, fields, filename);
     return;
   }

@@ -60,6 +60,16 @@ export interface LetterDocument {
   numbered?: boolean;
 }
 
+export interface LetterFormField {
+  key: string;
+  label: string;
+  group?: string;
+  type?: 'text' | 'textarea';
+  required?: boolean;
+  readOnly?: boolean;
+  defaultValue?: string;
+}
+
 export interface LetterTemplate {
   id: string;
   type: string;
@@ -67,6 +77,10 @@ export interface LetterTemplate {
   description: string;
   amount: string;
   bodyTemplate: string;
+  format?: 'form' | 'text';
+  formTitle?: string;
+  formNote?: string;
+  fields?: LetterFormField[];
   documents?: LetterDocument[];
 }
 

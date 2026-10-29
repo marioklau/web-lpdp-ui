@@ -43,14 +43,29 @@ function resolveLetterTemplates(
 
   return templates.map((template) => {
     const fallback = DEFAULT_TEMPLATE_BY_ID.get(template.id);
-    if (!fallback || template.documents?.length) return template;
+    if (!fallback) return template;
+
+    const legacy = !template.format && !template.documents?.length;
+    const documents = legacy ? fallback.documents : template.documents;
+    const format =
+      template.format ??
+      (documents?.length ? 'form' : fallback.format ?? 'text');
 
     return {
       ...template,
-      type: fallback.type,
-      amount: fallback.amount,
-      documents: fallback.documents,
-      bodyTemplate: fallback.bodyTemplate,
+      format,
+      formTitle: template.formTitle ?? fallback.formTitle,
+      formNote: template.formNote ?? fallback.formNote,
+      type: template.type || fallback.type,
+      amount: template.amount || fallback.amount,
+      fields:
+        template.fields?.length
+          ? template.fields
+          : format === 'form'
+            ? fallback.fields
+            : template.fields,
+      documents,
+      bodyTemplate: template.bodyTemplate || fallback.bodyTemplate,
     };
   });
 }
