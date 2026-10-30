@@ -14,8 +14,10 @@ import {
   getDoc,
   getDocs,
   getFirestore,
+  onSnapshot,
   orderBy,
   query,
+  runTransaction,
   setDoc,
 } from 'firebase/firestore';
 import type {
@@ -195,6 +197,99 @@ export async function submitAspiration(
   } catch (error) {
     console.error('Gagal menyimpan aspirasi', error);
     return null;
+  }
+}
+
+export interface SiteMetrics {
+  views: number;
+  loves: number;
+}
+
+const LOCAL_METRICS_KEY = 'aksara_metrics';
+const METRICS_EVENT = 'aksara-metrics';
+
+function readLocalMetrics(): SiteMetrics {
+  try {
+    const raw = localStorage.getItem(LOCAL_METRICS_KEY);
+    if (!raw) return { views: 0, loves: 0 };
+    const parsed = JSON.parse(raw) as Partial<SiteMetrics>;
+    return {
+      views: Math.max(0, Math.floor(Number(parsed.views ?? 0))),
+      loves: Math.max(0, Math.floor(Number(parsed.loves ?? 0))),
+    };
+  } catch {
+    return { views: 0, loves: 0 };
+  }
+}
+
+function writeLocalMetrics(next: SiteMetrics) {
+  localStorage.setItem(LOCAL_METRICS_KEY, JSON.stringify(next));
+  window.dispatchEvent(new Event(METRICS_EVENT));
+}
+
+export function subscribeSiteMetrics(
+  onChange: (metrics: SiteMetrics) => void,
+): () => void {
+  if (!db) {
+    onChange(readLocalMetrics());
+    const refresh = () => onChange(readLocalMetrics());
+    window.addEventListener(METRICS_EVENT, refresh);
+    window.addEventListener('storage', refresh);
+    return () => {
+      window.removeEventListener(METRICS_EVENT, refresh);
+      window.removeEventListener('storage', refresh);
+    };
+  }
+
+  return onSnapshot(
+    doc(db, 'site', 'metrics'),
+    (snap) => {
+      const data = snap.data();
+      onChange({
+        views: Math.max(0, Math.floor(Number(data?.views ?? 0))),
+        loves: Math.max(0, Math.floor(Number(data?.loves ?? 0))),
+      });
+    },
+    (error) => {
+      console.error('Gagal membaca metrik situs', error);
+      onChange(readLocalMetrics());
+    },
+  );
+}
+
+export async function bumpSiteMetric(field: 'views' | 'loves'): Promise<boolean> {
+  if (!db) {
+    const current = readLocalMetrics();
+    writeLocalMetrics({
+      views: current.views + (field === 'views' ? 1 : 0),
+      loves: current.loves + (field === 'loves' ? 1 : 0),
+    });
+    return true;
+  }
+
+  const ref = doc(db, 'site', 'metrics');
+  try {
+    await runTransaction(db, async (transaction) => {
+      const snap = await transaction.get(ref);
+      if (!snap.exists()) {
+        transaction.set(ref, {
+          views: field === 'views' ? 1 : 0,
+          loves: field === 'loves' ? 1 : 0,
+        });
+        return;
+      }
+      const data = snap.data();
+      const views = Math.max(0, Math.floor(Number(data.views ?? 0)));
+      const loves = Math.max(0, Math.floor(Number(data.loves ?? 0)));
+      transaction.update(ref, {
+        views: views + (field === 'views' ? 1 : 0),
+        loves: loves + (field === 'loves' ? 1 : 0),
+      });
+    });
+    return true;
+  } catch (error) {
+    console.error('Gagal memperbarui metrik situs', error);
+    return false;
   }
 }
 

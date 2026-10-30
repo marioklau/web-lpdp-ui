@@ -18,15 +18,14 @@ export default function HomeMapPreview({ onNavigate }: HomeMapPreviewProps) {
               Distribusi Awardee di Seluruh Indonesia
             </h2>
             <p className="mt-4 text-navy-600 leading-relaxed">
-              Peta interaktif memvisualisasikan sebaran awardee LPDP UI per
-              provinsi. Warna yang lebih pekat menunjukkan jumlah awardee yang
-              lebih banyak. Arahkan kursor untuk melihat ringkasan, lalu klik
-              provinsi untuk melihat profil awardee.
+              Peta interaktif memvisualisasikan sebaran awardee LPDP UI. Warna
+              berjalan dari abu-abu ke kuning: semakin kuning, semakin banyak.
+              Klik provinsi untuk masuk ke kabupaten dan kota.
             </p>
             <ul className="mt-6 space-y-3 text-sm text-navy-700">
               <li className="flex items-center gap-3">
                 <span className="h-2 w-2 rounded-full bg-gold-400" />
-                Choropleth berdasarkan jumlah awardee
+                Gradasi abu-abu ke kuning sesuai jumlah awardee
               </li>
               <li className="flex items-center gap-3">
                 <span className="h-2 w-2 rounded-full bg-gold-400" />
@@ -54,7 +53,7 @@ export default function HomeMapPreview({ onNavigate }: HomeMapPreviewProps) {
                     key={i}
                     className="aspect-square rounded-sm"
                     style={{
-                      backgroundColor: `rgba(226, 172, 52, ${0.1 + (i % 8) * 0.11})`,
+                      backgroundColor: `color-mix(in srgb, #e2ac34 ${8 + (i % 8) * 12}%, #c5c8d0)`,
                     }}
                   />
                 ))}

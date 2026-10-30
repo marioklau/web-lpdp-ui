@@ -14,6 +14,12 @@ export default function VisionMission() {
           <h2 className="mt-3 font-serif text-3xl sm:text-4xl font-semibold text-navy-900">
             Arah Perjuangan
           </h2>
+          <p className="mt-4 text-sm leading-relaxed text-navy-600 sm:text-base">
+            AKSARA dipilih karena singkat, mudah diingat, dan merangkum
+            kepemimpinan yang mendengar aspirasi, memperkuat kolaborasi,
+            menghadirkan solusi, mampu beradaptasi, cepat merespons, dan
+            membuat kelurahan terasa asyik.
+          </p>
           <div className="mt-6 h-1 w-16 mx-auto rounded-full bg-gold-400" />
         </div>
 
@@ -36,20 +42,30 @@ export default function VisionMission() {
 
         {/* Mission cards */}
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {visionMission.missions.map((m, i) => (
-            <div
-              key={i}
-              className="group rounded-2xl bg-white border border-navy-100 shadow-soft p-6 transition-all hover:shadow-card hover:-translate-y-1"
-            >
-              <div className="flex items-center gap-3 mb-3">
-                <span className="grid place-items-center h-8 w-8 rounded-lg bg-gold-400 text-navy-900 font-bold text-sm">
-                  {i + 1}
-                </span>
-                <span className="h-px flex-1 bg-navy-100 group-hover:bg-gold-300 transition-colors" />
+          {visionMission.missions.map((mission, index) => {
+            const [rawTitle, ...rest] = mission.split('—');
+            const title = rest.length > 0 ? rawTitle.trim() : '';
+            const body = rest.length > 0 ? rest.join('—').trim() : mission;
+            const letter = 'AKSARA'[index] ?? String(index + 1);
+            return (
+              <div
+                key={mission}
+                className="group rounded-2xl bg-white border border-navy-100 shadow-soft p-6 transition-all hover:shadow-card hover:-translate-y-1"
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="grid place-items-center h-8 w-8 rounded-lg bg-gold-400 text-navy-900 font-bold text-sm">
+                    {letter}
+                  </span>
+                  {title && (
+                    <h3 className="font-serif text-lg font-semibold text-navy-900">
+                      {title}
+                    </h3>
+                  )}
+                </div>
+                <p className="text-sm text-navy-700 leading-relaxed">{body}</p>
               </div>
-              <p className="text-sm text-navy-700 leading-relaxed">{m}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

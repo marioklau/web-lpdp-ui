@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { GraduationCap, Menu, X } from 'lucide-react';
+import { Eye, GraduationCap, Menu, X } from 'lucide-react';
+import { formatCount, useSitePulse } from '@/lib/sitePulse';
 import type { Page } from '@/types';
 
 interface NavbarProps {
@@ -9,10 +10,25 @@ interface NavbarProps {
 
 const links: { id: Page; label: string }[] = [
   { id: 'home', label: 'Beranda' },
+  { id: 'jejak', label: 'Jejak Sutan' },
   { id: 'peta', label: 'Peta Awardee' },
-  { id: 'surat', label: 'Layanan Pengajuan Dana' },
   { id: 'admin', label: 'Admin' },
 ];
+
+function ViewBadge() {
+  const { views } = useSitePulse();
+
+  return (
+    <span
+      className="inline-flex items-center gap-1 rounded-full bg-navy-950/70 px-2 py-0.5 text-[11px] font-semibold text-gold-300"
+      title="Jumlah dilihat"
+    >
+      <Eye className="h-3.5 w-3.5" aria-hidden="true" />
+      <span className="tabular-nums">{formatCount(views)}</span>
+      <span className="sr-only">dilihat</span>
+    </span>
+  );
+}
 
 export default function Navbar({ page, onNavigate }: NavbarProps) {
   const [open, setOpen] = useState(false);
@@ -45,64 +61,75 @@ export default function Navbar({ page, onNavigate }: NavbarProps) {
           </button>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-1">
             {links.map((l) => (
               <button
                 key={l.id}
                 onClick={() => handleNav(l.id)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                   page === l.id
                     ? 'text-gold-300 bg-navy-800/60'
                     : 'text-navy-100 hover:text-white hover:bg-navy-800/40'
                 }`}
               >
                 {l.label}
+                {l.id === 'home' && <ViewBadge />}
               </button>
             ))}
           </nav>
 
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <button
               onClick={() => handleNav('surat')}
-              className="inline-flex items-center gap-2 rounded-lg bg-gold-400 px-5 py-2.5 text-sm font-semibold text-navy-900 shadow-soft transition-all hover:bg-gold-300 hover:shadow-card"
+              className={`inline-flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold shadow-soft transition-all ${
+                page === 'surat'
+                  ? 'bg-gold-300 text-navy-900'
+                  : 'bg-gold-400 text-navy-900 hover:bg-gold-300 hover:shadow-card'
+              }`}
             >
-              Ajukan Surat
+              Layanan Pengajuan Dana
             </button>
           </div>
 
           {/* Mobile toggle */}
-          <button
-            onClick={() => setOpen((o) => !o)}
-            className="md:hidden grid place-items-center h-10 w-10 rounded-lg text-navy-100 hover:bg-navy-800/60"
-            aria-label="Menu"
-          >
-            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+          <div className="flex items-center gap-2 lg:hidden">
+            <ViewBadge />
+            <button
+              onClick={() => setOpen((o) => !o)}
+              className="grid place-items-center h-10 w-10 rounded-lg text-navy-100 hover:bg-navy-800/60"
+              aria-label="Menu"
+            >
+              {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden border-t border-navy-800/60 bg-navy-900 animate-fade-in">
+        <div className="lg:hidden border-t border-navy-800/60 bg-navy-900 animate-fade-in">
           <nav className="mx-auto max-w-7xl px-4 py-3 flex flex-col gap-1">
             {links.map((l) => (
               <button
                 key={l.id}
                 onClick={() => handleNav(l.id)}
-                className={`px-4 py-3 rounded-lg text-left text-sm font-medium ${
+                className={`inline-flex items-center gap-2 px-4 py-3 rounded-lg text-left text-sm font-medium ${
                   page === l.id
                     ? 'text-gold-300 bg-navy-800/60'
                     : 'text-navy-100 hover:bg-navy-800/40'
                 }`}
               >
                 {l.label}
+                {l.id === 'home' && <ViewBadge />}
               </button>
             ))}
             <button
               onClick={() => handleNav('surat')}
-              className="mt-2 rounded-lg bg-gold-400 px-4 py-3 text-sm font-semibold text-navy-900"
+              className={`mt-2 rounded-lg px-4 py-3 text-sm font-semibold text-navy-900 ${
+                page === 'surat' ? 'bg-gold-300' : 'bg-gold-400'
+              }`}
             >
-              Ajukan Surat
+              Layanan Pengajuan Dana
             </button>
           </nav>
         </div>

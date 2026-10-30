@@ -139,4 +139,124 @@ body {
 }
 .leaflet-container {
   font-family: 'Plus Jakarta Sans', sans-serif;
+  background: #eef2fb;
+}
+.lpdp-map .leaflet-control-zoom {
+  border: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px -12px rgba(10, 22, 56, 0.28);
+}
+.lpdp-map .leaflet-control-zoom a {
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+  color: #0a1638;
+  border-bottom-color: #e4e6ec;
+}
+.lpdp-map .leaflet-control-attribution {
+  background: rgba(255, 255, 255, 0.82);
+  font-size: 10px;
+}
+
+.hero-outline {
+  -webkit-text-stroke: 1px rgba(226, 172, 52, 0.32);
+}
+
+.hero-float {
+  animation: hero-float 7s ease-in-out infinite;
+}
+
+@keyframes hero-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.hero-marquee-track {
+  animation: hero-marquee 32s linear infinite;
+}
+
+@keyframes hero-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.map-grid {
+  background-image:
+    linear-gradient(rgba(226, 172, 52, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(226, 172, 52, 0.07) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+.map-progress {
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.map-card {
+  opacity: 0.62;
+  transform: translateY(18px) scale(0.96);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.map-station.is-here .map-card {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.map-station.is-here .map-pin {
+  background: #e2ac34;
+  color: #0a1638;
+  box-shadow: 0 0 0 8px rgba(226, 172, 52, 0.2);
+}
+
+.jejak-map-pin[data-motion='off'] {
+  height: auto;
+  overflow: visible;
+}
+
+.jejak-map-pin[data-motion='off'] .jejak-map-scroller {
+  height: auto;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.jejak-map-pin[data-motion='off'] .map-station {
+  height: auto;
+  scroll-snap-align: center;
+  padding-top: 6rem;
+  padding-bottom: 7rem;
+}
+
+.jejak-map-pin[data-motion='off'] .map-card,
+.jejak-map-pin[data-motion='off'] .map-station.is-here .map-card {
+  opacity: 1;
+  transform: none;
+}
+
+.jejak-dot.is-active {
+  border-color: #e2ac34;
+  background: #0a1638;
+  color: #eac566;
+  box-shadow: 0 0 0 8px rgba(226, 172, 52, 0.22);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-float,
+  .hero-marquee-track {
+    animation: none;
+  }
+
+  .jejak-line {
+    transform: scaleY(1);
+  }
 }

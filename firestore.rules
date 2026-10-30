@@ -29,6 +29,37 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // Penghitung kunjungan dan hati. Pengunjung hanya boleh menambah satu angka.
+    match /site/metrics {
+      function validMetrics(data) {
+        return data.keys().hasOnly(['views', 'loves'])
+          && data.views is int
+          && data.loves is int
+          && data.views >= 0
+          && data.loves >= 0
+          && data.views <= 100000000
+          && data.loves <= 100000000;
+      }
+
+      allow read: if true;
+      allow create: if validMetrics(request.resource.data)
+        && request.resource.data.views <= 1
+        && request.resource.data.loves <= 1
+        && request.resource.data.views + request.resource.data.loves == 1;
+      allow update: if validMetrics(request.resource.data)
+        && (
+          (
+            request.resource.data.views == resource.data.views + 1
+            && request.resource.data.loves == resource.data.loves
+          )
+          || (
+            request.resource.data.loves == resource.data.loves + 1
+            && request.resource.data.views == resource.data.views
+          )
+        );
+      allow delete: if false;
+    }
+
     // Pengunjung boleh membuat pengajuan, hanya admin yang boleh membaca/menghapus.
     match /letterSubmissions/{submissionId} {
       allow create: if request.resource.data.templateId is string

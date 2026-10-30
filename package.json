@@ -11,7 +11,8 @@
     "typecheck": "tsc --noEmit -p tsconfig.app.json"
   },
   "dependencies": {
-    "firebase": "^11.10.0",
+    "firebase": "^9.14.0",
+    "gsap": "^3.15.0",
     "jspdf": "^4.2.1",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.446.0",

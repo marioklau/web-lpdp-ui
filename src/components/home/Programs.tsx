@@ -9,8 +9,11 @@ import {
   Handshake,
   HeartHandshake,
   GraduationCap,
+  Database,
   Globe2,
+  Network,
   ShieldCheck,
+  Sun,
   type LucideIcon,
 } from 'lucide-react';
 import { useContent } from '@/lib/contentContext';
@@ -28,13 +31,16 @@ const iconMap: Record<string, LucideIcon> = {
   GraduationCap,
   Globe2,
   ShieldCheck,
+  Sun,
+  Database,
+  Network,
 };
 
 export default function Programs() {
   const { programs } = useContent();
 
   return (
-    <section className="bg-white py-16 sm:py-24">
+    <section id="program" className="bg-white py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto">
           <span className="text-xs font-semibold uppercase tracking-wider text-gold-600">
@@ -44,9 +50,9 @@ export default function Programs() {
             Agenda Nyata, Bukan Janji
           </h2>
           <p className="mt-4 text-navy-600">
-            Enam program unggulan AKSARA untuk menghadirkan solusi konkret,
-            memperkuat kolaborasi lintas angkatan, dan mewujudkan dampak nyata
-            bagi Kelurahan LPDP UI.
+            Delapan program unggulan AKSARA untuk menghadirkan solusi konkret,
+            memperkuat kolaborasi lintas angkatan dan fakultas, serta
+            mewujudkan dampak nyata bagi Kelurahan LPDP UI.
           </p>
         </div>
 

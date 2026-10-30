@@ -5,7 +5,10 @@ import {
   CheckCircle2,
   MessageSquareText,
   Link2,
+  Instagram,
 } from 'lucide-react';
+import { WhatsAppIcon } from '@/components/BrandIcons';
+import { SUTAN } from '@/lib/jejak';
 import { isFirebaseConfigured, submitAspiration } from '@/lib/firebase';
 import { useLocalStorage } from '@/lib/useLocalStorage';
 import type { Aspiration } from '@/types';
@@ -108,6 +111,38 @@ export default function AspirationContact() {
                     className="break-all text-sm text-navy-600 hover:text-gold-600 transition-colors"
                   >
                     bit.ly/47uIMTB
+                  </a>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="grid place-items-center h-10 w-10 rounded-xl bg-navy-900 text-gold-300 shrink-0">
+                  <WhatsAppIcon className="h-5 w-5" />
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-navy-900">WhatsApp</p>
+                  <a
+                    href={SUTAN.whatsapp}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-sm text-navy-600 hover:text-gold-600 transition-colors"
+                  >
+                    {SUTAN.phone}
+                  </a>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="grid place-items-center h-10 w-10 rounded-xl bg-navy-900 text-gold-300 shrink-0">
+                  <Instagram className="h-5 w-5" />
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-navy-900">Instagram</p>
+                  <a
+                    href={SUTAN.instagram}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-sm text-navy-600 hover:text-gold-600 transition-colors"
+                  >
+                    @sutan_azarya.dami
                   </a>
                 </div>
               </div>

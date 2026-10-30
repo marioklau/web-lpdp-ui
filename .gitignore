@@ -27,3 +27,4 @@ documents/
 
 # Metadata tooling lokal
 .bolt/
+scripts/.kabkota-cache/

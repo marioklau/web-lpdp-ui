@@ -9,11 +9,14 @@ import {
   Handshake,
   HeartHandshake,
   Map as MapIcon,
+  Database,
   MessageSquareText,
+  Network,
   Pencil,
   Plus,
   Save,
   ShieldCheck,
+  Sun,
   Trash2,
   Users,
   X,
@@ -46,6 +49,9 @@ const ICONS: Record<string, LucideIcon> = {
   GraduationCap,
   Globe2,
   ShieldCheck,
+  Sun,
+  Database,
+  Network,
 };
 
 const ICON_OPTIONS = Object.keys(ICONS);

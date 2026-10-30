@@ -1,6 +1,8 @@
 import Hero from '@/components/home/Hero';
 import VisionMission from '@/components/home/VisionMission';
 import Programs from '@/components/home/Programs';
+import Strategic from '@/components/home/Strategic';
+import JejakTeaser from '@/components/home/JejakTeaser';
 import Stats from '@/components/home/Stats';
 import HomeMapPreview from '@/components/home/HomeMapPreview';
 import News from '@/components/home/News';
@@ -25,6 +27,8 @@ export default function Home({ onNavigate }: HomeProps) {
       <Hero onNavigate={handleNav} />
       <VisionMission />
       <Programs />
+      <Strategic onNavigate={handleNav} />
+      <JejakTeaser onNavigate={onNavigate} />
       <Stats />
       <HomeMapPreview onNavigate={onNavigate} />
       <News />

@@ -25,19 +25,19 @@ export const CANDIDATE: Candidate = {
   tagline:
     'Aspirasi Didengar, Kolaborasi Diperkuat, Dampak Diwujudkan.',
   photoUrl: '',
-  bio: 'Kelurahan LPDP UI bukan sekadar wadah berkumpulnya para penerima beasiswa, melainkan rumah bersama tempat aspirasi didengarkan, potensi dikembangkan, solidaritas diperkuat, dan kontribusi diwujudkan.',
+  bio: 'Kelurahan LPDP UI bukan sekadar wadah berkumpulnya para penerima beasiswa, melainkan rumah bersama tempat aspirasi didengarkan, potensi dikembangkan, solidaritas diperkuat, dan kontribusi diwujudkan. Melalui semangat AKSARA, kepemimpinan yang diusung aspiratif, kolaboratif, solutif, adaptif, responsif, dan asyik.',
 };
 
 export const VISION_MISSION: VisionMission = {
   vision:
-    'Mewujudkan Kelurahan LPDP UI sebagai rumah bersama yang inklusif, kolaboratif, inovatif, dan berdaya saing melalui kepemimpinan yang aspiratif, responsif, serta berintegritas untuk menghadirkan kebermanfaatan nyata bagi seluruh awardee dan masyarakat.',
+    'Mewujudkan Kelurahan LPDP UI 14.0 sebagai rumah bersama yang ber-AKSARA (Aspiratif, Kolaboratif, Solutif, Adaptif, Responsif, Asyik).',
   missions: [
     'Aspiratif — Membangun ruang komunikasi terbuka, partisipatif, dan inklusif untuk menghimpun serta memperjuangkan aspirasi seluruh awardee LPDP UI tanpa membedakan program studi, angkatan, maupun latar belakang.',
     'Kolaboratif — Memperkuat solidaritas, kekeluargaan, jejaring lintas disiplin, dan sinergi antarsesama awardee melalui kegiatan akademik, sosial, profesional, serta pengabdian masyarakat.',
     'Solutif — Menghadirkan program dan layanan yang relevan untuk menjawab kebutuhan, tantangan akademik, kesejahteraan, serta pengembangan kapasitas awardee melalui solusi yang konkret dan berkelanjutan.',
-    'Adaptif — Mendorong budaya inovasi, kreativitas, literasi digital, dan pengembangan diri agar Kelurahan LPDP UI mampu beradaptasi dengan dinamika pendidikan, teknologi, serta kebutuhan awardee.',
+    'Adaptif — Mendorong budaya inovasi, kreativitas, literasi digital, digitalisasi layanan melalui Satu Data Kelurahan LPDP UI, dan pengembangan diri agar Kelurahan LPDP UI mampu beradaptasi dengan dinamika pendidikan, teknologi, serta kebutuhan awardee.',
     'Responsif — Mewujudkan kepengurusan yang komunikatif, mudah diakses, cepat tanggap, dan peduli terhadap kebutuhan maupun permasalahan awardee melalui mekanisme komunikasi serta tindak lanjut yang jelas.',
-    'Amanah — Menjalankan kepemimpinan yang berintegritas, transparan, akuntabel, dan bertanggung jawab dengan mengedepankan kepentingan bersama serta memastikan setiap program memiliki hasil yang terukur.',
+    'Asyik — Menghadirkan suasana kelurahan yang asyik, hangat, dan menyenangkan melalui kegiatan yang seru, santai namun bermakna, serta kepengurusan yang akrab dan terbuka, sehingga setiap awardee merasa nyaman, diterima, dan antusias terlibat dalam setiap program.',
   ],
 };
 
@@ -53,14 +53,14 @@ export const PROGRAMS: Program[] = [
     id: 'p2',
     title: 'AKSARA Connect',
     description:
-      'Networking, mentoring, serta kolaborasi lintas angkatan dan program studi.',
+      'Networking, mentoring, serta kolaborasi lintas angkatan dan fakultas melalui pemberdayaan dan restrukturisasi RT (minimal Ketua, Sekretaris, dan 3 anggota per RT).',
     icon: 'Handshake',
   },
   {
     id: 'p3',
     title: 'AKSARA Care',
     description:
-      'Solidaritas, dukungan sosial, dan kepedulian terhadap sesama awardee.',
+      'Solidaritas, dukungan sosial, dan kepedulian terhadap sesama awardee dan masyarakat.',
     icon: 'HeartHandshake',
   },
   {
@@ -79,10 +79,24 @@ export const PROGRAMS: Program[] = [
   },
   {
     id: 'p6',
-    title: 'AKSARA Transparan',
+    title: 'AKSARA Terang',
     description:
-      'Publikasi kegiatan, laporan kinerja, dan evaluasi kepengurusan.',
-    icon: 'ShieldCheck',
+      'Publikasi kegiatan, laporan kinerja, laporan keuangan dan sponsorship, serta evaluasi kepengurusan secara terbuka dan berkala.',
+    icon: 'Sun',
+  },
+  {
+    id: 'p7',
+    title: 'AKSARA Digital',
+    description:
+      'Digitalisasi Satu Data Kelurahan LPDP UI, termasuk layanan pembuatan dokumen pengajuan dana beasiswa.',
+    icon: 'Database',
+  },
+  {
+    id: 'p8',
+    title: 'AKSARA Sinergi',
+    description:
+      'Penguatan sponsorship setiap kegiatan serta kolaborasi eksternal dengan instansi dan antarkelurahan LPDP se-Jabodetabek.',
+    icon: 'Network',
   },
 ];
 
@@ -286,7 +300,7 @@ export const NEWS: NewsItem[] = [
     id: 'n2',
     title: 'AKSARA — Gerakan Bersama untuk Kelurahan LPDP UI 2026',
     excerpt:
-      'Kami percaya bahwa Kelurahan LPDP UI bukan sekadar wadah berkumpulnya para penerima beasiswa, melainkan rumah bersama tempat aspirasi didengarkan, potensi dikembangkan, solidaritas diperkuat, dan kontribusi diwujudkan. Melalui semangat AKSARA, kami berkomitmen menghadirkan kepemimpinan yang aspiratif, kolaboratif, solutif, adaptif, responsif, dan amanah.',
+      'Kami percaya bahwa Kelurahan LPDP UI bukan sekadar wadah berkumpulnya para penerima beasiswa, melainkan rumah bersama tempat aspirasi didengarkan, potensi dikembangkan, solidaritas diperkuat, dan kontribusi diwujudkan. Melalui semangat AKSARA, kami berkomitmen menghadirkan kepemimpinan yang aspiratif, kolaboratif, solutif, adaptif, responsif, dan asyik. Kepemimpinan bukan hanya tentang siapa yang memimpin, melainkan tentang siapa yang dilibatkan, siapa yang didengarkan, dan seberapa besar manfaat yang dapat dihadirkan.',
     date: '20 Oktober 2026',
     category: 'Kampanye',
     imageUrl:
@@ -294,13 +308,23 @@ export const NEWS: NewsItem[] = [
   },
   {
     id: 'n3',
-    title: 'Enam Program Unggulan AKSARA',
+    title: 'Delapan Program Unggulan AKSARA',
     excerpt:
-      'AKSARA Mendengar, AKSARA Connect, AKSARA Care, AKSARA Academy, AKSARA Impact, dan AKSARA Transparan dirancang untuk menghadirkan solusi konkret, memperkuat kolaborasi lintas angkatan, serta mewujudkan dampak nyata bagi seluruh awardee dan masyarakat.',
+      'AKSARA Mendengar, Connect, Care, Academy, Impact, Terang, Digital, dan Sinergi dirancang untuk menghadirkan solusi konkret, memperkuat kolaborasi lintas angkatan dan fakultas, serta mewujudkan dampak nyata bagi seluruh awardee dan masyarakat.',
     date: '12 Oktober 2026',
     category: 'Program',
     imageUrl:
       'https://images.pexels.com/photos/5538594/pexels-photo-5538594.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  },
+  {
+    id: 'n4',
+    title: 'Satu Data Kelurahan: Pengajuan Dana Tanpa Edit Template Manual',
+    excerpt:
+      'Pengajuan dana kedatangan, dana hidup, tunjangan buku, dana riset, dan reimburse SIMAK UI selama ini mengandalkan template Word yang diedit sendiri. AKSARA Digital menghadirkan formulir terpandu: data terisi otomatis, dokumen wajib punya daftar periksa, dan berkas yang dihasilkan siap diunggah ke e-beasiswa. Prototipe layanan ini sudah bisa dicoba di situs kampanye.',
+    date: '31 Oktober 2026',
+    category: 'Layanan',
+    imageUrl:
+      'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
   },
 ];
 

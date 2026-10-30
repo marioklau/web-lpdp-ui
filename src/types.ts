@@ -1,4 +1,4 @@
-export type Page = 'home' | 'peta' | 'surat' | 'admin';
+export type Page = 'home' | 'jejak' | 'peta' | 'surat' | 'admin';
 
 export interface Candidate {
   name: string;

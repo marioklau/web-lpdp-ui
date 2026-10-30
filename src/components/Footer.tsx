@@ -1,4 +1,6 @@
-import { GraduationCap, Link2, MapPin } from 'lucide-react';
+import { GraduationCap, Instagram, Link2, MapPin } from 'lucide-react';
+import { WhatsAppIcon } from '@/components/BrandIcons';
+import { SUTAN } from '@/lib/jejak';
 import type { Page } from '@/types';
 
 interface FooterProps {
@@ -20,9 +22,9 @@ export default function Footer({ onNavigate }: FooterProps) {
               </span>
             </div>
             <p className="text-sm text-navy-300 max-w-md leading-relaxed">
-              Landing page kampanye AKSARA, Calon Lurah Kelurahan LPDP UI 2026.
-              Bersama menghadirkan kepemimpinan yang aspiratif, kolaboratif,
-              solutif, adaptif, responsif, dan amanah.
+              Landing page kampanye AKSARA, Calon Lurah Kelurahan LPDP UI 2026
+              bersama Sutan Dami. Kepemimpinan yang aspiratif, kolaboratif,
+              solutif, adaptif, responsif, dan asyik.
             </p>
             <p className="mt-4 text-xs text-navy-400">
               Data statistik dan peta masih berupa contoh (placeholder) dan
@@ -35,6 +37,7 @@ export default function Footer({ onNavigate }: FooterProps) {
             <ul className="space-y-2 text-sm">
               {[
                 { id: 'home', label: 'Beranda' },
+                { id: 'jejak', label: 'Jejak Sutan' },
                 { id: 'peta', label: 'Peta Awardee' },
                 { id: 'surat', label: 'Layanan Pengajuan Dana' },
                 { id: 'admin', label: 'Admin' },
@@ -69,6 +72,28 @@ export default function Footer({ onNavigate }: FooterProps) {
                   Pendaftaran DPT: bit.ly/47uIMTB
                 </a>
               </li>
+              <li className="flex items-start gap-2">
+                <WhatsAppIcon className="h-4 w-4 mt-0.5 text-gold-400 shrink-0" />
+                <a
+                  href={SUTAN.whatsapp}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-gold-300 transition-colors"
+                >
+                  WhatsApp
+                </a>
+              </li>
+              <li className="flex items-start gap-2">
+                <Instagram className="h-4 w-4 mt-0.5 text-gold-400 shrink-0" />
+                <a
+                  href={SUTAN.instagram}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-gold-300 transition-colors"
+                >
+                  Instagram
+                </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -76,9 +101,8 @@ export default function Footer({ onNavigate }: FooterProps) {
         <div className="mt-10 pt-6 border-t border-navy-800/60 flex flex-col sm:flex-row justify-between gap-3 text-xs text-navy-400">
           <span>
             © {new Date().getFullYear()} AKSARA — Calon Lurah Kelurahan LPDP UI.
-            Dibuat untuk tujuan demonstrasi.
           </span>
-          <span>Desain & pengembangan oleh tim AKSARA.</span>
+          <span>Kelurahan LPDP UI, rumah bersama, ruang berkarya.</span>
         </div>
       </div>
     </footer>

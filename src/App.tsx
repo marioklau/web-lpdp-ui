@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Home from '@/pages/Home';
+import Jejak from '@/pages/Jejak';
 import Peta from '@/pages/Peta';
 import Surat from '@/pages/Surat';
 import Admin from '@/pages/Admin';
 import { ContentProvider } from '@/lib/content';
+import { SitePulseProvider } from '@/lib/sitePulse';
 import type { Page } from '@/types';
 
 function App() {
@@ -32,16 +34,19 @@ function App() {
 
   return (
     <ContentProvider>
-      <div className="min-h-screen flex flex-col bg-white">
-        <Navbar page={page} onNavigate={navigate} />
-        <div className="flex-1">
-          {page === 'home' && <Home onNavigate={navigate} />}
-          {page === 'peta' && <Peta />}
-          {page === 'surat' && <Surat />}
-          {page === 'admin' && <Admin />}
+      <SitePulseProvider>
+        <div className="min-h-screen flex flex-col bg-white">
+          <Navbar page={page} onNavigate={navigate} />
+          <div className="flex-1">
+            {page === 'home' && <Home onNavigate={navigate} />}
+            {page === 'jejak' && <Jejak />}
+            {page === 'peta' && <Peta />}
+            {page === 'surat' && <Surat />}
+            {page === 'admin' && <Admin />}
+          </div>
+          <Footer onNavigate={navigate} />
         </div>
-        <Footer onNavigate={navigate} />
-      </div>
+      </SitePulseProvider>
     </ContentProvider>
   );
 }
