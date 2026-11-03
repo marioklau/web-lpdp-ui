@@ -5,6 +5,7 @@ import Home from '@/pages/Home';
 import Jejak from '@/pages/Jejak';
 import Peta from '@/pages/Peta';
 import Surat from '@/pages/Surat';
+import Pasar from '@/pages/Pasar';
 import Admin from '@/pages/Admin';
 import { ContentProvider } from '@/lib/content';
 import { SitePulseProvider } from '@/lib/sitePulse';
@@ -42,6 +43,7 @@ function App() {
             {page === 'jejak' && <Jejak />}
             {page === 'peta' && <Peta />}
             {page === 'surat' && <Surat />}
+            {page === 'pasar' && <Pasar />}
             {page === 'admin' && <Admin />}
           </div>
           <Footer onNavigate={navigate} />

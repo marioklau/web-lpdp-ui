@@ -6,16 +6,18 @@ import {
   SectionHeader,
   btnGhost,
 } from '@/components/admin/ui';
-import type { Aspiration, LetterSubmission } from '@/types';
+import type { Aspiration, LetterSubmission, MarketListing } from '@/types';
 
 export default function Dashboard({
   submissions,
   aspirations,
+  listings,
   inboxLoading,
   onRefreshInbox,
 }: {
   submissions: LetterSubmission[];
   aspirations: Aspiration[];
+  listings: MarketListing[];
   inboxLoading: boolean;
   onRefreshInbox: () => void;
 }) {
@@ -41,6 +43,7 @@ export default function Dashboard({
       value: aspirations.length,
       sub: 'dari pengunjung',
     },
+    { label: 'Iklan Pasar', value: listings.length, sub: 'barang bekas' },
     { label: 'Program', value: programs.length, sub: 'terdaftar' },
     { label: 'Provinsi', value: provinces.length, sub: 'terdata' },
     { label: 'Berita', value: news.length, sub: 'publikasi' },

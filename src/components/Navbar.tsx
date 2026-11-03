@@ -12,6 +12,7 @@ const links: { id: Page; label: string }[] = [
   { id: 'home', label: 'Beranda' },
   { id: 'jejak', label: 'Jejak Sutan' },
   { id: 'peta', label: 'Peta Awardee' },
+  { id: 'pasar', label: 'Pasar Awardee' },
   { id: 'admin', label: 'Admin' },
 ];
 
