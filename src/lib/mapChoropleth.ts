@@ -65,7 +65,7 @@ function apportion(total: number, weights: number[]): number[] {
   const sum = weights.reduce((totalWeight, weight) => totalWeight + weight, 0) || 1;
   const raw = weights.map((weight) => (total * weight) / sum);
   const base = raw.map((value) => Math.floor(value));
-  let remain = total - base.reduce((totalCount, count) => totalCount + count, 0);
+  const remain = total - base.reduce((totalCount, count) => totalCount + count, 0);
   const order = raw
     .map((value, index) => ({ index, fraction: value - Math.floor(value) }))
     .sort((a, b) => b.fraction - a.fraction || a.index - b.index);

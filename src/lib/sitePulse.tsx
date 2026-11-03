@@ -53,6 +53,7 @@ export function SitePulseProvider({ children }: { children: ReactNode }) {
     if (loveLock.current) return;
     loveLock.current = true;
     setLoved(true);
+    setMetrics((current) => ({ ...current, loves: current.loves + 1 }));
     void bumpSiteMetric('loves').then((ok) => {
       if (ok) {
         try {
