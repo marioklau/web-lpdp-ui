@@ -291,12 +291,7 @@ export async function bumpSiteMetric(field: 'views' | 'loves'): Promise<boolean>
     return true;
   } catch (error) {
     console.error('Gagal memperbarui metrik situs', error);
-    const current = readLocalMetrics();
-    writeLocalMetrics({
-      views: current.views + (field === 'views' ? 1 : 0),
-      loves: current.loves + (field === 'loves' ? 1 : 0),
-    });
-    return true;
+    return false;
   }
 }
 
