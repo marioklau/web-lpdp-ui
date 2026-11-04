@@ -183,6 +183,7 @@ export interface MarketListing {
   description: string;
   imageUrl: string;
   createdAt: string;
+  isSample?: boolean;
 }
 
 export interface SiteContent {

@@ -50,6 +50,7 @@ import {
   watchAdmin,
 } from '@/lib/firebase';
 import { useLocalStorage } from '@/lib/useLocalStorage';
+import { SAMPLE_MARKET_LISTINGS } from '@/lib/marketSamples';
 import type { Aspiration, LetterSubmission, MarketListing } from '@/types';
 
 type Tab =
@@ -181,8 +182,8 @@ export default function AdminPage() {
 
   const marketListings = useMemo(
     () =>
-      mergeById(localMarket, remoteMarket).sort((a, b) =>
-        b.createdAt.localeCompare(a.createdAt),
+      mergeById(mergeById(SAMPLE_MARKET_LISTINGS, localMarket), remoteMarket).sort(
+        (a, b) => b.createdAt.localeCompare(a.createdAt),
       ),
     [localMarket, remoteMarket],
   );

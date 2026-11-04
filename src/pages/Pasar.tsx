@@ -20,6 +20,7 @@ import {
   isFirebaseConfigured,
   submitMarketListing,
 } from '@/lib/firebase';
+import { SAMPLE_MARKET_LISTINGS } from '@/lib/marketSamples';
 import { useLocalStorage } from '@/lib/useLocalStorage';
 import type { MarketListing } from '@/types';
 
@@ -131,6 +132,7 @@ export default function PasarPage() {
 
   const listings = useMemo(() => {
     const map = new Map<string, MarketListing>();
+    for (const item of SAMPLE_MARKET_LISTINGS) map.set(item.id, item);
     for (const item of localListings) map.set(item.id, item);
     for (const item of remoteListings) map.set(item.id, item);
     return [...map.values()].sort((a, b) =>
@@ -697,6 +699,11 @@ export default function PasarPage() {
                         <span className="rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-navy-700 backdrop-blur-sm">
                           {listing.condition}
                         </span>
+                        {listing.isSample && (
+                          <span className="rounded-full bg-gold-400 px-2.5 py-1 text-[11px] font-semibold text-navy-900">
+                            Contoh
+                          </span>
+                        )}
                       </div>
                     </div>
 

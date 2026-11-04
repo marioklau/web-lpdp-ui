@@ -94,7 +94,8 @@ export default function MarketTab({
                           {listing.title}
                         </p>
                         <p className="text-xs text-navy-500">
-                          {listing.category} · {listing.condition} ·{' '}
+                          {listing.category} · {listing.condition}
+                          {listing.isSample ? ' · Contoh' : ''} ·{' '}
                           {formatDate(listing.createdAt)}
                         </p>
                       </div>
@@ -125,14 +126,20 @@ export default function MarketTab({
                     </div>
                   </div>
 
-                  <button
-                    onClick={() => onDelete(listing.id)}
-                    className="inline-flex shrink-0 items-center gap-1 self-start rounded-lg border border-red-200 px-2.5 py-1.5 text-xs font-semibold text-red-600 transition hover:bg-red-50"
-                    title="Hapus iklan"
-                    aria-label={`Hapus iklan ${listing.title}`}
-                  >
-                    <Trash2 className="h-3.5 w-3.5" /> Hapus
-                  </button>
+                  {listing.isSample ? (
+                    <span className="shrink-0 rounded-lg bg-gold-50 px-2.5 py-1.5 text-xs font-semibold text-gold-700">
+                      Data contoh
+                    </span>
+                  ) : (
+                    <button
+                      onClick={() => onDelete(listing.id)}
+                      className="inline-flex shrink-0 items-center gap-1 self-start rounded-lg border border-red-200 px-2.5 py-1.5 text-xs font-semibold text-red-600 transition hover:bg-red-50"
+                      title="Hapus iklan"
+                      aria-label={`Hapus iklan ${listing.title}`}
+                    >
+                      <Trash2 className="h-3.5 w-3.5" /> Hapus
+                    </button>
+                  )}
                 </div>
               </div>
             );
