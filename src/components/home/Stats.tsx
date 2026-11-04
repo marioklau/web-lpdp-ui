@@ -31,17 +31,17 @@ function StatCard({ stat }: { stat: StatItem }) {
 }
 
 export default function Stats() {
-  const { stats } = useContent();
+  const { stats, homepage } = useContent();
 
   return (
     <section className="bg-navy-50 py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-10">
           <span className="text-xs font-semibold uppercase tracking-wider text-gold-600">
-            Statistik
+            {homepage.statsEyebrow}
           </span>
           <h2 className="mt-3 font-serif text-3xl sm:text-4xl font-semibold text-navy-900">
-            Jejaring dalam Angka
+            {homepage.statsTitle}
           </h2>
         </div>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">

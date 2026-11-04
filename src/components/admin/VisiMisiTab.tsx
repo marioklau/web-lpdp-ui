@@ -7,17 +7,24 @@ import {
   SectionHeader,
   btnGhost,
   btnPrimary,
+  inputClass,
   textareaClass,
 } from '@/components/admin/ui';
 
 export default function VisiMisiTab() {
   const { visionMission, saveVisionMission } = useContent();
+  const [eyebrow, setEyebrow] = useState(visionMission.eyebrow ?? '');
+  const [title, setTitle] = useState(visionMission.title ?? '');
+  const [intro, setIntro] = useState(visionMission.intro ?? '');
   const [vision, setVision] = useState(visionMission.vision);
   const [missions, setMissions] = useState<string[]>(visionMission.missions);
   const [saving, setSaving] = useState(false);
   const [result, setResult] = useState<SaveResult | null>(null);
 
   useEffect(() => {
+    setEyebrow(visionMission.eyebrow ?? '');
+    setTitle(visionMission.title ?? '');
+    setIntro(visionMission.intro ?? '');
     setVision(visionMission.vision);
     setMissions(visionMission.missions);
   }, [visionMission]);
@@ -29,6 +36,9 @@ export default function VisiMisiTab() {
   const handleSave = async () => {
     setSaving(true);
     const res = await saveVisionMission({
+      eyebrow,
+      title,
+      intro,
       vision,
       missions: missions.map((item) => item.trim()).filter(Boolean),
     });
@@ -43,6 +53,34 @@ export default function VisiMisiTab() {
         desc="Arah perjuangan yang tampil di beranda."
       />
 
+      <Field label="Label kecil">
+        <input
+          className={inputClass}
+          value={eyebrow}
+          onChange={(event) => setEyebrow(event.target.value)}
+        />
+      </Field>
+      <div className="mt-4">
+        <Field label="Judul bagian">
+          <input
+            className={inputClass}
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
+          />
+        </Field>
+      </div>
+      <div className="mt-4">
+        <Field label="Pengantar">
+          <textarea
+            rows={3}
+            className={textareaClass}
+            value={intro}
+            onChange={(event) => setIntro(event.target.value)}
+          />
+        </Field>
+      </div>
+
+      <div className="mt-4">
       <Field label="Visi">
         <textarea
           rows={4}
@@ -51,6 +89,7 @@ export default function VisiMisiTab() {
           onChange={(event) => setVision(event.target.value)}
         />
       </Field>
+      </div>
 
       <div className="mt-5">
         <div className="mb-2 flex items-center justify-between">

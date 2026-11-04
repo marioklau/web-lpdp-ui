@@ -55,7 +55,7 @@ export default function Navbar({ page, onNavigate }: NavbarProps) {
                 LPDP UI
               </span>
               <span className="text-[10px] sm:text-xs text-gold-300 tracking-wider uppercase">
-                AKSARA · Calon Lurah 2026
+                AKSARA · Calon Lurah LPDP UI 14.0
               </span>
             </span>
           </button>

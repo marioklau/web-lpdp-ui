@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight } from 'lucide-react';
+import { useContent } from '@/lib/contentContext';
 import type { Page } from '@/types';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -41,6 +42,7 @@ const frames = [
 ];
 
 export default function JejakTeaser({ onNavigate }: JejakTeaserProps) {
+  const { homepage } = useContent();
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -76,22 +78,19 @@ export default function JejakTeaser({ onNavigate }: JejakTeaserProps) {
       <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
         <div>
           <span className="text-xs font-semibold uppercase tracking-wider text-gold-600">
-            Mengenal lebih dekat
+            {homepage.jejakEyebrow}
           </span>
           <h2 className="mt-3 font-serif text-3xl font-semibold text-navy-900 sm:text-5xl">
-            Jejak Sutan
+            {homepage.jejakTitle}
           </h2>
           <p className="mt-5 max-w-xl text-base leading-relaxed text-navy-700 sm:text-lg">
-            Di balik nama AKSARA ada Sutan Dami, putra Rote Ndao, lulusan
-            informatika, awardee LPDP, dan mahasiswa magister di UI. Garis
-            hidupnya berjalan dari pulau, ke ruang organisasi, lalu ke sistem
-            yang dipakai orang banyak.
+            {homepage.jejakBody}
           </p>
           <button
             onClick={() => onNavigate('jejak')}
             className="mt-8 inline-flex items-center gap-2 rounded-lg bg-navy-900 px-6 py-3 text-sm font-semibold text-gold-300 transition-colors hover:bg-navy-800"
           >
-            Susuri garis hidupnya
+            {homepage.jejakCta}
             <ArrowRight className="h-4 w-4" />
           </button>
         </div>

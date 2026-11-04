@@ -4,7 +4,7 @@ import { useContent } from '@/lib/contentContext';
 import type { NewsItem } from '@/types';
 
 export default function News() {
-  const { news } = useContent();
+  const { news, homepage } = useContent();
   const [selected, setSelected] = useState<NewsItem | null>(null);
 
   useEffect(() => {
@@ -27,10 +27,10 @@ export default function News() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
           <div>
             <span className="text-xs font-semibold uppercase tracking-wider text-gold-600">
-              Berita &amp; Kegiatan
+              {homepage.newsEyebrow}
             </span>
             <h2 className="mt-3 font-serif text-3xl sm:text-4xl font-semibold text-navy-900">
-              Kabar Terbaru
+              {homepage.newsTitle}
             </h2>
           </div>
         </div>

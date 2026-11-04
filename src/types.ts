@@ -9,8 +9,78 @@ export interface Candidate {
 }
 
 export interface VisionMission {
+  eyebrow: string;
+  title: string;
+  intro: string;
   vision: string;
   missions: string[];
+}
+
+export interface HomePillar {
+  id: string;
+  icon: string;
+  program: string;
+  title: string;
+  body: string;
+  points: string[];
+}
+
+export interface HomePageContent {
+  heroEyebrow: string;
+  heroCompanion: string;
+  heroPrimaryCta: string;
+  heroSecondaryCta: string;
+  heroSupport: string;
+  heroWatermark: string;
+  heroCaption: string;
+  heroMarquee: string[];
+  heroScrollHint: string;
+  programsEyebrow: string;
+  programsTitle: string;
+  programsIntro: string;
+  strategicEyebrow: string;
+  strategicTitle: string;
+  strategicLead: string;
+  strategicNote: string;
+  strategicCta: string;
+  strategicSecondaryCta: string;
+  pillars: HomePillar[];
+  jejakEyebrow: string;
+  jejakTitle: string;
+  jejakBody: string;
+  jejakCta: string;
+  mapEyebrow: string;
+  mapTitle: string;
+  mapBody: string;
+  mapPoints: string[];
+  mapCta: string;
+  mapCaption: string;
+  statsEyebrow: string;
+  statsTitle: string;
+  newsEyebrow: string;
+  newsTitle: string;
+  contactEyebrow: string;
+  contactTitle: string;
+  contactIntro: string;
+  contactChannelTitle: string;
+  contactChannelBody: string;
+  dptLabel: string;
+  dptUrl: string;
+  dptDisplay: string;
+  whatsappLabel: string;
+  phone: string;
+  whatsappUrl: string;
+  instagramLabel: string;
+  instagramHandle: string;
+  instagramUrl: string;
+  email: string;
+  linkedinUrl: string;
+  cvUrl: string;
+  address: string;
+  footerBlurb: string;
+  footerNote: string;
+  footerCopyright: string;
+  footerTagline: string;
 }
 
 export interface Program {
@@ -104,6 +174,7 @@ export interface Aspiration {
 export interface SiteContent {
   candidate: Candidate;
   visionMission: VisionMission;
+  homepage: HomePageContent;
   programs: Program[];
   stats: StatItem[];
   provinces: ProvinceData[];

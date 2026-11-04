@@ -2,6 +2,7 @@ import type {
   AwardeeProfile,
   Candidate,
   VisionMission,
+  HomePageContent,
   Program,
   StatItem,
   ProvinceData,
@@ -29,6 +30,10 @@ export const CANDIDATE: Candidate = {
 };
 
 export const VISION_MISSION: VisionMission = {
+  eyebrow: 'Visi & Misi',
+  title: 'Arah Perjuangan',
+  intro:
+    'AKSARA dipilih karena singkat, mudah diingat, dan merangkum kepemimpinan yang mendengar aspirasi, memperkuat kolaborasi, menghadirkan solusi, mampu beradaptasi, cepat merespons, dan membuat kelurahan terasa asyik.',
   vision:
     'Mewujudkan Kelurahan LPDP UI 14.0 sebagai rumah bersama yang ber-AKSARA (Aspiratif, Kolaboratif, Solutif, Adaptif, Responsif, Asyik).',
   missions: [
@@ -39,6 +44,123 @@ export const VISION_MISSION: VisionMission = {
     'Responsif — Mewujudkan kepengurusan yang komunikatif, mudah diakses, cepat tanggap, dan peduli terhadap kebutuhan maupun permasalahan awardee melalui mekanisme komunikasi serta tindak lanjut yang jelas.',
     'Asyik — Menghadirkan suasana kelurahan yang asyik, hangat, dan menyenangkan melalui kegiatan yang seru, santai namun bermakna, serta kepengurusan yang akrab dan terbuka, sehingga setiap awardee merasa nyaman, diterima, dan antusias terlibat dalam setiap program.',
   ],
+};
+
+export const HOME_PAGE: HomePageContent = {
+  heroEyebrow: 'Pemilu Lurah · Kelurahan LPDP UI 14.0',
+  heroCompanion: 'bersama Sutan Dami',
+  heroPrimaryCta: 'Kenali Sutan Dami',
+  heroSecondaryCta: 'Visi & Misi',
+  heroSupport: '1 love = 1 support for Sutan',
+  heroWatermark: 'AKSARA',
+  heroCaption: 'Sutan Dami',
+  heroMarquee: [
+    'Aspiratif',
+    'Kolaboratif',
+    'Solutif',
+    'Adaptif',
+    'Responsif',
+    'Asyik',
+    'Kelurahan LPDP UI 14.0',
+    'Rumah bersama',
+  ],
+  heroScrollHint: 'Gulir untuk melihat arah perjuangan',
+  programsEyebrow: 'Program Unggulan',
+  programsTitle: 'Agenda Nyata, Bukan Janji',
+  programsIntro:
+    'Delapan program unggulan AKSARA untuk menghadirkan solusi konkret, memperkuat kolaborasi lintas angkatan dan fakultas, serta mewujudkan dampak nyata bagi Kelurahan LPDP UI.',
+  strategicEyebrow: 'Program strategis',
+  strategicTitle: 'Tiga kerja yang akan dijalankan',
+  strategicLead:
+    'Kepemimpinan bukan hanya tentang siapa yang memimpin, melainkan tentang siapa yang dilibatkan, siapa yang didengarkan, dan seberapa besar manfaat yang dapat dihadirkan.',
+  strategicNote:
+    'Kelurahan LPDP UI 14.0 diarahkan sebagai rumah bersama yang ber-AKSARA: aspiratif, kolaboratif, solutif, adaptif, responsif, dan asyik. Rumah bersama, ruang berkarya.',
+  strategicCta: 'Coba layanan pengajuan dana',
+  strategicSecondaryCta: 'Lihat delapan program',
+  pillars: [
+    {
+      id: 'digital',
+      icon: 'Database',
+      program: 'AKSARA Digital',
+      title: 'Satu Data Kelurahan',
+      body: 'Pengajuan dana kedatangan, dana hidup bulanan, tunjangan buku, dana riset, dan reimburse SIMAK UI masih sering dimulai dari template Word yang diunduh lalu diedit manual. Cara itu rawan salah ketik dan dokumen wajib yang terlewat.',
+      points: [
+        'Awardee mengisi formulir terpandu, bukan menyunting berkas kosong.',
+        'Data pribadi dan data beasiswa terisi otomatis serta tervalidasi.',
+        'Setiap jenis dana punya daftar periksa dokumen wajib.',
+        'Berkas yang dihasilkan mengikuti template LPDP dan siap diunggah ke e-beasiswa.',
+      ],
+    },
+    {
+      id: 'connect',
+      icon: 'Users',
+      program: 'AKSARA Connect',
+      title: 'RT sebagai ujung tombak',
+      body: 'Beban divisi di kepengurusan kelurahan akan disesuaikan agar kerja proporsional. Setiap RT diperkuat supaya komunikasi, pendataan, dan kegiatan lintas angkatan serta fakultas tidak menggantung di segelintir orang.',
+      points: [
+        'Susunan minimal setiap RT: 1 Ketua, 1 Sekretaris, dan 3 Anggota.',
+        'RT menjadi kanal terdekat untuk aspirasi dan pelaksanaan program.',
+        'Jejaring lintas angkatan dan fakultas dijalankan dari bawah, bukan hanya dari pusat kelurahan.',
+      ],
+    },
+    {
+      id: 'sinergi',
+      icon: 'Network',
+      program: 'AKSARA Sinergi',
+      title: 'Sponsorship dan jejaring luar',
+      body: 'Program kelurahan perlu kaki yang lebih panjang dari iuran semata. Setiap kegiatan didorong memiliki sponsorship, dan kelurahan membuka kolaborasi dengan instansi serta kelurahan LPDP lain di Jabodetabek.',
+      points: [
+        'Sponsorship melekat pada kegiatan, supaya program lebih berkelanjutan.',
+        'Kolaborasi eksternal dengan instansi yang relevan bagi awardee.',
+        'Saling berbagi program dan jejaring antarkelurahan LPDP se-Jabodetabek.',
+      ],
+    },
+  ],
+  jejakEyebrow: 'Mengenal lebih dekat',
+  jejakTitle: 'Jejak Sutan',
+  jejakBody:
+    'Di balik nama AKSARA ada Sutan Dami, putra Rote Ndao, lulusan informatika, awardee LPDP, dan mahasiswa magister di UI. Garis hidupnya berjalan dari pulau, ke ruang organisasi, lalu ke sistem yang dipakai orang banyak.',
+  jejakCta: 'Susuri garis hidupnya',
+  mapEyebrow: 'Peta Awardee',
+  mapTitle: 'Distribusi Awardee di Seluruh Indonesia',
+  mapBody:
+    'Peta interaktif memvisualisasikan sebaran awardee LPDP UI. Warna berjalan dari abu-abu ke kuning: semakin kuning, semakin banyak. Klik provinsi untuk masuk ke kabupaten dan kota.',
+  mapPoints: [
+    'Gradasi abu-abu ke kuning sesuai jumlah awardee',
+    'Filter alumni & awardee aktif',
+    'Profil awardee: foto, nama, dan pekerjaan',
+  ],
+  mapCta: 'Buka Peta Lengkap',
+  mapCaption: 'Pratinjau peta — buka halaman peta untuk versi interaktif penuh',
+  statsEyebrow: 'Statistik',
+  statsTitle: 'Jejaring dalam Angka',
+  newsEyebrow: 'Berita & Kegiatan',
+  newsTitle: 'Kabar Terbaru',
+  contactEyebrow: 'Aspirasi & Kontak',
+  contactTitle: 'Sampaikan Aspirasi Anda',
+  contactIntro:
+    'Aspirasi Didengar. Sampaikan ide, kritik, atau harapan Anda untuk Kelurahan LPDP UI 2026.',
+  contactChannelTitle: 'Saluran Aspirasi Terbuka',
+  contactChannelBody: 'Form ini terkirim langsung ke tim AKSARA.',
+  dptLabel: 'Pendaftaran DPT',
+  dptUrl: 'https://bit.ly/47uIMTB',
+  dptDisplay: 'bit.ly/47uIMTB',
+  whatsappLabel: 'WhatsApp',
+  phone: '+62 812-3379-7977',
+  whatsappUrl: 'https://wa.me/6281233797977',
+  instagramLabel: 'Instagram',
+  instagramHandle: '@sutan_azarya.dami',
+  instagramUrl: 'https://instagram.com/sutan_azarya.dami',
+  email: 'sutandami@gmail.com',
+  linkedinUrl: 'https://www.linkedin.com/in/azarya-dami/',
+  cvUrl: '/dokumen/cv-sutan-dami.pdf',
+  address: 'Kampus UI, Depok, Jawa Barat',
+  footerBlurb:
+    'Landing page kampanye AKSARA, Calon Lurah Kelurahan LPDP UI 2026 bersama Sutan Dami. Kepemimpinan yang aspiratif, kolaboratif, solutif, adaptif, responsif, dan asyik.',
+  footerNote:
+    'Data statistik dan peta masih berupa contoh (placeholder) dan belum merupakan data resmi.',
+  footerCopyright: 'AKSARA — Calon Lurah Kelurahan LPDP UI.',
+  footerTagline: 'Kelurahan LPDP UI, rumah bersama, ruang berkarya.',
 };
 
 export const PROGRAMS: Program[] = [

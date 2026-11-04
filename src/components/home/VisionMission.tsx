@@ -9,17 +9,16 @@ export default function VisionMission() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto">
           <span className="text-xs font-semibold uppercase tracking-wider text-gold-600">
-            Visi &amp; Misi
+            {visionMission.eyebrow}
           </span>
           <h2 className="mt-3 font-serif text-3xl sm:text-4xl font-semibold text-navy-900">
-            Arah Perjuangan
+            {visionMission.title}
           </h2>
-          <p className="mt-4 text-sm leading-relaxed text-navy-600 sm:text-base">
-            AKSARA dipilih karena singkat, mudah diingat, dan merangkum
-            kepemimpinan yang mendengar aspirasi, memperkuat kolaborasi,
-            menghadirkan solusi, mampu beradaptasi, cepat merespons, dan
-            membuat kelurahan terasa asyik.
-          </p>
+          {visionMission.intro && (
+            <p className="mt-4 text-sm leading-relaxed text-navy-600 sm:text-base">
+              {visionMission.intro}
+            </p>
+          )}
           <div className="mt-6 h-1 w-16 mx-auto rounded-full bg-gold-400" />
         </div>
 

@@ -147,7 +147,74 @@ export default function PetaPage() {
 
   return (
     <main className="bg-navy-50">
-      <section className="relative z-0 h-[calc(100dvh-4rem)] min-h-[440px] sm:h-[calc(100dvh-5rem)]">
+      <section
+        id="sebaran"
+        className="mx-auto max-w-7xl scroll-mt-24 px-4 pb-2 pt-8 sm:px-6 sm:pt-10 lg:px-8"
+      >
+        <div className="max-w-2xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold-600">
+            Sebaran awardee
+          </p>
+          <div className="mt-2 flex flex-wrap items-end justify-between gap-3">
+            <h1 className="font-serif text-3xl font-semibold text-navy-900 sm:text-4xl">
+              {activeProvince ? activeProvince.name : 'Seluruh Indonesia'}
+            </h1>
+            {activeProvince && (
+              <button
+                onClick={backToIndonesia}
+                className="rounded-lg bg-gold-400 px-4 py-2 text-sm font-semibold text-navy-900 hover:bg-gold-300"
+              >
+                Kembali ke Indonesia
+              </button>
+            )}
+          </div>
+          <p className="mt-3 text-sm leading-relaxed text-navy-600 sm:text-base">
+            {drilled
+              ? 'Satu Data Kelurahan LPDP UI membawa peta ini lebih dekat: dari provinsi, turun ke kabupaten dan kota. Pilih satu wilayah untuk melihat siapa yang ada di sana.'
+              : 'Satu Data Kelurahan LPDP UI mengumpulkan rumah awardee dalam satu peta. Dari sini kelurahan melihat di mana jejaringnya hidup, lalu masuk lebih dalam sampai kabupaten dan kota.'}
+          </p>
+        </div>
+
+        {!dataLoaded && (
+          <div className="mt-6 flex items-start gap-3 rounded-xl border border-gold-200 bg-gold-50 px-5 py-4 text-sm text-gold-800">
+            <Info className="mt-0.5 h-5 w-5 shrink-0 text-gold-600" />
+            <p>
+              <strong>Status data: belum tersinkron, karena menggunakan Data Dummy sebagai testing Prototype.</strong> Angka provinsi masih
+              data contoh. Angka kabupaten dan kota adalah pecahan ilustrasi dari
+              total provinsi, bukan data resmi per wilayah.
+            </p>
+          </div>
+        )}
+
+        <div className="mt-6 grid gap-3 sm:grid-cols-3">
+          {[
+            { label: 'Total Awardee', value: totalAwardee, icon: Users },
+            { label: 'Awardee Aktif', value: totalActive, icon: BadgeCheck },
+            { label: 'Alumni', value: totalAlumni, icon: GraduationCap },
+          ].map((item) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={item.label}
+                className="flex items-center gap-3 rounded-2xl border border-navy-100 bg-white px-4 py-3 shadow-soft"
+              >
+                <span className="grid h-10 w-10 place-items-center rounded-xl bg-navy-900 text-gold-300">
+                  <Icon className="h-5 w-5" />
+                </span>
+                <div>
+                  <p className="font-serif text-2xl font-bold text-navy-900">
+                    {item.value.toLocaleString('id-ID')}
+                  </p>
+                  <p className="text-xs text-navy-500">{item.label}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="mx-auto mt-6 max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="relative z-0 h-[calc(100dvh-4rem)] min-h-[440px] overflow-hidden rounded-2xl border border-navy-100 shadow-soft sm:h-[calc(100dvh-5rem)]">
         <div className="absolute inset-0 z-0">
           <IndonesiaMap
             areas={areas}
@@ -210,74 +277,11 @@ export default function PetaPage() {
             </button>
           )}
         </div>
+        </div>
       </section>
 
-      <section
-        id="sebaran"
-        className="mx-auto max-w-7xl scroll-mt-24 px-4 py-10 sm:px-6 sm:py-14 lg:px-8"
-      >
-        <div className="max-w-2xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold-600">
-            Sebaran awardee
-          </p>
-          <div className="mt-2 flex flex-wrap items-end justify-between gap-3">
-            <h1 className="font-serif text-3xl font-semibold text-navy-900 sm:text-4xl">
-              {activeProvince ? activeProvince.name : 'Seluruh Indonesia'}
-            </h1>
-            {activeProvince && (
-              <button
-                onClick={backToIndonesia}
-                className="rounded-lg bg-gold-400 px-4 py-2 text-sm font-semibold text-navy-900 hover:bg-gold-300"
-              >
-                Kembali ke Indonesia
-              </button>
-            )}
-          </div>
-          <p className="mt-3 text-sm leading-relaxed text-navy-600 sm:text-base">
-            {drilled
-              ? 'Warna mengikuti pecahan ilustrasi dari total provinsi: abu-abu untuk yang lebih sedikit, kuning UI untuk yang lebih banyak. Arahkan kursor di peta atau pilih nama di daftar.'
-              : 'Setiap provinsi diwarnai dari abu-abu ke kuning UI sesuai jumlah awardee. Klik provinsi di peta atau di daftar untuk membuka kabupaten dan kota di dalamnya.'}
-          </p>
-        </div>
-
-        {!dataLoaded && (
-          <div className="mt-6 flex items-start gap-3 rounded-xl border border-gold-200 bg-gold-50 px-5 py-4 text-sm text-gold-800">
-            <Info className="mt-0.5 h-5 w-5 shrink-0 text-gold-600" />
-            <p>
-              <strong>Status data: belum tersinkron.</strong> Angka provinsi masih
-              data contoh. Angka kabupaten dan kota adalah pecahan ilustrasi dari
-              total provinsi, bukan data resmi per wilayah.
-            </p>
-          </div>
-        )}
-
-        <div className="mt-6 grid gap-3 sm:grid-cols-3">
-          {[
-            { label: 'Total Awardee', value: totalAwardee, icon: Users },
-            { label: 'Awardee Aktif', value: totalActive, icon: BadgeCheck },
-            { label: 'Alumni', value: totalAlumni, icon: GraduationCap },
-          ].map((item) => {
-            const Icon = item.icon;
-            return (
-              <div
-                key={item.label}
-                className="flex items-center gap-3 rounded-2xl border border-navy-100 bg-white px-4 py-3 shadow-soft"
-              >
-                <span className="grid h-10 w-10 place-items-center rounded-xl bg-navy-900 text-gold-300">
-                  <Icon className="h-5 w-5" />
-                </span>
-                <div>
-                  <p className="font-serif text-2xl font-bold text-navy-900">
-                    {item.value.toLocaleString('id-ID')}
-                  </p>
-                  <p className="text-xs text-navy-500">{item.label}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="mt-6 flex flex-wrap items-center gap-2">
+      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+        <div className="flex flex-wrap items-center gap-2">
           {filters.map((item) => {
             const Icon = item.icon;
             const active = filter === item.key;

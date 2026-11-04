@@ -8,7 +8,7 @@ import {
   Instagram,
 } from 'lucide-react';
 import { WhatsAppIcon } from '@/components/BrandIcons';
-import { SUTAN } from '@/lib/jejak';
+import { useContent } from '@/lib/contentContext';
 import { isFirebaseConfigured, submitAspiration } from '@/lib/firebase';
 import { useLocalStorage } from '@/lib/useLocalStorage';
 import type { Aspiration } from '@/types';
@@ -24,6 +24,7 @@ export default function AspirationContact() {
     'lpdp_aspirations',
     [],
   );
+  const { homepage } = useContent();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,14 +73,13 @@ export default function AspirationContact() {
         <div className="grid gap-10 lg:grid-cols-2 items-start">
           <div>
             <span className="text-xs font-semibold uppercase tracking-wider text-gold-600">
-              Aspirasi &amp; Kontak
+              {homepage.contactEyebrow}
             </span>
             <h2 className="mt-3 font-serif text-3xl sm:text-4xl font-semibold text-navy-900">
-              Sampaikan Aspirasi Anda
+              {homepage.contactTitle}
             </h2>
             <p className="mt-4 text-navy-600 leading-relaxed max-w-lg">
-              Aspirasi Didengar. Sampaikan ide, kritik, atau harapan Anda untuk
-              Kelurahan LPDP UI 2026.
+              {homepage.contactIntro}
             </p>
 
             <div className="mt-8 space-y-4">
@@ -89,10 +89,10 @@ export default function AspirationContact() {
                 </span>
                 <div>
                   <p className="text-sm font-semibold text-navy-900">
-                    Saluran Aspirasi Terbuka
+                    {homepage.contactChannelTitle}
                   </p>
                   <p className="text-sm text-navy-600">
-                    Form ini terkirim langsung ke tim AKSARA.
+                    {homepage.contactChannelBody}
                   </p>
                 </div>
               </div>
@@ -102,15 +102,15 @@ export default function AspirationContact() {
                 </span>
                 <div>
                   <p className="text-sm font-semibold text-navy-900">
-                    Pendaftaran DPT
+                    {homepage.dptLabel}
                   </p>
                   <a
-                    href="https://bit.ly/47uIMTB"
+                    href={homepage.dptUrl}
                     target="_blank"
                     rel="noreferrer"
                     className="break-all text-sm text-navy-600 hover:text-gold-600 transition-colors"
                   >
-                    bit.ly/47uIMTB
+                    {homepage.dptDisplay || homepage.dptUrl}
                   </a>
                 </div>
               </div>
@@ -119,14 +119,14 @@ export default function AspirationContact() {
                   <WhatsAppIcon className="h-5 w-5" />
                 </span>
                 <div>
-                  <p className="text-sm font-semibold text-navy-900">WhatsApp</p>
+                  <p className="text-sm font-semibold text-navy-900">{homepage.whatsappLabel}</p>
                   <a
-                    href={SUTAN.whatsapp}
+                    href={homepage.whatsappUrl}
                     target="_blank"
                     rel="noreferrer"
                     className="text-sm text-navy-600 hover:text-gold-600 transition-colors"
                   >
-                    {SUTAN.phone}
+                    {homepage.phone}
                   </a>
                 </div>
               </div>
@@ -135,14 +135,14 @@ export default function AspirationContact() {
                   <Instagram className="h-5 w-5" />
                 </span>
                 <div>
-                  <p className="text-sm font-semibold text-navy-900">Instagram</p>
+                  <p className="text-sm font-semibold text-navy-900">{homepage.instagramLabel}</p>
                   <a
-                    href={SUTAN.instagram}
+                    href={homepage.instagramUrl}
                     target="_blank"
                     rel="noreferrer"
                     className="text-sm text-navy-600 hover:text-gold-600 transition-colors"
                   >
-                    @sutan_azarya.dami
+                    {homepage.instagramHandle}
                   </a>
                 </div>
               </div>

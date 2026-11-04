@@ -4,7 +4,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowDown, ArrowRight, Heart, Instagram } from 'lucide-react';
 import { WhatsAppIcon } from '@/components/BrandIcons';
 import { useContent } from '@/lib/contentContext';
-import { SUTAN } from '@/lib/jejak';
 import { formatCount, useSitePulse } from '@/lib/sitePulse';
 import type { Page } from '@/types';
 
@@ -14,19 +13,8 @@ interface HeroProps {
   onNavigate: (page: Page, anchor?: string) => void;
 }
 
-const MARQUEE = [
-  'Aspiratif',
-  'Kolaboratif',
-  'Solutif',
-  'Adaptif',
-  'Responsif',
-  'Asyik',
-  'Kelurahan LPDP UI 14.0',
-  'Rumah bersama',
-];
-
 export default function Hero({ onNavigate }: HeroProps) {
-  const { candidate } = useContent();
+  const { candidate, homepage } = useContent();
   const { loves, loved, giveLove } = useSitePulse();
   const sectionRef = useRef<HTMLElement>(null);
   const beats = candidate.tagline
@@ -95,14 +83,14 @@ export default function Hero({ onNavigate }: HeroProps) {
         }}
       />
       <p className="hero-watermark pointer-events-none absolute -right-[6vw] bottom-10 z-0 hidden select-none font-serif text-[14rem] leading-none text-transparent hero-outline xl:block">
-        AKSARA
+        {homepage.heroWatermark}
       </p>
 
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="animate-fade-up">
             <span className="inline-flex items-center gap-2 rounded-full bg-gold-400/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-gold-300 ring-1 ring-gold-400/30">
-              Pemilu Lurah · Kelurahan LPDP UI 14.0
+              {homepage.heroEyebrow}
             </span>
             <h1 className="mt-6 font-serif text-6xl font-semibold leading-none text-white sm:text-7xl lg:text-8xl">
               {candidate.name}
@@ -110,12 +98,14 @@ export default function Hero({ onNavigate }: HeroProps) {
             <p className="mt-4 text-base font-medium text-gold-300 sm:text-lg">
               {candidate.position}
             </p>
-            <button
-              onClick={() => onNavigate('jejak')}
-              className="mt-3 text-left text-sm text-navy-200 underline decoration-gold-400/70 underline-offset-4 transition-colors hover:text-white"
-            >
-              bersama Sutan Dami
-            </button>
+            {homepage.heroCompanion && (
+              <button
+                onClick={() => onNavigate('jejak')}
+                className="mt-3 text-left text-sm text-navy-200 underline decoration-gold-400/70 underline-offset-4 transition-colors hover:text-white"
+              >
+                {homepage.heroCompanion}
+              </button>
+            )}
 
             <div className="mt-8 space-y-1">
               {(beats.length > 0 ? beats : [candidate.tagline]).map((beat, index) => (
@@ -142,14 +132,14 @@ export default function Hero({ onNavigate }: HeroProps) {
                 onClick={() => onNavigate('jejak')}
                 className="inline-flex items-center gap-2 rounded-lg bg-gold-400 px-6 py-3 text-sm font-semibold text-navy-900 shadow-soft transition-all hover:bg-gold-300"
               >
-                Kenali Sutan Dami
+                {homepage.heroPrimaryCta}
                 <ArrowRight className="h-4 w-4" />
               </button>
               <button
                 onClick={() => onNavigate('home', 'visi-misi')}
                 className="inline-flex items-center gap-2 rounded-lg border border-white/20 px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-white/10"
               >
-                Visi &amp; Misi
+                {homepage.heroSecondaryCta}
               </button>
               <button
                 type="button"
@@ -170,33 +160,31 @@ export default function Hero({ onNavigate }: HeroProps) {
               </button>
             </div>
 
-            <p className="mt-4 inline-flex items-center gap-2 rounded-full border border-gold-400/30 bg-gold-400/10 px-4 py-2 font-serif text-base text-white sm:text-lg">
-              <Heart className="h-4 w-4 fill-rose-400 text-rose-400" aria-hidden="true" />
-              <span>1 love</span>
-              <span className="text-gold-300">=</span>
-              <span>
-                1 support for <span className="text-gold-300">Sutan</span>
-              </span>
-            </p>
+            {homepage.heroSupport && (
+              <p className="mt-4 inline-flex items-center gap-2 rounded-full border border-gold-400/30 bg-gold-400/10 px-4 py-2 font-serif text-base text-white sm:text-lg">
+                <Heart className="h-4 w-4 fill-rose-400 text-rose-400" aria-hidden="true" />
+                <span>{homepage.heroSupport}</span>
+              </p>
+            )}
 
             <div className="mt-5 flex flex-wrap gap-4 text-sm text-navy-100">
               <a
-                href={SUTAN.whatsapp}
+                href={homepage.whatsappUrl}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 transition-colors hover:text-gold-300"
               >
                 <WhatsAppIcon className="h-4 w-4" />
-                WhatsApp
+                {homepage.whatsappLabel}
               </a>
               <a
-                href={SUTAN.instagram}
+                href={homepage.instagramUrl}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 transition-colors hover:text-gold-300"
               >
                 <Instagram className="h-4 w-4" />
-                Instagram
+                {homepage.instagramLabel}
               </a>
             </div>
           </div>
@@ -225,12 +213,14 @@ export default function Hero({ onNavigate }: HeroProps) {
                 <figure className="relative -rotate-2 transition-transform duration-500 hover:rotate-0 hover:scale-[1.03]">
                   <img
                     src={candidate.photoUrl || '/asset/sutan-pasfoto.jpg'}
-                    alt="Sutan Dami"
+                    alt={homepage.heroCaption || candidate.name}
                     className="h-60 w-full rounded-3xl border-2 border-gold-400/60 object-cover object-top shadow-card sm:h-72"
                   />
-                  <figcaption className="absolute bottom-3 left-3 rounded-full bg-navy-950/85 px-3 py-1 text-xs font-medium text-gold-300">
-                    Sutan Dami
-                  </figcaption>
+                  {homepage.heroCaption && (
+                    <figcaption className="absolute bottom-3 left-3 rounded-full bg-navy-950/85 px-3 py-1 text-xs font-medium text-gold-300">
+                      {homepage.heroCaption}
+                    </figcaption>
+                  )}
                 </figure>
               </div>
             </div>
@@ -242,13 +232,14 @@ export default function Hero({ onNavigate }: HeroProps) {
           className="mt-10 hidden items-center gap-2 self-start text-xs font-semibold uppercase tracking-[0.2em] text-navy-300 hover:text-gold-300 sm:inline-flex"
         >
           <ArrowDown className="h-4 w-4" />
-          Gulir untuk melihat arah perjuangan
+          {homepage.heroScrollHint}
         </button>
       </div>
 
+      {homepage.heroMarquee.length > 0 && (
       <div className="relative overflow-hidden border-t border-white/10 bg-navy-950/80">
         <div className="hero-marquee-track flex w-max gap-8 py-3">
-          {[...MARQUEE, ...MARQUEE].map((item, index) => (
+          {[...homepage.heroMarquee, ...homepage.heroMarquee].map((item, index) => (
             <span
               key={`${item}-${index}`}
               className="text-xs font-semibold uppercase tracking-[0.28em] text-gold-300/80"
@@ -259,6 +250,7 @@ export default function Hero({ onNavigate }: HeroProps) {
           ))}
         </div>
       </div>
+      )}
     </section>
   );
 }

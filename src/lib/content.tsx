@@ -7,13 +7,14 @@ import {
   type ContentSource,
   type SaveResult,
 } from '@/lib/contentContext';
-import type { LetterTemplate, SiteContent } from '@/types';
+import type { HomePageContent, LetterTemplate, SiteContent } from '@/types';
 import { LETTER_TEMPLATES } from '@/data';
 
 const CACHE_KEY = 'lpdp_site_content_v3';
 const CONTENT_KEYS: (keyof SiteContent)[] = [
   'candidate',
   'visionMission',
+  'homepage',
   'programs',
   'stats',
   'provinces',
@@ -70,6 +71,29 @@ function resolveLetterTemplates(
   });
 }
 
+function mergeHomepage(
+  base: HomePageContent,
+  patch?: Partial<HomePageContent>,
+): HomePageContent {
+  if (!patch) return base;
+  return {
+    ...base,
+    ...patch,
+    heroMarquee: Array.isArray(patch.heroMarquee) ? patch.heroMarquee : base.heroMarquee,
+    mapPoints: Array.isArray(patch.mapPoints) ? patch.mapPoints : base.mapPoints,
+    pillars:
+      Array.isArray(patch.pillars) && patch.pillars.length
+        ? patch.pillars.map((pillar, index) => ({
+            ...base.pillars[index],
+            ...pillar,
+            points: Array.isArray(pillar.points)
+              ? pillar.points
+              : base.pillars[index]?.points ?? [],
+          }))
+        : base.pillars,
+  };
+}
+
 function mergeContent(base: SiteContent, patch: Partial<SiteContent>): SiteContent {
   return {
     candidate: patch.candidate
@@ -78,6 +102,7 @@ function mergeContent(base: SiteContent, patch: Partial<SiteContent>): SiteConte
     visionMission: patch.visionMission
       ? { ...base.visionMission, ...patch.visionMission }
       : base.visionMission,
+    homepage: mergeHomepage(base.homepage, patch.homepage),
     programs: Array.isArray(patch.programs) ? patch.programs : base.programs,
     stats: Array.isArray(patch.stats) ? patch.stats : base.stats,
     provinces: Array.isArray(patch.provinces) ? patch.provinces : base.provinces,
@@ -126,6 +151,9 @@ function applyRemote(
   }
   if (!pending.has('visionMission') && remote.visionMission) {
     next.visionMission = { ...current.visionMission, ...remote.visionMission };
+  }
+  if (!pending.has('homepage') && remote.homepage) {
+    next.homepage = mergeHomepage(current.homepage, remote.homepage);
   }
   if (!pending.has('programs') && Array.isArray(remote.programs)) {
     next.programs = remote.programs;
@@ -264,6 +292,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
     lastSave,
     saveCandidate: (value) => persist('candidate', value),
     saveVisionMission: (value) => persist('visionMission', value),
+    saveHomepage: (value) => persist('homepage', value),
     savePrograms: (value) => persist('programs', value),
     saveStats: (value) => persist('stats', value),
     saveProvinces: (value) => persist('provinces', value),

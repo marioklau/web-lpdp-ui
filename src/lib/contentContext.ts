@@ -2,6 +2,7 @@ import { createContext, useContext } from 'react';
 import {
   AWARDEE_PROFILES,
   CANDIDATE,
+  HOME_PAGE,
   LETTER_TEMPLATES,
   NEWS,
   PROGRAMS,
@@ -12,6 +13,7 @@ import {
 import type {
   AwardeeProfile,
   Candidate,
+  HomePageContent,
   LetterTemplate,
   NewsItem,
   Program,
@@ -35,6 +37,7 @@ export interface ContentContextValue extends SiteContent {
   lastSave: SaveResult | null;
   saveCandidate: (value: Candidate) => Promise<SaveResult>;
   saveVisionMission: (value: VisionMission) => Promise<SaveResult>;
+  saveHomepage: (value: HomePageContent) => Promise<SaveResult>;
   savePrograms: (value: Program[]) => Promise<SaveResult>;
   saveStats: (value: StatItem[]) => Promise<SaveResult>;
   saveProvinces: (value: ProvinceData[]) => Promise<SaveResult>;
@@ -47,6 +50,7 @@ export interface ContentContextValue extends SiteContent {
 export const DEFAULT_CONTENT: SiteContent = {
   candidate: CANDIDATE,
   visionMission: VISION_MISSION,
+  homepage: HOME_PAGE,
   programs: PROGRAMS,
   stats: STATS,
   provinces: PROVINCE_DATA,

@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react';
+import { useContent } from '@/lib/contentContext';
 import type { Page } from '@/types';
 
 interface HomeMapPreviewProps {
@@ -6,41 +7,35 @@ interface HomeMapPreviewProps {
 }
 
 export default function HomeMapPreview({ onNavigate }: HomeMapPreviewProps) {
+  const { homepage } = useContent();
+
   return (
     <section className="bg-white py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-2 items-center">
           <div>
             <span className="text-xs font-semibold uppercase tracking-wider text-gold-600">
-              Peta Awardee
+              {homepage.mapEyebrow}
             </span>
             <h2 className="mt-3 font-serif text-3xl sm:text-4xl font-semibold text-navy-900">
-              Distribusi Awardee di Seluruh Indonesia
+              {homepage.mapTitle}
             </h2>
             <p className="mt-4 text-navy-600 leading-relaxed">
-              Peta interaktif memvisualisasikan sebaran awardee LPDP UI. Warna
-              berjalan dari abu-abu ke kuning: semakin kuning, semakin banyak.
-              Klik provinsi untuk masuk ke kabupaten dan kota.
+              {homepage.mapBody}
             </p>
             <ul className="mt-6 space-y-3 text-sm text-navy-700">
-              <li className="flex items-center gap-3">
-                <span className="h-2 w-2 rounded-full bg-gold-400" />
-                Gradasi abu-abu ke kuning sesuai jumlah awardee
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="h-2 w-2 rounded-full bg-gold-400" />
-                Filter alumni &amp; awardee aktif
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="h-2 w-2 rounded-full bg-gold-400" />
-                Profil awardee: foto, nama, dan pekerjaan
-              </li>
+              {homepage.mapPoints.map((point) => (
+                <li key={point} className="flex items-center gap-3">
+                  <span className="h-2 w-2 shrink-0 rounded-full bg-gold-400" />
+                  {point}
+                </li>
+              ))}
             </ul>
             <button
               onClick={() => onNavigate('peta')}
               className="mt-8 inline-flex items-center gap-2 rounded-lg bg-navy-900 px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-navy-800"
             >
-              Buka Peta Lengkap
+              {homepage.mapCta}
               <ArrowRight className="h-4 w-4" />
             </button>
           </div>
@@ -60,7 +55,7 @@ export default function HomeMapPreview({ onNavigate }: HomeMapPreviewProps) {
               </div>
             </div>
             <div className="p-4 text-center text-xs text-navy-500">
-              Pratinjau peta — buka halaman peta untuk versi interaktif penuh
+              {homepage.mapCaption}
             </div>
           </div>
         </div>

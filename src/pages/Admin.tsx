@@ -15,10 +15,12 @@ import {
   User,
   Users,
   Wifi,
+  Home,
 } from 'lucide-react';
 import type { User as FirebaseUser } from 'firebase/auth';
 import Dashboard from '@/components/admin/Dashboard';
 import ProfilTab from '@/components/admin/ProfilTab';
+import HomeTab from '@/components/admin/HomeTab';
 import VisiMisiTab from '@/components/admin/VisiMisiTab';
 import ProgramsTab from '@/components/admin/ProgramsTab';
 import StatsTab from '@/components/admin/StatsTab';
@@ -49,6 +51,7 @@ import type { Aspiration, LetterSubmission } from '@/types';
 type Tab =
   | 'dashboard'
   | 'profil'
+  | 'beranda'
   | 'visimisi'
   | 'program'
   | 'statistik'
@@ -62,6 +65,7 @@ type Tab =
 const tabs: { id: Tab; label: string; icon: typeof User }[] = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { id: 'profil', label: 'Profil', icon: User },
+  { id: 'beranda', label: 'Beranda', icon: Home },
   { id: 'visimisi', label: 'Visi & Misi', icon: Target },
   { id: 'program', label: 'Program', icon: Sparkles },
   { id: 'statistik', label: 'Statistik', icon: BarChart3 },
@@ -293,6 +297,7 @@ export default function AdminPage() {
               />
             )}
             {tab === 'profil' && <ProfilTab />}
+            {tab === 'beranda' && <HomeTab />}
             {tab === 'visimisi' && <VisiMisiTab />}
             {tab === 'program' && <ProgramsTab />}
             {tab === 'statistik' && <StatsTab />}

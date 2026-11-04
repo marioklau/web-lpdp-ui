@@ -1,9 +1,12 @@
 import { ArrowDown, Download, Instagram, Linkedin, Mail } from 'lucide-react';
 import { WhatsAppIcon } from '@/components/BrandIcons';
 import JourneyMap from '@/components/jejak/JourneyMap';
+import { useContent } from '@/lib/contentContext';
 import { JEJAK_HIGHLIGHTS, JEJAK_PHOTOS, SUTAN } from '@/lib/jejak';
 
 export default function Jejak() {
+  const { homepage } = useContent();
+
   return (
     <div className="bg-navy-950 text-white">
       <section className="relative overflow-hidden">
@@ -101,7 +104,7 @@ export default function Jejak() {
 
           <div className="mt-10 flex flex-wrap gap-3">
             <a
-              href={SUTAN.cvUrl}
+              href={homepage.cvUrl || SUTAN.cvUrl}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-lg bg-gold-400 px-6 py-3 text-sm font-semibold text-navy-900 transition-colors hover:bg-gold-300"
@@ -110,7 +113,7 @@ export default function Jejak() {
               Buka CV lengkap
             </a>
             <a
-              href={SUTAN.linkedin}
+              href={homepage.linkedinUrl || SUTAN.linkedin}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-lg border border-white/15 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"
@@ -119,7 +122,7 @@ export default function Jejak() {
               LinkedIn
             </a>
             <a
-              href={SUTAN.whatsapp}
+              href={homepage.whatsappUrl}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-lg border border-white/15 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"
@@ -128,7 +131,7 @@ export default function Jejak() {
               WhatsApp
             </a>
             <a
-              href={SUTAN.instagram}
+              href={homepage.instagramUrl}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-lg border border-white/15 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"
@@ -139,18 +142,18 @@ export default function Jejak() {
           </div>
 
           <div className="mt-8 flex flex-col gap-3 text-sm text-navy-300 sm:flex-row sm:flex-wrap sm:gap-6">
-            <a href={`mailto:${SUTAN.email}`} className="inline-flex items-center gap-2 hover:text-gold-300">
+            <a href={`mailto:${homepage.email}`} className="inline-flex items-center gap-2 hover:text-gold-300">
               <Mail className="h-4 w-4 text-gold-400" />
-              {SUTAN.email}
+              {homepage.email}
             </a>
             <a
-              href={SUTAN.whatsapp}
+              href={homepage.whatsappUrl}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 hover:text-gold-300"
             >
               <WhatsAppIcon className="h-4 w-4 text-gold-400" />
-              {SUTAN.phone}
+              {homepage.phone}
             </a>
           </div>
         </div>

@@ -102,7 +102,7 @@ export default function ProfilTab() {
     <div>
       <SectionHeader
         title="Profil Kandidat"
-        desc="Data ini tampil di bagian hero halaman beranda."
+        desc="Nama ini menjadi judul besar di awal beranda. Posisi, tagline, bio, dan foto juga tampil di hero."
       />
 
       <div className="flex flex-col gap-6 lg:flex-row">
@@ -153,7 +153,7 @@ export default function ProfilTab() {
         </div>
 
         <div className="grid flex-1 gap-4 sm:grid-cols-2">
-          <Field label="Nama">
+          <Field label="Nama di awal beranda" hint="Judul besar di hero, misalnya AKSARA.">
             <input
               className={inputClass}
               value={form.name}

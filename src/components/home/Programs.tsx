@@ -37,22 +37,20 @@ const iconMap: Record<string, LucideIcon> = {
 };
 
 export default function Programs() {
-  const { programs } = useContent();
+  const { programs, homepage } = useContent();
 
   return (
     <section id="program" className="bg-white py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto">
           <span className="text-xs font-semibold uppercase tracking-wider text-gold-600">
-            Program Unggulan
+            {homepage.programsEyebrow}
           </span>
           <h2 className="mt-3 font-serif text-3xl sm:text-4xl font-semibold text-navy-900">
-            Agenda Nyata, Bukan Janji
+            {homepage.programsTitle}
           </h2>
           <p className="mt-4 text-navy-600">
-            Delapan program unggulan AKSARA untuk menghadirkan solusi konkret,
-            memperkuat kolaborasi lintas angkatan dan fakultas, serta
-            mewujudkan dampak nyata bagi Kelurahan LPDP UI.
+            {homepage.programsIntro}
           </p>
         </div>
 
