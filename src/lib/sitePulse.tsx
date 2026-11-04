@@ -13,7 +13,7 @@ import {
 } from '@/lib/firebase';
 
 const VIEW_KEY = 'aksara_view_session';
-const LOVE_KEY = 'aksara_love';
+const LOVE_KEY = 'aksara_love_v2';
 
 interface SitePulseValue extends SiteMetrics {
   loved: boolean;
@@ -53,6 +53,7 @@ export function SitePulseProvider({ children }: { children: ReactNode }) {
     if (loveLock.current) return;
     loveLock.current = true;
     setLoved(true);
+    setMetrics((current) => ({ ...current, loves: current.loves + 1 }));
     void bumpSiteMetric('loves').then((ok) => {
       if (ok) {
         try {
@@ -64,6 +65,10 @@ export function SitePulseProvider({ children }: { children: ReactNode }) {
       }
       loveLock.current = false;
       setLoved(false);
+      setMetrics((current) => ({
+        ...current,
+        loves: Math.max(0, current.loves - 1),
+      }));
     });
   };
 

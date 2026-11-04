@@ -1,4 +1,4 @@
-export type Page = 'home' | 'jejak' | 'peta' | 'surat' | 'admin';
+export type Page = 'home' | 'jejak' | 'peta' | 'surat' | 'pasar' | 'admin';
 
 export interface Candidate {
   name: string;
@@ -168,6 +168,20 @@ export interface Aspiration {
   name: string;
   email: string;
   message: string;
+  createdAt: string;
+}
+
+export interface MarketListing {
+  id: string;
+  sellerName: string;
+  contact: string;
+  city: string;
+  title: string;
+  category: string;
+  condition: string;
+  price: number;
+  description: string;
+  imageUrl: string;
   createdAt: string;
 }
 

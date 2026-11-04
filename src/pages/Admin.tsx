@@ -11,6 +11,7 @@ import {
   Newspaper,
   Shield,
   Sparkles,
+  Store,
   Target,
   User,
   Users,
@@ -28,6 +29,7 @@ import ProvincesTab from '@/components/admin/ProvincesTab';
 import AwardeesTab from '@/components/admin/AwardeesTab';
 import NewsTab from '@/components/admin/NewsTab';
 import TemplatesTab from '@/components/admin/TemplatesTab';
+import MarketTab from '@/components/admin/MarketTab';
 import { AspirationsTab, SubmissionsTab } from '@/components/admin/InboxTabs';
 import {
   Field,
@@ -38,15 +40,17 @@ import {
 import { useContent } from '@/lib/contentContext';
 import {
   deleteLetterSubmission,
+  deleteMarketListing,
   fetchAspirations,
   fetchLetterSubmissions,
+  fetchMarketListings,
   isFirebaseConfigured,
   signInAdmin,
   signOutAdmin,
   watchAdmin,
 } from '@/lib/firebase';
 import { useLocalStorage } from '@/lib/useLocalStorage';
-import type { Aspiration, LetterSubmission } from '@/types';
+import type { Aspiration, LetterSubmission, MarketListing } from '@/types';
 
 type Tab =
   | 'dashboard'
@@ -60,7 +64,8 @@ type Tab =
   | 'berita'
   | 'template'
   | 'pengajuan'
-  | 'aspirasi';
+  | 'aspirasi'
+  | 'pasar';
 
 const tabs: { id: Tab; label: string; icon: typeof User }[] = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -75,6 +80,7 @@ const tabs: { id: Tab; label: string; icon: typeof User }[] = [
   { id: 'template', label: 'Template Surat', icon: FileText },
   { id: 'pengajuan', label: 'Pengajuan Dana', icon: Inbox },
   { id: 'aspirasi', label: 'Aspirasi', icon: MessageSquareText },
+  { id: 'pasar', label: 'Pasar Awardee', icon: Store },
 ];
 
 function mergeById<T extends { id: string }>(local: T[], remote: T[]): T[] {
@@ -97,10 +103,15 @@ export default function AdminPage() {
     'lpdp_aspirations',
     [],
   );
+  const [localMarket, setLocalMarket] = useLocalStorage<MarketListing[]>(
+    'lpdp_market_listings',
+    [],
+  );
   const [remoteSubmissions, setRemoteSubmissions] = useState<
     LetterSubmission[]
   >([]);
   const [remoteAspirations, setRemoteAspirations] = useState<Aspiration[]>([]);
+  const [remoteMarket, setRemoteMarket] = useState<MarketListing[]>([]);
   const [inboxLoading, setInboxLoading] = useState(false);
   const [inboxError, setInboxError] = useState('');
   const [inboxNote, setInboxNote] = useState('');
@@ -117,23 +128,25 @@ export default function AdminPage() {
     if (!isFirebaseConfigured) {
       setRemoteSubmissions([]);
       setRemoteAspirations([]);
+      setRemoteMarket([]);
       setInboxError('');
       return;
     }
     setInboxLoading(true);
     setInboxError('');
-    const [submissions, aspirations] = await Promise.all([
+    const [submissions, aspirations, market] = await Promise.all([
       fetchLetterSubmissions(),
       fetchAspirations(),
+      fetchMarketListings(),
     ]);
-    if (submissions === null || aspirations === null) {
+    if (submissions === null || aspirations === null || market === null) {
       setInboxError(
-        'Gagal memuat pengajuan/aspirasi dari Firebase. Pastikan Anda login dan aturan Firestore sudah diterapkan.',
+        'Sebagian data gagal dimuat dari Firebase. Pastikan Anda login dan aturan Firestore sudah diterapkan.',
       );
-    } else {
-      setRemoteSubmissions(submissions);
-      setRemoteAspirations(aspirations);
     }
+    if (submissions) setRemoteSubmissions(submissions);
+    if (aspirations) setRemoteAspirations(aspirations);
+    if (market) setRemoteMarket(market);
     setInboxLoading(false);
   }, []);
 
@@ -146,6 +159,7 @@ export default function AdminPage() {
     if (!user) {
       setRemoteSubmissions([]);
       setRemoteAspirations([]);
+      setRemoteMarket([]);
     }
   }, [user]);
 
@@ -163,6 +177,14 @@ export default function AdminPage() {
         b.createdAt.localeCompare(a.createdAt),
       ),
     [localAspirations, remoteAspirations],
+  );
+
+  const marketListings = useMemo(
+    () =>
+      mergeById(localMarket, remoteMarket).sort((a, b) =>
+        b.createdAt.localeCompare(a.createdAt),
+      ),
+    [localMarket, remoteMarket],
   );
 
   const deleteSubmission = async (id: string) => {
@@ -192,6 +214,35 @@ export default function AdminPage() {
       isFirebaseConfigured
         ? 'Pengajuan dana berhasil dihapus dari Firebase.'
         : 'Pengajuan dana dihapus dari browser ini.',
+    );
+  };
+
+  const deleteListing = async (id: string) => {
+    const listing = marketListings.find((item) => item.id === id);
+    const title = listing?.title ?? 'iklan ini';
+    if (
+      !window.confirm(`Hapus "${title}"? Tindakan ini tidak dapat dibatalkan.`)
+    ) {
+      return;
+    }
+
+    const isRemote = remoteMarket.some((item) => item.id === id);
+    if (isFirebaseConfigured && isRemote) {
+      const deleted = await deleteMarketListing(id);
+      if (!deleted) {
+        setInboxNote(
+          'Gagal menghapus iklan dari Firebase. Periksa login dan aturan Firestore.',
+        );
+        return;
+      }
+    }
+
+    setLocalMarket((prev) => prev.filter((item) => item.id !== id));
+    setRemoteMarket((prev) => prev.filter((item) => item.id !== id));
+    setInboxNote(
+      isRemote
+        ? 'Iklan pasar berhasil dihapus dari Firebase.'
+        : 'Iklan pasar dihapus dari browser ini.',
     );
   };
 
@@ -292,6 +343,7 @@ export default function AdminPage() {
               <Dashboard
                 submissions={submissions}
                 aspirations={aspirations}
+                listings={marketListings}
                 inboxLoading={inboxLoading}
                 onRefreshInbox={loadInbox}
               />
@@ -321,6 +373,15 @@ export default function AdminPage() {
                 loading={inboxLoading}
                 error={inboxError}
                 onRefresh={loadInbox}
+              />
+            )}
+            {tab === 'pasar' && (
+              <MarketTab
+                listings={marketListings}
+                loading={inboxLoading}
+                error={inboxError}
+                onRefresh={loadInbox}
+                onDelete={deleteListing}
               />
             )}
           </section>

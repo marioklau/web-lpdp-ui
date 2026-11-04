@@ -23,6 +23,7 @@ import {
 import type {
   Aspiration,
   LetterSubmission,
+  MarketListing,
   SiteContent,
 } from '@/types';
 
@@ -50,6 +51,7 @@ export const auth = app ? getAuth(app) : null;
 
 const SUBMISSIONS_COLLECTION = 'letterSubmissions';
 const ASPIRATIONS_COLLECTION = 'aspirations';
+const MARKET_COLLECTION = 'marketListings';
 
 // ---------------------------------------------------------------------------
 // Konten situs
@@ -312,5 +314,68 @@ export async function fetchAspirations(): Promise<Aspiration[] | null> {
   } catch (error) {
     console.error('Gagal membaca aspirasi', error);
     return null;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Pasar awardee
+// ---------------------------------------------------------------------------
+
+function toMarketListing(id: string, data: Record<string, unknown>): MarketListing {
+  return {
+    id,
+    sellerName: String(data.sellerName ?? ''),
+    contact: String(data.contact ?? ''),
+    city: String(data.city ?? ''),
+    title: String(data.title ?? ''),
+    category: String(data.category ?? ''),
+    condition: String(data.condition ?? ''),
+    price: Math.max(0, Math.floor(Number(data.price ?? 0))),
+    description: String(data.description ?? ''),
+    imageUrl: String(data.imageUrl ?? ''),
+    createdAt: String(data.createdAt ?? ''),
+  };
+}
+
+export async function submitMarketListing(
+  data: Omit<MarketListing, 'id' | 'createdAt'>,
+): Promise<MarketListing | null> {
+  if (!db) return null;
+  const createdAt = new Date().toISOString();
+  try {
+    const ref = await addDoc(collection(db, MARKET_COLLECTION), {
+      ...data,
+      createdAt,
+    });
+    return { id: ref.id, ...data, createdAt };
+  } catch (error) {
+    console.error('Gagal menyimpan iklan pasar', error);
+    return null;
+  }
+}
+
+export async function fetchMarketListings(): Promise<MarketListing[] | null> {
+  if (!db) return [];
+  try {
+    const snap = await getDocs(
+      query(collection(db, MARKET_COLLECTION), orderBy('createdAt', 'desc')),
+    );
+    return snap.docs.map((item) =>
+      toMarketListing(item.id, item.data() as Record<string, unknown>),
+    );
+  } catch (error) {
+    console.error('Gagal membaca iklan pasar', error);
+    return null;
+  }
+}
+
+export async function deleteMarketListing(id: string): Promise<boolean> {
+  if (!db) return false;
+  try {
+    await deleteDoc(doc(db, MARKET_COLLECTION, id));
+    return true;
+  } catch (error) {
+    console.error('Gagal menghapus iklan pasar', error);
+    return false;
   }
 }

@@ -85,5 +85,53 @@ service cloud.firestore {
         && request.resource.data.createdAt.size() <= 40;
       allow read, delete: if isAdmin();
     }
+
+    // Pasar awardee: iklan dapat dibaca publik dan dibuat pengunjung.
+    // Moderasi (ubah/hapus) hanya untuk admin. Transaksi di luar platform.
+    match /marketListings/{listingId} {
+      function validListing(data) {
+        return data.keys().hasOnly([
+            'sellerName',
+            'contact',
+            'city',
+            'title',
+            'category',
+            'condition',
+            'price',
+            'description',
+            'imageUrl',
+            'createdAt'
+          ])
+          && data.sellerName is string
+          && data.sellerName.size() > 0
+          && data.sellerName.size() <= 120
+          && data.contact is string
+          && data.contact.size() > 0
+          && data.contact.size() <= 80
+          && data.city is string
+          && data.city.size() <= 120
+          && data.title is string
+          && data.title.size() > 0
+          && data.title.size() <= 160
+          && data.category is string
+          && data.category.size() <= 60
+          && data.condition is string
+          && data.condition.size() <= 60
+          && data.price is int
+          && data.price >= 0
+          && data.price <= 1000000000000
+          && data.description is string
+          && data.description.size() > 0
+          && data.description.size() <= 2000
+          && data.imageUrl is string
+          && data.imageUrl.size() <= 200000
+          && data.createdAt is string
+          && data.createdAt.size() <= 40;
+      }
+
+      allow read: if true;
+      allow create: if validListing(request.resource.data);
+      allow update, delete: if isAdmin();
+    }
   }
 }
