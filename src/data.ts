@@ -7,6 +7,7 @@ import type {
   StatItem,
   ProvinceData,
   NewsItem,
+  HighlightNews,
   LetterDocument,
   LetterFormField,
   LetterTemplate,
@@ -405,6 +406,56 @@ export const STATS: StatItem[] = [
     isPlaceholder: true,
   },
   { id: 's4', label: 'Pembaruan Data', value: '20 Okt 2026', isPlaceholder: true },
+];
+
+export const HIGHLIGHT_NEWS: HighlightNews[] = [
+  {
+    id: 'volunteer-sampan-2026',
+    tone: 'call',
+    category: 'Pengabdian',
+    title: 'Open Volunteer Pengabdian Masyarakat LPDP UI 13.0',
+    summary:
+      'Ini kegiatan terakhir Pengabdian Masyarakat LPDP UI 13.0. Divisi pengabdian masyarakat membuka kesempatan bagi awardee yang ingin terjun langsung ke masyarakat. Kegiatan kali ini adalah Monitoring SAMPAN MANDIRI dan Cek Kesehatan Gratis.',
+    facts: [
+      { label: 'Hari', value: 'Sabtu, 14 November 2026' },
+      { label: 'Waktu', value: '08.00–13.00 WIB' },
+      { label: 'Tempat', value: 'Puri Jatijajar' },
+      { label: 'Batas isi data', value: 'Kamis, 12 November 2026, pukul 16.00 WIB' },
+    ],
+    links: [
+      {
+        label: 'Isi data volunteer',
+        href: 'https://bit.ly/VolunteerMonitoring_cekkesehatan',
+      },
+    ],
+    contacts: [
+      { label: 'Hida', href: 'https://wa.me/6282257615340' },
+    ],
+    note: 'Sponsored by PK-273 · Divisi Pengabdian Masyarakat LPDP UI 13.0, Kabinet Utama',
+  },
+  {
+    id: 'duka-bietris-2026',
+    tone: 'memorial',
+    category: 'Turut berdukacita',
+    title: 'LPDP UI Peduli: Turut Berdukacita',
+    summary:
+      'Keluarga besar awardee LPDP UI mengucapkan turut berdukacita atas berpulangnya Ns. Bietris Warisyu, awardee LPDP Doktoral Ilmu Keperawatan FIK UI. Semoga segala amal ibadah dan kebaikan almarhumah mendapat tempat terbaik di sisi Tuhan Yang Maha Esa, dan keluarga serta orang terkasih diberi kekuatan, penghiburan, dan ketabahan.',
+    facts: [
+      { label: 'Rekening', value: 'Bank BRI 067201000226560' },
+      { label: 'Atas nama', value: 'Ikatan Penerima Beasiswa LPDP' },
+      { label: 'Periode donasi', value: '6–10 November 2026' },
+    ],
+    links: [
+      {
+        label: 'Konfirmasi donasi',
+        href: 'https://forms.gle/RPXGQoDray2ytSoU6',
+      },
+    ],
+    contacts: [
+      { label: 'Mutiara', href: 'https://wa.me/6289616983423' },
+    ],
+    note: 'Kelurahan LPDP UI 13.0',
+  },
 ];
 
 export const NEWS: NewsItem[] = [

@@ -131,6 +131,28 @@ export interface NewsItem {
   imageUrl: string;
 }
 
+export interface HighlightFact {
+  label: string;
+  value: string;
+}
+
+export interface HighlightLink {
+  label: string;
+  href: string;
+}
+
+export interface HighlightNews {
+  id: string;
+  tone: 'call' | 'memorial';
+  category: string;
+  title: string;
+  summary: string;
+  facts: HighlightFact[];
+  links: HighlightLink[];
+  contacts: HighlightLink[];
+  note?: string;
+}
+
 export interface LetterDocument {
   key: string;
   label: string;

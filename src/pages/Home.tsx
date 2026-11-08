@@ -6,6 +6,7 @@ import Strategic from '@/components/home/Strategic';
 import JejakTeaser from '@/components/home/JejakTeaser';
 import Stats from '@/components/home/Stats';
 import HomeMapPreview from '@/components/home/HomeMapPreview';
+import Announcements from '@/components/home/Announcements';
 import News from '@/components/home/News';
 import type { Page } from '@/types';
 
@@ -32,6 +33,7 @@ export default function Home({ onNavigate }: HomeProps) {
       <JejakTeaser onNavigate={onNavigate} />
       <Stats />
       <HomeMapPreview onNavigate={onNavigate} />
+      <Announcements />
       <News />
     </main>
   );
