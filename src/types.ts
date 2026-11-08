@@ -1,4 +1,11 @@
-export type Page = 'home' | 'jejak' | 'peta' | 'surat' | 'pasar' | 'admin';
+export type Page =
+  | 'home'
+  | 'jejak'
+  | 'peta'
+  | 'surat'
+  | 'pasar'
+  | 'kos'
+  | 'admin';
 
 export interface Candidate {
   name: string;
@@ -182,6 +189,29 @@ export interface MarketListing {
   price: number;
   description: string;
   imageUrl: string;
+  createdAt: string;
+  isSample?: boolean;
+}
+
+export type KosCampus = 'depok' | 'salemba';
+
+export type KosGender = 'putra' | 'putri' | 'campur';
+
+export interface KosListing {
+  id: string;
+  name: string;
+  campus: KosCampus;
+  gender: KosGender;
+  address: string;
+  price: number;
+  facilities: string[];
+  contact: string;
+  imageUrl: string;
+  lat: number;
+  lng: number;
+  notes: string;
+  ratingSum: number;
+  ratingCount: number;
   createdAt: string;
   isSample?: boolean;
 }

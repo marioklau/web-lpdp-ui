@@ -22,6 +22,7 @@ import {
 } from 'firebase/firestore';
 import type {
   Aspiration,
+  KosListing,
   LetterSubmission,
   MarketListing,
   SiteContent,
@@ -52,6 +53,7 @@ export const auth = app ? getAuth(app) : null;
 const SUBMISSIONS_COLLECTION = 'letterSubmissions';
 const ASPIRATIONS_COLLECTION = 'aspirations';
 const MARKET_COLLECTION = 'marketListings';
+const KOS_COLLECTION = 'kosListings';
 
 // ---------------------------------------------------------------------------
 // Konten situs
@@ -377,5 +379,109 @@ export async function deleteMarketListing(id: string): Promise<boolean> {
   } catch (error) {
     console.error('Gagal menghapus iklan pasar', error);
     return false;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Katalog kos
+// ---------------------------------------------------------------------------
+
+function toKosListing(id: string, data: Record<string, unknown>): KosListing {
+  const facilities = Array.isArray(data.facilities)
+    ? data.facilities.map((item) => String(item)).filter(Boolean)
+    : [];
+
+  return {
+    id,
+    name: String(data.name ?? ''),
+    campus: data.campus === 'salemba' ? 'salemba' : 'depok',
+    gender:
+      data.gender === 'putri' || data.gender === 'campur'
+        ? data.gender
+        : 'putra',
+    address: String(data.address ?? ''),
+    price: Math.max(0, Math.floor(Number(data.price ?? 0))),
+    facilities,
+    contact: String(data.contact ?? ''),
+    imageUrl: String(data.imageUrl ?? ''),
+    lat: Number(data.lat ?? 0),
+    lng: Number(data.lng ?? 0),
+    notes: String(data.notes ?? ''),
+    ratingSum: Math.max(0, Math.floor(Number(data.ratingSum ?? 0))),
+    ratingCount: Math.max(0, Math.floor(Number(data.ratingCount ?? 0))),
+    createdAt: String(data.createdAt ?? ''),
+  };
+}
+
+export async function fetchKosListings(): Promise<KosListing[] | null> {
+  if (!db) return [];
+  try {
+    const snap = await getDocs(
+      query(collection(db, KOS_COLLECTION), orderBy('createdAt', 'desc')),
+    );
+    return snap.docs.map((item) =>
+      toKosListing(item.id, item.data() as Record<string, unknown>),
+    );
+  } catch (error) {
+    console.error('Gagal membaca katalog kos', error);
+    return null;
+  }
+}
+
+export async function saveKosListing(
+  id: string | null,
+  data: Omit<KosListing, 'id' | 'isSample'>,
+): Promise<KosListing | null> {
+  if (!db) return null;
+  try {
+    if (id) {
+      await setDoc(doc(db, KOS_COLLECTION, id), data);
+      return { id, ...data };
+    }
+    const ref = await addDoc(collection(db, KOS_COLLECTION), data);
+    return { id: ref.id, ...data };
+  } catch (error) {
+    console.error('Gagal menyimpan katalog kos', error);
+    return null;
+  }
+}
+
+export async function deleteKosListing(id: string): Promise<boolean> {
+  if (!db) return false;
+  try {
+    await deleteDoc(doc(db, KOS_COLLECTION, id));
+    return true;
+  } catch (error) {
+    console.error('Gagal menghapus katalog kos', error);
+    return false;
+  }
+}
+
+export async function rateKosListing(
+  id: string,
+  rating: number,
+): Promise<{ ratingSum: number; ratingCount: number } | null> {
+  if (!db) return null;
+  const value = Math.max(1, Math.min(5, Math.round(rating)));
+  const ref = doc(db, KOS_COLLECTION, id);
+
+  try {
+    let next = { ratingSum: 0, ratingCount: 0 };
+    await runTransaction(db, async (transaction) => {
+      const snap = await transaction.get(ref);
+      if (!snap.exists()) throw new Error('Kos tidak ditemukan.');
+      const data = snap.data();
+      const ratingSum = Math.max(0, Math.floor(Number(data.ratingSum ?? 0)));
+      const ratingCount = Math.max(0, Math.floor(Number(data.ratingCount ?? 0)));
+      next = {
+        ratingSum: ratingSum + value,
+        ratingCount: ratingCount + 1,
+      };
+      transaction.update(ref, next);
+    });
+    return next;
+  } catch (error) {
+    console.error('Gagal mengirim rating kos', error);
+    return null;
   }
 }

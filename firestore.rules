@@ -10,6 +10,7 @@ service cloud.firestore {
         && (
           request.auth.token.admin == true
           || request.auth.uid in [
+            '7QdiAC3pupNTKOlZX6hYjdwwsdM2',
             'KULwbZ60JhVm3EWrFjPGK7SFFqi2'
           ]
           || (
@@ -132,6 +133,82 @@ service cloud.firestore {
       allow read: if true;
       allow create: if validListing(request.resource.data);
       allow update, delete: if isAdmin();
+    }
+
+    // Katalog kos: data dikelola admin, publik boleh membaca dan memberi rating.
+    // Rating hanya boleh menambah ratingSum (1-5) dan ratingCount (+1).
+    match /kosListings/{listingId} {
+      function validKos(data) {
+        return data.keys().hasOnly([
+            'name',
+            'campus',
+            'gender',
+            'address',
+            'price',
+            'facilities',
+            'contact',
+            'imageUrl',
+            'lat',
+            'lng',
+            'notes',
+            'ratingSum',
+            'ratingCount',
+            'createdAt'
+          ])
+          && data.name is string
+          && data.name.size() > 0
+          && data.name.size() <= 160
+          && data.campus is string
+          && data.campus in ['depok', 'salemba']
+          && data.gender is string
+          && data.gender in ['putra', 'putri', 'campur']
+          && data.address is string
+          && data.address.size() > 0
+          && data.address.size() <= 300
+          && data.price is int
+          && data.price >= 0
+          && data.price <= 100000000000
+          && data.facilities is list
+          && data.facilities.size() <= 30
+          && data.contact is string
+          && data.contact.size() <= 80
+          && data.imageUrl is string
+          && data.imageUrl.size() <= 200000
+          && data.lat is number
+          && data.lat >= -90
+          && data.lat <= 90
+          && data.lng is number
+          && data.lng >= -180
+          && data.lng <= 180
+          && data.notes is string
+          && data.notes.size() <= 2000
+          && data.ratingSum is int
+          && data.ratingSum >= 0
+          && data.ratingCount is int
+          && data.ratingCount >= 0
+          && data.createdAt is string
+          && data.createdAt.size() <= 40;
+      }
+
+      allow read: if true;
+      allow create: if isAdmin()
+        && validKos(request.resource.data)
+        && request.resource.data.ratingSum == 0
+        && request.resource.data.ratingCount == 0;
+      allow update: if validKos(request.resource.data)
+        && (
+          isAdmin()
+          || (
+            request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+              'ratingSum',
+              'ratingCount'
+            ])
+            && request.resource.data.ratingSum >= resource.data.ratingSum + 1
+            && request.resource.data.ratingSum <= resource.data.ratingSum + 5
+            && request.resource.data.ratingCount == resource.data.ratingCount + 1
+          )
+        );
+      allow delete: if isAdmin();
     }
   }
 }

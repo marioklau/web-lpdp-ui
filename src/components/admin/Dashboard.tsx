@@ -12,12 +12,14 @@ export default function Dashboard({
   submissions,
   aspirations,
   listings,
+  kosCount,
   inboxLoading,
   onRefreshInbox,
 }: {
   submissions: LetterSubmission[];
   aspirations: Aspiration[];
   listings: MarketListing[];
+  kosCount: number;
   inboxLoading: boolean;
   onRefreshInbox: () => void;
 }) {
@@ -44,6 +46,7 @@ export default function Dashboard({
       sub: 'dari pengunjung',
     },
     { label: 'Iklan Pasar', value: listings.length, sub: 'barang bekas' },
+    { label: 'Katalog Kos', value: kosCount, sub: 'terdaftar' },
     { label: 'Program', value: programs.length, sub: 'terdaftar' },
     { label: 'Provinsi', value: provinces.length, sub: 'terdata' },
     { label: 'Berita', value: news.length, sub: 'publikasi' },

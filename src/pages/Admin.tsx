@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState, type FormEvent } from 'react';
 import {
   BarChart3,
+  Building2,
   Database,
   FileText,
   Inbox,
@@ -30,6 +31,7 @@ import AwardeesTab from '@/components/admin/AwardeesTab';
 import NewsTab from '@/components/admin/NewsTab';
 import TemplatesTab from '@/components/admin/TemplatesTab';
 import MarketTab from '@/components/admin/MarketTab';
+import KosTab from '@/components/admin/KosTab';
 import { AspirationsTab, SubmissionsTab } from '@/components/admin/InboxTabs';
 import {
   Field,
@@ -37,21 +39,31 @@ import {
   btnPrimary,
   inputClass,
 } from '@/components/admin/ui';
-import { useContent } from '@/lib/contentContext';
+import { useContent, type SaveResult } from '@/lib/contentContext';
 import {
+  deleteKosListing,
   deleteLetterSubmission,
   deleteMarketListing,
   fetchAspirations,
+  fetchKosListings,
   fetchLetterSubmissions,
   fetchMarketListings,
   isFirebaseConfigured,
+  saveKosListing,
   signInAdmin,
   signOutAdmin,
   watchAdmin,
 } from '@/lib/firebase';
+import { KOS_LISTINGS_STORAGE_KEY, toKosPayload } from '@/lib/kos';
+import { SAMPLE_KOS_LISTINGS } from '@/lib/kosSamples';
 import { useLocalStorage } from '@/lib/useLocalStorage';
 import { SAMPLE_MARKET_LISTINGS } from '@/lib/marketSamples';
-import type { Aspiration, LetterSubmission, MarketListing } from '@/types';
+import type {
+  Aspiration,
+  KosListing,
+  LetterSubmission,
+  MarketListing,
+} from '@/types';
 
 type Tab =
   | 'dashboard'
@@ -66,7 +78,8 @@ type Tab =
   | 'template'
   | 'pengajuan'
   | 'aspirasi'
-  | 'pasar';
+  | 'pasar'
+  | 'kos';
 
 const tabs: { id: Tab; label: string; icon: typeof User }[] = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -82,6 +95,7 @@ const tabs: { id: Tab; label: string; icon: typeof User }[] = [
   { id: 'pengajuan', label: 'Pengajuan Dana', icon: Inbox },
   { id: 'aspirasi', label: 'Aspirasi', icon: MessageSquareText },
   { id: 'pasar', label: 'Pasar Awardee', icon: Store },
+  { id: 'kos', label: 'Katalog Kos', icon: Building2 },
 ];
 
 function mergeById<T extends { id: string }>(local: T[], remote: T[]): T[] {
@@ -108,11 +122,16 @@ export default function AdminPage() {
     'lpdp_market_listings',
     [],
   );
+  const [localKos, setLocalKos] = useLocalStorage<KosListing[]>(
+    KOS_LISTINGS_STORAGE_KEY,
+    [],
+  );
   const [remoteSubmissions, setRemoteSubmissions] = useState<
     LetterSubmission[]
   >([]);
   const [remoteAspirations, setRemoteAspirations] = useState<Aspiration[]>([]);
   const [remoteMarket, setRemoteMarket] = useState<MarketListing[]>([]);
+  const [remoteKos, setRemoteKos] = useState<KosListing[]>([]);
   const [inboxLoading, setInboxLoading] = useState(false);
   const [inboxError, setInboxError] = useState('');
   const [inboxNote, setInboxNote] = useState('');
@@ -130,17 +149,24 @@ export default function AdminPage() {
       setRemoteSubmissions([]);
       setRemoteAspirations([]);
       setRemoteMarket([]);
+      setRemoteKos([]);
       setInboxError('');
       return;
     }
     setInboxLoading(true);
     setInboxError('');
-    const [submissions, aspirations, market] = await Promise.all([
+    const [submissions, aspirations, market, kos] = await Promise.all([
       fetchLetterSubmissions(),
       fetchAspirations(),
       fetchMarketListings(),
+      fetchKosListings(),
     ]);
-    if (submissions === null || aspirations === null || market === null) {
+    if (
+      submissions === null ||
+      aspirations === null ||
+      market === null ||
+      kos === null
+    ) {
       setInboxError(
         'Sebagian data gagal dimuat dari Firebase. Pastikan Anda login dan aturan Firestore sudah diterapkan.',
       );
@@ -148,6 +174,7 @@ export default function AdminPage() {
     if (submissions) setRemoteSubmissions(submissions);
     if (aspirations) setRemoteAspirations(aspirations);
     if (market) setRemoteMarket(market);
+    if (kos) setRemoteKos(kos);
     setInboxLoading(false);
   }, []);
 
@@ -161,6 +188,7 @@ export default function AdminPage() {
       setRemoteSubmissions([]);
       setRemoteAspirations([]);
       setRemoteMarket([]);
+      setRemoteKos([]);
     }
   }, [user]);
 
@@ -186,6 +214,14 @@ export default function AdminPage() {
         (a, b) => b.createdAt.localeCompare(a.createdAt),
       ),
     [localMarket, remoteMarket],
+  );
+
+  const kosListings = useMemo(
+    () =>
+      mergeById(mergeById(SAMPLE_KOS_LISTINGS, localKos), remoteKos).sort(
+        (a, b) => b.createdAt.localeCompare(a.createdAt),
+      ),
+    [localKos, remoteKos],
   );
 
   const deleteSubmission = async (id: string) => {
@@ -245,6 +281,124 @@ export default function AdminPage() {
         ? 'Iklan pasar berhasil dihapus dari Firebase.'
         : 'Iklan pasar dihapus dari browser ini.',
     );
+  };
+
+  const saveKos = async (listing: KosListing): Promise<SaveResult> => {
+    const name = listing.name.trim();
+    const address = listing.address.trim();
+    if (!name || !address) {
+      return {
+        ok: false,
+        persisted: false,
+        message: 'Nama dan alamat kos wajib diisi.',
+      };
+    }
+    if (
+      !Number.isFinite(listing.lat) ||
+      !Number.isFinite(listing.lng) ||
+      listing.lat < -90 ||
+      listing.lat > 90 ||
+      listing.lng < -180 ||
+      listing.lng > 180
+    ) {
+      return {
+        ok: false,
+        persisted: false,
+        message: 'Koordinat lokasi kos tidak valid.',
+      };
+    }
+
+    const payload = toKosPayload({
+      ...listing,
+      name,
+      address,
+      price: Math.max(0, Math.floor(listing.price)),
+      facilities: [...new Set(listing.facilities)],
+      contact: listing.contact.trim(),
+      imageUrl: listing.imageUrl.trim(),
+      notes: listing.notes.trim(),
+    });
+    const isRemote = remoteKos.some((item) => item.id === listing.id);
+
+    if (isFirebaseConfigured) {
+      const saved = await saveKosListing(isRemote ? listing.id : null, payload);
+      if (!saved) {
+        return {
+          ok: false,
+          persisted: false,
+          message:
+            'Gagal menyimpan kos ke Firebase. Periksa login dan aturan Firestore.',
+        };
+      }
+      setRemoteKos((prev) =>
+        isRemote
+          ? prev.map((item) => (item.id === saved.id ? saved : item))
+          : [saved, ...prev],
+      );
+      setLocalKos((prev) => prev.filter((item) => item.id !== listing.id));
+      setInboxNote('Kos berhasil disimpan ke Firebase.');
+      return {
+        ok: true,
+        persisted: true,
+        message:
+          'Kos berhasil disimpan ke Firebase dan tampil di katalog publik.',
+      };
+    }
+
+    const id = listing.id || crypto.randomUUID();
+    const next: KosListing = { ...payload, id, isSample: false };
+    setLocalKos((prev) =>
+      prev.some((item) => item.id === id)
+        ? prev.map((item) => (item.id === id ? next : item))
+        : [next, ...prev],
+    );
+    setInboxNote('Kos disimpan di browser ini.');
+    return {
+      ok: true,
+      persisted: false,
+      message:
+        'Kos disimpan di browser ini. Hubungkan Firebase agar tampil untuk semua pengunjung.',
+    };
+  };
+
+  const deleteKos = async (id: string): Promise<SaveResult | null> => {
+    const listing = kosListings.find((item) => item.id === id);
+    if (!listing || listing.isSample) return null;
+    if (
+      !window.confirm(
+        `Hapus "${listing.name}"? Tindakan ini tidak dapat dibatalkan.`,
+      )
+    ) {
+      return null;
+    }
+
+    const isRemote = remoteKos.some((item) => item.id === id);
+    if (isFirebaseConfigured && isRemote) {
+      const deleted = await deleteKosListing(id);
+      if (!deleted) {
+        return {
+          ok: false,
+          persisted: false,
+          message:
+            'Gagal menghapus kos dari Firebase. Periksa login dan aturan Firestore.',
+        };
+      }
+    }
+
+    setLocalKos((prev) => prev.filter((item) => item.id !== id));
+    setRemoteKos((prev) => prev.filter((item) => item.id !== id));
+    setInboxNote(
+      isRemote
+        ? 'Kos berhasil dihapus dari Firebase.'
+        : 'Kos dihapus dari browser ini.',
+    );
+    return {
+      ok: true,
+      persisted: isRemote,
+      message: isRemote
+        ? 'Kos berhasil dihapus dari Firebase.'
+        : 'Kos dihapus dari browser ini.',
+    };
   };
 
   const handleSignOut = async () => {
@@ -345,6 +499,7 @@ export default function AdminPage() {
                 submissions={submissions}
                 aspirations={aspirations}
                 listings={marketListings}
+                kosCount={kosListings.length}
                 inboxLoading={inboxLoading}
                 onRefreshInbox={loadInbox}
               />
@@ -383,6 +538,16 @@ export default function AdminPage() {
                 error={inboxError}
                 onRefresh={loadInbox}
                 onDelete={deleteListing}
+              />
+            )}
+            {tab === 'kos' && (
+              <KosTab
+                listings={kosListings}
+                loading={inboxLoading}
+                error={inboxError}
+                onRefresh={loadInbox}
+                onSave={saveKos}
+                onDelete={deleteKos}
               />
             )}
           </section>

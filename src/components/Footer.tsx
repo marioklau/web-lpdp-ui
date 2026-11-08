@@ -38,6 +38,7 @@ export default function Footer({ onNavigate }: FooterProps) {
                 { id: 'home', label: 'Beranda' },
                 { id: 'jejak', label: 'Jejak Sutan' },
                 { id: 'peta', label: 'Peta Awardee' },
+                { id: 'kos', label: 'Katalog Kos' },
                 { id: 'surat', label: 'Layanan Pengajuan Dana' },
                 { id: 'admin', label: 'Admin' },
               ].map((l) => (

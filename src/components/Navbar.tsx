@@ -13,6 +13,7 @@ const links: { id: Page; label: string }[] = [
   { id: 'jejak', label: 'Jejak Sutan' },
   { id: 'peta', label: 'Peta Awardee' },
   { id: 'pasar', label: 'Pasar Awardee' },
+  { id: 'kos', label: 'Katalog Kos' },
   { id: 'admin', label: 'Admin' },
 ];
 
