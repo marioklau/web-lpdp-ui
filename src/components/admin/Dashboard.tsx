@@ -55,7 +55,7 @@ export default function Dashboard({
 
   const sourceLabel =
     source === 'firebase'
-      ? 'Firebase — tersinkron'
+      ? 'Firebase - tersinkron'
       : source === 'local'
         ? 'Penyimpanan lokal browser'
         : 'Data contoh (belum disimpan)';

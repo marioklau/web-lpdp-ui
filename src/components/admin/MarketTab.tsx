@@ -16,7 +16,7 @@ function formatPrice(value: number): string {
 }
 
 function formatDate(value: string): string {
-  if (!value) return '—';
+  if (!value) return '-';
   const date = new Date(value);
   return Number.isNaN(date.getTime()) ? value : date.toLocaleString('id-ID');
 }

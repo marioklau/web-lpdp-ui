@@ -305,7 +305,7 @@ export default function PetaPage() {
         <div className="mt-5 rounded-2xl border border-navy-100 bg-white p-5 shadow-soft">
           <div className="flex items-end justify-between gap-3">
             <h2 className="text-sm font-semibold text-navy-900">
-              Gradasi sebaran — {filterLabel}
+              Gradasi sebaran - {filterLabel}
             </h2>
             <p className="text-[11px] text-navy-500">
               {drilled ? 'Di dalam provinsi ini' : 'Antarprovinsi'}

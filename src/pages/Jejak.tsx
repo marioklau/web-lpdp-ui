@@ -22,7 +22,7 @@ export default function Jejak() {
             </h1>
             <p className="mt-4 text-lg text-gold-300">{SUTAN.fullName}</p>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-navy-200 sm:text-lg">
-              Gulir ke bawah. Petanya berjalan ke kanan — dari Rote Ndao, lewat
+              Gulir ke bawah. Petanya berjalan ke kanan - dari Rote Ndao, lewat
               Surabaya, sampai ke rumah bersama di Kelurahan LPDP UI.
             </p>
             <div className="mt-8 flex flex-wrap gap-2">
@@ -90,7 +90,7 @@ export default function Jejak() {
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-navy-200 sm:text-lg">
               {SUTAN.familiarName} menyusun sistem untuk pemerintah, organisasi,
               dan mahasiswa. Di kelas magister ia mengangkat Satu Data
-              Kemendagri — kerja yang sama yang ingin ia bawa ke kelurahan.
+              Kemendagri - kerja yang sama yang ingin ia bawa ke kelurahan.
             </p>
           </div>
 

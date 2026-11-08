@@ -42,9 +42,9 @@ export default function VisionMission() {
         {/* Mission cards */}
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {visionMission.missions.map((mission, index) => {
-            const [rawTitle, ...rest] = mission.split('—');
+            const [rawTitle, ...rest] = mission.split('-');
             const title = rest.length > 0 ? rawTitle.trim() : '';
-            const body = rest.length > 0 ? rest.join('—').trim() : mission;
+            const body = rest.length > 0 ? rest.join('-').trim() : mission;
             const letter = 'AKSARA'[index] ?? String(index + 1);
             return (
               <div

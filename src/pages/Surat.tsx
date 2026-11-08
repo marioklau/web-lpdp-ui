@@ -526,7 +526,7 @@ export default function SuratPage() {
                                 />
                               </label>
                               <p className="mt-1.5 text-xs text-navy-500">
-                                JPG/PNG, maksimal 10 MB — dikompres otomatis.
+                                JPG/PNG, maksimal 10 MB - dikompres otomatis.
                               </p>
                             </div>
                           )}
@@ -572,7 +572,7 @@ export default function SuratPage() {
                   >
                     <p className="text-xs text-navy-500">{field.label}</p>
                     <p className="mt-0.5 break-words text-sm font-medium text-navy-900">
-                      {fields[field.key] || '—'}
+                      {fields[field.key] || '-'}
                     </p>
                   </div>
                 ))}
@@ -714,7 +714,7 @@ export default function SuratPage() {
           >
             {isFirebaseConfigured
               ? 'Tersambung ke Firebase'
-              : 'Mode lokal — pengajuan disimpan di browser'}
+              : 'Mode lokal - pengajuan disimpan di browser'}
           </span>
         </p>
       </div>

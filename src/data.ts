@@ -38,12 +38,12 @@ export const VISION_MISSION: VisionMission = {
   vision:
     'Mewujudkan Kelurahan LPDP UI 14.0 sebagai rumah bersama yang ber-AKSARA (Aspiratif, Kolaboratif, Solutif, Adaptif, Responsif, Asyik).',
   missions: [
-    'Aspiratif — Membangun ruang komunikasi terbuka, partisipatif, dan inklusif untuk menghimpun serta memperjuangkan aspirasi seluruh awardee LPDP UI tanpa membedakan program studi, angkatan, maupun latar belakang.',
-    'Kolaboratif — Memperkuat solidaritas, kekeluargaan, jejaring lintas disiplin, dan sinergi antarsesama awardee melalui kegiatan akademik, sosial, profesional, serta pengabdian masyarakat.',
-    'Solutif — Menghadirkan program dan layanan yang relevan untuk menjawab kebutuhan, tantangan akademik, kesejahteraan, serta pengembangan kapasitas awardee melalui solusi yang konkret dan berkelanjutan.',
-    'Adaptif — Mendorong budaya inovasi, kreativitas, literasi digital, digitalisasi layanan melalui Satu Data Kelurahan LPDP UI, dan pengembangan diri agar Kelurahan LPDP UI mampu beradaptasi dengan dinamika pendidikan, teknologi, serta kebutuhan awardee.',
-    'Responsif — Mewujudkan kepengurusan yang komunikatif, mudah diakses, cepat tanggap, dan peduli terhadap kebutuhan maupun permasalahan awardee melalui mekanisme komunikasi serta tindak lanjut yang jelas.',
-    'Asyik — Menghadirkan suasana kelurahan yang asyik, hangat, dan menyenangkan melalui kegiatan yang seru, santai namun bermakna, serta kepengurusan yang akrab dan terbuka, sehingga setiap awardee merasa nyaman, diterima, dan antusias terlibat dalam setiap program.',
+    'Aspiratif - Membangun ruang komunikasi terbuka, partisipatif, dan inklusif untuk menghimpun serta memperjuangkan aspirasi seluruh awardee LPDP UI tanpa membedakan program studi, angkatan, maupun latar belakang.',
+    'Kolaboratif - Memperkuat solidaritas, kekeluargaan, jejaring lintas disiplin, dan sinergi antarsesama awardee melalui kegiatan akademik, sosial, profesional, serta pengabdian masyarakat.',
+    'Solutif - Menghadirkan program dan layanan yang relevan untuk menjawab kebutuhan, tantangan akademik, kesejahteraan, serta pengembangan kapasitas awardee melalui solusi yang konkret dan berkelanjutan.',
+    'Adaptif - Mendorong budaya inovasi, kreativitas, literasi digital, digitalisasi layanan melalui Satu Data Kelurahan LPDP UI, dan pengembangan diri agar Kelurahan LPDP UI mampu beradaptasi dengan dinamika pendidikan, teknologi, serta kebutuhan awardee.',
+    'Responsif - Mewujudkan kepengurusan yang komunikatif, mudah diakses, cepat tanggap, dan peduli terhadap kebutuhan maupun permasalahan awardee melalui mekanisme komunikasi serta tindak lanjut yang jelas.',
+    'Asyik - Menghadirkan suasana kelurahan yang asyik, hangat, dan menyenangkan melalui kegiatan yang seru, santai namun bermakna, serta kepengurusan yang akrab dan terbuka, sehingga setiap awardee merasa nyaman, diterima, dan antusias terlibat dalam setiap program.',
   ],
 };
 
@@ -132,7 +132,7 @@ export const HOME_PAGE: HomePageContent = {
     'Profil awardee: foto, nama, dan pekerjaan',
   ],
   mapCta: 'Buka Peta Lengkap',
-  mapCaption: 'Pratinjau peta — buka halaman peta untuk versi interaktif penuh',
+  mapCaption: 'Pratinjau peta - buka halaman peta untuk versi interaktif penuh',
   statsEyebrow: 'Statistik',
   statsTitle: 'Jejaring dalam Angka',
   newsEyebrow: 'Berita & Kegiatan',
@@ -160,7 +160,7 @@ export const HOME_PAGE: HomePageContent = {
     'Landing page kampanye AKSARA, Calon Lurah Kelurahan LPDP UI 2026 bersama Sutan Dami. Kepemimpinan yang aspiratif, kolaboratif, solutif, adaptif, responsif, dan asyik.',
   footerNote:
     'Data statistik dan peta masih berupa contoh (placeholder) dan belum merupakan data resmi.',
-  footerCopyright: 'AKSARA — Calon Lurah Kelurahan LPDP UI.',
+  footerCopyright: 'AKSARA - Calon Lurah Kelurahan LPDP UI.',
   footerTagline: 'Kelurahan LPDP UI, rumah bersama, ruang berkarya.',
 };
 
@@ -223,7 +223,7 @@ export const PROGRAMS: Program[] = [
   },
 ];
 
-// Data provinsi CONTOH — angka awardee hanya ilustrasi.
+// Data provinsi CONTOH - angka awardee hanya ilustrasi.
 export const PROVINCE_DATA: ProvinceData[] = [
   { id: 'ID-AC', name: 'Aceh', awardeeCount: 24, activeAwardeeCount: 8, alumniCount: 16 },
   { id: 'ID-SU', name: 'Sumatera Utara', awardeeCount: 52, activeAwardeeCount: 15, alumniCount: 37 },
@@ -385,7 +385,7 @@ const totalActive = PROVINCE_DATA.reduce(
   0,
 );
 
-// Statistik CONTOH — diturunkan dari data provinsi agar konsisten.
+// Statistik CONTOH - diturunkan dari data provinsi agar konsisten.
 export const STATS: StatItem[] = [
   {
     id: 's1',
@@ -471,7 +471,7 @@ export const NEWS: NewsItem[] = [
   },
   {
     id: 'n2',
-    title: 'AKSARA — Gerakan Bersama untuk Kelurahan LPDP UI 2026',
+    title: 'AKSARA - Gerakan Bersama untuk Kelurahan LPDP UI 2026',
     excerpt:
       'Kami percaya bahwa Kelurahan LPDP UI bukan sekadar wadah berkumpulnya para penerima beasiswa, melainkan rumah bersama tempat aspirasi didengarkan, potensi dikembangkan, solidaritas diperkuat, dan kontribusi diwujudkan. Melalui semangat AKSARA, kami berkomitmen menghadirkan kepemimpinan yang aspiratif, kolaboratif, solutif, adaptif, responsif, dan asyik. Kepemimpinan bukan hanya tentang siapa yang memimpin, melainkan tentang siapa yang dilibatkan, siapa yang didengarkan, dan seberapa besar manfaat yang dapat dihadirkan.',
     date: '20 Oktober 2026',
@@ -513,7 +513,7 @@ const buildScholarshipForm = (documents: LetterDocument[]) => {
     'IBAN / ABA / BSB                   : {{iban}}',
     'Kampus                             : {{kampus}}',
     'Negara                             : {{negara}}',
-    'Jenis Dana Pengajuan dan Jumlahnya : {{jenisDana}} — {{jumlah}}',
+    'Jenis Dana Pengajuan dan Jumlahnya : {{jenisDana}} - {{jumlah}}',
     '',
     'Dokumen Pendukung:',
   ];
@@ -669,7 +669,7 @@ export const LETTER_TEMPLATES: LetterTemplate[] = [
   {
     id: 'dana-hidup',
     type: 'Dana Hidup Bulanan',
-    title: 'Form Pengajuan Dana Beasiswa — Dana Hidup Bulanan',
+    title: 'Form Pengajuan Dana Beasiswa - Dana Hidup Bulanan',
     description: 'Pengajuan dana hidup bulanan beserta dokumen pendukung.',
     amount: 'Rp 15.000.000,-',
     format: 'form',
@@ -681,7 +681,7 @@ export const LETTER_TEMPLATES: LetterTemplate[] = [
   {
     id: 'dana-kedatangan',
     type: 'Dana Kedatangan',
-    title: 'Form Pengajuan Dana Beasiswa — Dana Kedatangan',
+    title: 'Form Pengajuan Dana Beasiswa - Dana Kedatangan',
     description: 'Pengajuan dana kedatangan beserta dokumen pendukung.',
     amount: 'Rp 10.000.000,-',
     format: 'form',
@@ -693,7 +693,7 @@ export const LETTER_TEMPLATES: LetterTemplate[] = [
   {
     id: 'dana-pendaftaran',
     type: 'Dana Pendaftaran',
-    title: 'Form Pengajuan Dana Beasiswa — Dana Pendaftaran SIMAK UI',
+    title: 'Form Pengajuan Dana Beasiswa - Dana Pendaftaran SIMAK UI',
     description: 'Pengajuan dana pendaftaran SIMAK UI beserta dokumen pendukung.',
     amount: 'Rp 1.350.000,-',
     format: 'form',
@@ -705,7 +705,7 @@ export const LETTER_TEMPLATES: LetterTemplate[] = [
   {
     id: 'tunjangan-buku',
     type: 'Dana Tunjangan Buku',
-    title: 'Form Pengajuan Dana Beasiswa — Dana Tunjangan Buku',
+    title: 'Form Pengajuan Dana Beasiswa - Dana Tunjangan Buku',
     description: 'Pengajuan dana tunjangan buku beserta dokumen pendukung.',
     amount: 'Rp 10.000.000,-',
     format: 'form',

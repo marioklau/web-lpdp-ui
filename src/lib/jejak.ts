@@ -98,7 +98,7 @@ export const JEJAK_CHAPTERS: JejakChapter[] = [
     summary:
       'Setahun setelah masuk kampus, ia sudah mengerjakan sistem sungguhan. Di CV Yoong Motor ia membangun aplikasi alur kerja untuk lebih dari 200 karyawan. Di laboratorium Informatika Petra ia mendampingi lebih dari 200 mahasiswa. Di luar kelas, ia memimpin UKM Catur dan menjadi wakil ketua divisi IT sebuah lomba logika kampus.',
     points: [
-      'Backend freelance CV Yoong Motor — persetujuan cuti dari 3 hari menjadi 1 hari',
+      'Backend freelance CV Yoong Motor - persetujuan cuti dari 3 hari menjadi 1 hari',
       'Asisten dosen pemrograman, web, dan sistem informasi',
       'Ketua UKM Catur dan Wakil Ketua Divisi IT Informatics Rally',
     ],
@@ -128,7 +128,7 @@ export const JEJAK_CHAPTERS: JejakChapter[] = [
     place: 'Jakarta & Surabaya',
     title: 'Teknologi yang berpihak pada orang',
     summary:
-      'Magang backend di PT Inti Utama Solusindo membawanya ke sistem kesehatan: integrasi SATUSEHAT dan lebih dari 5.000 data rekam medis. Di tahun yang sama, proyek PKM-KC ABLEMENT — pengenalan bahasa isyarat berbasis AI — didanai Kemendikbudristek. Ia juga mengantongi Silver Certificate Cisco, mengurus media GMKI Surabaya, dan memimpin panitia pemilu raya kampus.',
+      'Magang backend di PT Inti Utama Solusindo membawanya ke sistem kesehatan: integrasi SATUSEHAT dan lebih dari 5.000 data rekam medis. Di tahun yang sama, proyek PKM-KC ABLEMENT - pengenalan bahasa isyarat berbasis AI - didanai Kemendikbudristek. Ia juga mengantongi Silver Certificate Cisco, mengurus media GMKI Surabaya, dan memimpin panitia pemilu raya kampus.',
     points: [
       'Magang backend: Django, SATUSEHAT, konflik jadwal turun hingga 80%',
       'PKM-KC ABLEMENT, video recognition bahasa isyarat',
@@ -144,7 +144,7 @@ export const JEJAK_CHAPTERS: JejakChapter[] = [
     place: 'Surabaya',
     title: 'Lulus cumlaude, rumah kedua tetap dijaga',
     summary:
-      'September 2024 ia lulus dengan IPK 3,68, predikat cumlaude dan aktif berprestasi. Sebelum dan sesudah wisuda ia sempat menjadi ketua Flobamora — rumah pemuda NTT di Surabaya — membangun backend platform karier Ngejob, dan membimbing kelompok kecil sebagai mentor.',
+      'September 2024 ia lulus dengan IPK 3,68, predikat cumlaude dan aktif berprestasi. Sebelum dan sesudah wisuda ia sempat menjadi ketua Flobamora - rumah pemuda NTT di Surabaya - membangun backend platform karier Ngejob, dan membimbing kelompok kecil sebagai mentor.',
     points: [
       'IPK 3,68/4,00 · Cumlaude dan Aktif Berprestasi',
       'Ketua Flobamora “Ketong Semua Basodara”',
@@ -177,7 +177,7 @@ export const JEJAK_CHAPTERS: JejakChapter[] = [
     place: 'Kelurahan LPDP UI',
     title: 'Garis ini sampai di rumah bersama',
     summary:
-      'Tahun ini ia menyelesaikan TOEFL ITP dengan skor 513 dan menyabet predikat Arcade Champion di Google Cloud — 77 lencana, 84 poin. Ia juga membangun lebih dari 40 API untuk Pengurus Nasional Perkumpulan Senior GMKI. Semua garis itu kini ia bawa ke satu tawaran: AKSARA, kepemimpinan yang mendengar, menghubungkan, dan menyelesaikan.',
+      'Tahun ini ia menyelesaikan TOEFL ITP dengan skor 513 dan menyabet predikat Arcade Champion di Google Cloud - 77 lencana, 84 poin. Ia juga membangun lebih dari 40 API untuk Pengurus Nasional Perkumpulan Senior GMKI. Semua garis itu kini ia bawa ke satu tawaran: AKSARA, kepemimpinan yang mendengar, menghubungkan, dan menyelesaikan.',
     points: [
       'TOEFL ITP 513',
       'Google Cloud Arcade Champion',
