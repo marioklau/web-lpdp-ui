@@ -7,13 +7,42 @@ export interface JejakChapter {
   points: string[];
   image?: string;
   imageAlt?: string;
+  imageFit?: 'cover' | 'contain';
 }
 
 export const JEJAK_PHOTOS = {
-  portrait: '/asset/sutan-pasfoto.jpg',
+  portrait: '/asset/sutan-utama-damai.jpg',
+  campaign: '/asset/sutan-utama-semangat.jpg',
   classroom: '/asset/sutan-kelas.jpg',
   together: '/asset/sutan-bersama.jpg',
 };
+
+export const STUDIO_PHOTOS = [
+  {
+    src: '/asset/sutan-utama-semangat.jpg',
+    alt: 'Sutan Dami duduk dengan tangan terkepal, jaket kuning Universitas Indonesia',
+  },
+  {
+    src: '/asset/sutan-utama-damai.jpg',
+    alt: 'Sutan Dami tersenyum dan mengangkat dua jari, jaket kuning Universitas Indonesia',
+  },
+  {
+    src: '/asset/sutan-studio-duduk.jpg',
+    alt: 'Sutan Dami duduk di kursi studio dengan jaket kuning',
+  },
+  {
+    src: '/asset/sutan-studio-satu.jpg',
+    alt: 'Sutan Dami mengangkat satu jari sambil tersenyum',
+  },
+  {
+    src: '/asset/sutan-studio-berdiri.jpg',
+    alt: 'Sutan Dami berdiri dengan jaket kuning dan tangan di saku',
+  },
+  {
+    src: '/asset/sutan-studio-saku.jpg',
+    alt: 'Sutan Dami berdiri tegak dengan jaket kuning Universitas Indonesia',
+  },
+];
 
 export const SUTAN = {
   familiarName: 'Sutan Dami',
@@ -43,6 +72,7 @@ export const JEJAK_CHAPTERS: JejakChapter[] = [
     ],
     image: '/asset/sutan-dekat.jpg',
     imageAlt: 'Sutan Dami tersenyum, berkacamata, mengenakan kemeja biru',
+    imageFit: 'cover',
   },
   {
     id: 'petra',
@@ -56,6 +86,9 @@ export const JEJAK_CHAPTERS: JejakChapter[] = [
       'Beasiswa penuh 100%',
       'XP Young Leader Scholarship',
     ],
+    image: '/asset/sutan-studio-berdiri.jpg',
+    imageAlt: 'Sutan Dami berdiri dengan jaket kuning saat memulai perjalanan kampus',
+    imageFit: 'contain',
   },
   {
     id: 'membangun',
@@ -69,6 +102,9 @@ export const JEJAK_CHAPTERS: JejakChapter[] = [
       'Asisten dosen pemrograman, web, dan sistem informasi',
       'Ketua UKM Catur dan Wakil Ketua Divisi IT Informatics Rally',
     ],
+    image: '/asset/sutan-kelas.jpg',
+    imageAlt: 'Sutan Dami presentasi di kelas',
+    imageFit: 'cover',
   },
   {
     id: 'mpm',
@@ -84,6 +120,7 @@ export const JEJAK_CHAPTERS: JejakChapter[] = [
     ],
     image: '/asset/sutan-forum.jpg',
     imageAlt: 'Sutan Dami berbicara di depan peserta menggunakan mikrofon',
+    imageFit: 'cover',
   },
   {
     id: 'dampak',
@@ -97,6 +134,9 @@ export const JEJAK_CHAPTERS: JejakChapter[] = [
       'PKM-KC ABLEMENT, video recognition bahasa isyarat',
       'Ketua Panitia PEMIRA: 5 kampanye, lebih dari 1.000 peserta, tanpa pelanggaran',
     ],
+    image: '/asset/sutan-bersama.jpg',
+    imageAlt: 'Sutan Dami bersama rekan penerima beasiswa',
+    imageFit: 'cover',
   },
   {
     id: 'lulus',
@@ -110,6 +150,9 @@ export const JEJAK_CHAPTERS: JejakChapter[] = [
       'Ketua Flobamora “Ketong Semua Basodara”',
       'Backend Ngejob: 25+ endpoint, lebih dari 100 pengujian otomatis',
     ],
+    image: '/asset/sutan-studio-duduk.jpg',
+    imageAlt: 'Sutan Dami duduk tenang dengan jaket kuning setelah lulus',
+    imageFit: 'contain',
   },
   {
     id: 'lpdp',
@@ -126,6 +169,7 @@ export const JEJAK_CHAPTERS: JejakChapter[] = [
     ],
     image: '/asset/sutan-ui.jpg',
     imageAlt: 'Sutan Dami di kampus Universitas Indonesia dengan jaket kuning',
+    imageFit: 'cover',
   },
   {
     id: 'aksara',
@@ -140,8 +184,9 @@ export const JEJAK_CHAPTERS: JejakChapter[] = [
       'Backend Pengurus Nasional Perkumpulan Senior GMKI',
       'Mengusung AKSARA untuk Kelurahan LPDP UI 2026',
     ],
-    image: '/asset/sutan-pasfoto.jpg',
-    imageAlt: 'Foto formal Sutan Dami, calon lurah Kelurahan LPDP UI',
+    image: '/asset/sutan-utama-semangat.jpg',
+    imageAlt: 'Sutan Dami dengan tangan terkepal, calon lurah nomor urut 4',
+    imageFit: 'contain',
   },
 ];
 

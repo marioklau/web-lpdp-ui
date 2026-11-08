@@ -140,9 +140,9 @@ export default function JourneyMap() {
       <div className="map-needle pointer-events-none absolute bottom-[7.5rem] left-[28%] top-[46%] z-20 w-px bg-gold-400/50">
         <span className="absolute left-1/2 top-full grid h-14 w-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-gold-300 bg-navy-950 shadow-[0_0_0_8px_rgba(226,172,52,0.15)]">
           <img
-            src={JEJAK_PHOTOS.portrait}
+            src={JEJAK_PHOTOS.campaign}
             alt=""
-            className="h-11 w-11 rounded-full object-cover object-top"
+            className="h-11 w-11 rounded-full object-cover object-[center_12%]"
           />
         </span>
       </div>
@@ -155,35 +155,45 @@ export default function JourneyMap() {
           {JEJAK_CHAPTERS.map((chapter, index) => (
             <article
               key={chapter.id}
-              className={`map-station relative h-full w-[78vw] shrink-0 sm:w-[56vw] lg:w-[42vw] ${
+              className={`map-station relative h-full w-[86vw] shrink-0 sm:w-[62vw] lg:w-[44vw] ${
                 index === 0 ? 'is-here' : ''
               }`}
             >
-              <div className="map-card absolute inset-x-3 top-28 bottom-36 flex flex-col justify-center sm:inset-x-6">
+              <div className="map-card absolute inset-x-3 top-[5.5rem] bottom-[5.75rem] flex min-h-0 flex-col sm:inset-x-5 sm:top-24 sm:bottom-28">
                 {chapter.image ? (
-                  <div className="overflow-hidden rounded-2xl border border-gold-400/30 shadow-card">
+                  <div
+                    className={`min-h-0 flex-1 overflow-hidden rounded-2xl border border-gold-400/30 shadow-card ${
+                      chapter.imageFit === 'contain'
+                        ? 'flex items-center justify-center bg-[#d10f1a]'
+                        : ''
+                    }`}
+                  >
                     <img
                       src={chapter.image}
                       alt={chapter.imageAlt ?? chapter.title}
-                      className="h-40 w-full object-cover object-[center_22%] sm:h-52"
+                      className={
+                        chapter.imageFit === 'contain'
+                          ? 'h-full max-h-full w-auto max-w-full object-contain'
+                          : 'h-full w-full object-cover object-[center_16%]'
+                      }
                     />
                   </div>
                 ) : (
-                  <div className="grid h-28 place-items-center rounded-2xl border border-dashed border-gold-400/35 bg-white/5 sm:h-36">
+                  <div className="grid min-h-28 flex-1 place-items-center rounded-2xl border border-dashed border-gold-400/35 bg-white/5">
                     <span className="font-serif text-5xl text-gold-300/80">{chapter.year}</span>
                   </div>
                 )}
-                <div className="mt-3 rounded-2xl border border-white/10 bg-navy-900/85 p-4 backdrop-blur-sm">
-                  <p className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-gold-300">
-                    <MapPin className="h-3.5 w-3.5" />
+                <div className="mt-2 shrink-0 rounded-2xl border border-white/10 bg-navy-900/85 p-3 backdrop-blur-sm sm:mt-3 sm:p-4">
+                  <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-gold-300">
+                    <MapPin className="h-3.5 w-3.5 shrink-0" />
                     {chapter.place}
                     <span className="text-white/30">·</span>
                     {chapter.year}
                   </p>
-                  <h3 className="mt-2 font-serif text-xl leading-tight sm:text-2xl">
+                  <h3 className="mt-1.5 font-serif text-lg leading-tight sm:text-2xl">
                     {chapter.title}
                   </h3>
-                  <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-navy-200">
+                  <p className="mt-1.5 line-clamp-2 text-[13px] leading-snug text-navy-200 [@media(max-height:540px)]:hidden sm:line-clamp-3 sm:text-sm sm:leading-relaxed">
                     {chapter.summary}
                   </p>
                 </div>

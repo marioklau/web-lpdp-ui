@@ -5,6 +5,7 @@ export type Page =
   | 'surat'
   | 'pasar'
   | 'kos'
+  | 'aspirasi'
   | 'admin';
 
 export interface Candidate {
@@ -172,9 +173,14 @@ export interface LetterSubmission {
 
 export interface Aspiration {
   id: string;
+  anonymous?: boolean;
   name: string;
   email: string;
+  whatsapp?: string;
   message: string;
+  attachmentName?: string;
+  attachmentType?: string;
+  attachmentData?: string;
   createdAt: string;
 }
 

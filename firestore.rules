@@ -76,14 +76,61 @@ service cloud.firestore {
 
     // Pengunjung boleh mengirim aspirasi, hanya admin yang boleh membaca.
     match /aspirations/{aspirationId} {
-      allow create: if request.resource.data.name is string
-        && request.resource.data.name.size() <= 200
-        && request.resource.data.email is string
-        && request.resource.data.email.size() <= 320
-        && request.resource.data.message is string
-        && request.resource.data.message.size() <= 5000
-        && request.resource.data.createdAt is string
-        && request.resource.data.createdAt.size() <= 40;
+      function validAspirationText(data) {
+        return data.name is string
+          && data.name.size() <= 200
+          && data.email is string
+          && data.email.size() <= 320
+          && data.message is string
+          && data.message.size() > 0
+          && data.message.size() <= 5000
+          && data.createdAt is string
+          && data.createdAt.size() <= 40;
+      }
+
+      function validFollowUp(data) {
+        return data.keys().hasOnly([
+            'anonymous',
+            'name',
+            'email',
+            'whatsapp',
+            'message',
+            'attachmentName',
+            'attachmentType',
+            'attachmentData',
+            'createdAt'
+          ])
+          && data.anonymous is bool
+          && data.whatsapp is string
+          && data.whatsapp.size() <= 40
+          && data.attachmentName is string
+          && data.attachmentName.size() <= 180
+          && data.attachmentType is string
+          && data.attachmentType.size() <= 120
+          && data.attachmentData is string
+          && data.attachmentData.size() <= 700000
+          && (
+            (
+              data.anonymous == true
+              && data.name == ''
+              && data.email == ''
+              && data.whatsapp == ''
+              && data.attachmentData == ''
+            )
+            || (
+              data.anonymous == false
+              && data.name.size() > 0
+              && data.email.size() > 3
+              && data.whatsapp.size() >= 8
+            )
+          );
+      }
+
+      allow create: if validAspirationText(request.resource.data)
+        && (
+          request.resource.data.keys().hasOnly(['name', 'email', 'message', 'createdAt'])
+          || validFollowUp(request.resource.data)
+        );
       allow read, delete: if isAdmin();
     }
 

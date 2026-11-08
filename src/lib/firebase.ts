@@ -188,7 +188,7 @@ export async function deleteLetterSubmission(id: string): Promise<boolean> {
 // ---------------------------------------------------------------------------
 
 export async function submitAspiration(
-  data: Pick<Aspiration, 'name' | 'email' | 'message'>,
+  data: Omit<Aspiration, 'id' | 'createdAt'>,
 ): Promise<Aspiration | null> {
   if (!db) return null;
   const createdAt = new Date().toISOString();
@@ -307,9 +307,14 @@ export async function fetchAspirations(): Promise<Aspiration[] | null> {
       const data = item.data();
       return {
         id: item.id,
+        anonymous: data.anonymous === true,
         name: String(data.name ?? ''),
         email: String(data.email ?? ''),
+        whatsapp: String(data.whatsapp ?? ''),
         message: String(data.message ?? ''),
+        attachmentName: String(data.attachmentName ?? ''),
+        attachmentType: String(data.attachmentType ?? ''),
+        attachmentData: String(data.attachmentData ?? ''),
         createdAt: String(data.createdAt ?? ''),
       };
     });

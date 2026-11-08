@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Eye, GraduationCap, Menu, X } from 'lucide-react';
+import BallotMark from '@/components/BallotMark';
 import { formatCount, useSitePulse } from '@/lib/sitePulse';
 import type { Page } from '@/types';
 
@@ -14,6 +15,7 @@ const links: { id: Page; label: string }[] = [
   { id: 'peta', label: 'Peta Awardee' },
   { id: 'pasar', label: 'Pasar Awardee' },
   { id: 'kos', label: 'Katalog Kos' },
+  { id: 'aspirasi', label: 'Aspirasi' },
   { id: 'admin', label: 'Admin' },
 ];
 
@@ -63,38 +65,40 @@ export default function Navbar({ page, onNavigate }: NavbarProps) {
           </button>
 
           {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden xl:flex items-center gap-0.5">
             {links.map((l) => (
               <button
                 key={l.id}
                 onClick={() => handleNav(l.id)}
-                className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`inline-flex items-center gap-1 whitespace-nowrap rounded-lg px-1.5 py-2 text-xs font-medium transition-colors ${
                   page === l.id
                     ? 'text-gold-300 bg-navy-800/60'
                     : 'text-navy-100 hover:text-white hover:bg-navy-800/40'
                 }`}
               >
+                <BallotMark />
                 {l.label}
                 {l.id === 'home' && <ViewBadge />}
               </button>
             ))}
           </nav>
 
-          <div className="hidden lg:block">
+          <div className="hidden xl:block">
             <button
               onClick={() => handleNav('surat')}
-              className={`inline-flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold shadow-soft transition-all ${
+              className={`inline-flex items-center gap-2 whitespace-nowrap rounded-lg px-3.5 py-2.5 text-sm font-semibold shadow-soft transition-all ${
                 page === 'surat'
                   ? 'bg-gold-300 text-navy-900'
                   : 'bg-gold-400 text-navy-900 hover:bg-gold-300 hover:shadow-card'
               }`}
             >
+              <BallotMark tone="navy" />
               Layanan Pengajuan Dana
             </button>
           </div>
 
           {/* Mobile toggle */}
-          <div className="flex items-center gap-2 lg:hidden">
+          <div className="flex items-center gap-2 xl:hidden">
             <ViewBadge />
             <button
               onClick={() => setOpen((o) => !o)}
@@ -109,7 +113,7 @@ export default function Navbar({ page, onNavigate }: NavbarProps) {
 
       {/* Mobile menu */}
       {open && (
-        <div className="lg:hidden border-t border-navy-800/60 bg-navy-900 animate-fade-in">
+        <div className="xl:hidden border-t border-navy-800/60 bg-navy-900 animate-fade-in">
           <nav className="mx-auto max-w-7xl px-4 py-3 flex flex-col gap-1">
             {links.map((l) => (
               <button
@@ -121,16 +125,18 @@ export default function Navbar({ page, onNavigate }: NavbarProps) {
                     : 'text-navy-100 hover:bg-navy-800/40'
                 }`}
               >
+                <BallotMark />
                 {l.label}
                 {l.id === 'home' && <ViewBadge />}
               </button>
             ))}
             <button
               onClick={() => handleNav('surat')}
-              className={`mt-2 rounded-lg px-4 py-3 text-sm font-semibold text-navy-900 ${
+              className={`mt-2 inline-flex items-center gap-2 rounded-lg px-4 py-3 text-left text-sm font-semibold text-navy-900 ${
                 page === 'surat' ? 'bg-gold-300' : 'bg-gold-400'
               }`}
             >
+              <BallotMark tone="navy" />
               Layanan Pengajuan Dana
             </button>
           </nav>

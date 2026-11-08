@@ -27,6 +27,40 @@ function loadImage(src: string): Promise<HTMLImageElement> {
   });
 }
 
+const ASPIRATION_DOC_BYTES = 500 * 1024;
+const ASPIRATION_DATA_URL_LENGTH = 700_000;
+
+function isAspirationDocument(file: File): boolean {
+  const name = file.name.toLowerCase();
+  return (
+    file.type === 'application/pdf' ||
+    file.type === 'application/msword' ||
+    file.type ===
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
+    /\.(pdf|docx?)$/.test(name)
+  );
+}
+
+export async function prepareAspirationFile(
+  file: File,
+): Promise<{ name: string; type: string; data: string }> {
+  const name = file.name.replace(/[^\w.\- ()]/g, '').slice(0, 180) || 'bukti';
+  if (file.type.startsWith('image/')) {
+    return { name, type: 'image/jpeg', data: await prepareImageAttachment(file) };
+  }
+  if (!isAspirationDocument(file)) {
+    throw new Error('Unggah gambar, dokumen Word, atau PDF.');
+  }
+  if (file.size > ASPIRATION_DOC_BYTES) {
+    throw new Error('Dokumen Word atau PDF maksimal 500 KB.');
+  }
+  const data = await readAsDataUrl(file);
+  if (data.length > ASPIRATION_DATA_URL_LENGTH) {
+    throw new Error('Dokumen terlalu besar. Perkecil ukurannya lalu coba lagi.');
+  }
+  return { name, type: file.type || 'application/octet-stream', data };
+}
+
 export async function prepareImageAttachment(file: File): Promise<string> {
   if (!file.type.startsWith('image/')) {
     throw new Error('File harus berupa gambar.');

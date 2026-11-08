@@ -1,4 +1,5 @@
 import Hero from '@/components/home/Hero';
+import VotingCall from '@/components/home/VotingCall';
 import VisionMission from '@/components/home/VisionMission';
 import Programs from '@/components/home/Programs';
 import Strategic from '@/components/home/Strategic';
@@ -6,7 +7,6 @@ import JejakTeaser from '@/components/home/JejakTeaser';
 import Stats from '@/components/home/Stats';
 import HomeMapPreview from '@/components/home/HomeMapPreview';
 import News from '@/components/home/News';
-import AspirationContact from '@/components/home/AspirationContact';
 import type { Page } from '@/types';
 
 interface HomeProps {
@@ -25,6 +25,7 @@ export default function Home({ onNavigate }: HomeProps) {
   return (
     <main>
       <Hero onNavigate={handleNav} />
+      <VotingCall />
       <VisionMission />
       <Programs />
       <Strategic onNavigate={handleNav} />
@@ -32,7 +33,6 @@ export default function Home({ onNavigate }: HomeProps) {
       <Stats />
       <HomeMapPreview onNavigate={onNavigate} />
       <News />
-      <AspirationContact />
     </main>
   );
 }

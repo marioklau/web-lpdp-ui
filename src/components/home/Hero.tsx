@@ -189,40 +189,46 @@ export default function Hero({ onNavigate }: HeroProps) {
             </div>
           </div>
 
-          <div className="relative mx-auto h-[26rem] w-full max-w-lg sm:h-[32rem]">
-            <div className="hero-shot absolute left-0 top-8 z-10 w-[48%]" data-depth="42">
-              <div className="hero-float" style={{ animationDuration: '7.6s' }}>
-                <img
-                  src="/asset/sutan-forum.jpg"
-                  alt="Sutan Dami berbicara di sebuah forum"
-                  className="h-48 w-full -rotate-6 rounded-2xl border border-white/15 object-cover object-[center_22%] shadow-card sm:h-60"
-                />
-              </div>
-            </div>
-            <div className="hero-shot absolute right-0 top-0 z-10 w-[50%]" data-depth="-28">
-              <div className="hero-float" style={{ animationDuration: '6.4s', animationDelay: '-1.6s' }}>
-                <img
-                  src="/asset/sutan-ui.jpg"
-                  alt="Sutan Dami di kampus Universitas Indonesia"
-                  className="h-52 w-full rotate-3 rounded-2xl border border-white/15 object-cover object-[center_18%] shadow-card sm:h-64"
-                />
-              </div>
-            </div>
-            <div className="hero-shot absolute bottom-0 left-[16%] z-20 w-[64%]" data-depth="14">
-              <div className="hero-float" style={{ animationDuration: '8.8s', animationDelay: '-2.2s' }}>
-                <figure className="relative -rotate-2 transition-transform duration-500 hover:rotate-0 hover:scale-[1.03]">
+          <div className="relative mx-auto w-full max-w-xl">
+            <div className="grid grid-cols-2 items-end gap-3 sm:gap-4">
+              <figure className="hero-shot relative" data-depth="18">
+                <div className="hero-float" style={{ animationDuration: '8.2s' }}>
                   <img
-                    src={candidate.photoUrl || '/asset/sutan-pasfoto.jpg'}
-                    alt={homepage.heroCaption || candidate.name}
-                    className="h-60 w-full rounded-3xl border-2 border-gold-400/60 object-cover object-top shadow-card sm:h-72"
+                    src="/asset/sutan-utama-semangat.jpg"
+                    alt={homepage.heroCaption || 'Sutan Dami dengan tangan terkepal, jaket kuning'}
+                    className="aspect-[3/4] w-full rounded-[1.6rem] border-2 border-gold-400/70 object-cover object-top shadow-card"
                   />
                   {homepage.heroCaption && (
                     <figcaption className="absolute bottom-3 left-3 rounded-full bg-navy-950/85 px-3 py-1 text-xs font-medium text-gold-300">
                       {homepage.heroCaption}
                     </figcaption>
                   )}
-                </figure>
-              </div>
+                </div>
+              </figure>
+              <figure className="hero-shot relative mb-4 sm:mb-8" data-depth="-16">
+                <div className="hero-float" style={{ animationDuration: '7s', animationDelay: '-1.4s' }}>
+                  <img
+                    src="/asset/sutan-utama-damai.jpg"
+                    alt="Sutan Dami tersenyum dan mengangkat dua jari"
+                    className="aspect-[3/4] w-full rounded-[1.6rem] border border-white/15 object-cover object-top shadow-card"
+                  />
+                </div>
+              </figure>
+            </div>
+            <div className="mt-3 grid grid-cols-4 gap-2">
+              {[
+                ['/asset/sutan-studio-duduk.jpg', 'Sutan Dami duduk di studio'],
+                ['/asset/sutan-studio-satu.jpg', 'Sutan Dami mengangkat satu jari'],
+                ['/asset/sutan-studio-berdiri.jpg', 'Sutan Dami berdiri dengan jaket kuning'],
+                ['/asset/sutan-studio-saku.jpg', 'Sutan Dami berdiri tegak dengan jaket kuning'],
+              ].map(([src, alt]) => (
+                <img
+                  key={src}
+                  src={src}
+                  alt={alt}
+                  className="aspect-[3/4] w-full rounded-xl border border-white/10 object-cover object-top"
+                />
+              ))}
             </div>
           </div>
         </div>

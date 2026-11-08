@@ -190,7 +190,7 @@ export function AspirationsTab({
     <div>
       <SectionHeader
         title="Aspirasi Masuk"
-        desc="Masukan dari pengunjung halaman beranda."
+        desc="Masukan anonim dan aspirasi yang meminta tindak lanjut."
         action={
           <button className={btnGhost} onClick={onRefresh} disabled={loading}>
             <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
@@ -205,7 +205,13 @@ export function AspirationsTab({
         <EmptyState message="Belum ada aspirasi." />
       ) : (
         <div className="space-y-3">
-          {aspirations.map((aspiration) => (
+          {aspirations.map((aspiration) => {
+            const anonymous = aspiration.anonymous === true || (!aspiration.name && !aspiration.email);
+            const whatsappDigits = (aspiration.whatsapp ?? '').replace(/\D/g, '');
+            const whatsappHref = whatsappDigits
+              ? `https://wa.me/${whatsappDigits.startsWith('0') ? `62${whatsappDigits.slice(1)}` : whatsappDigits}`
+              : '';
+            return (
             <div
               key={aspiration.id}
               className="rounded-xl border border-navy-100 p-4"
@@ -213,9 +219,14 @@ export function AspirationsTab({
               <div className="flex flex-wrap items-start justify-between gap-2">
                 <div>
                   <p className="font-semibold text-navy-900">
-                    {aspiration.name}
+                    {anonymous ? 'Anonim' : aspiration.name}
                   </p>
-                  <p className="text-xs text-navy-500">{aspiration.email}</p>
+                  {!anonymous && (
+                    <p className="text-xs text-navy-500">
+                      {aspiration.email}
+                      {aspiration.whatsapp ? ` · ${aspiration.whatsapp}` : ''}
+                    </p>
+                  )}
                 </div>
                 <span className="text-xs text-navy-500">
                   {formatDate(aspiration.createdAt)}
@@ -224,8 +235,40 @@ export function AspirationsTab({
               <p className="mt-2 whitespace-pre-wrap text-sm text-navy-700">
                 {aspiration.message}
               </p>
+              {!anonymous && whatsappHref && (
+                <a
+                  href={whatsappHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-2 inline-flex text-xs font-semibold text-gold-700 hover:text-gold-600"
+                >
+                  Balas lewat WhatsApp
+                </a>
+              )}
+              {aspiration.attachmentData && (
+                <div className="mt-3">
+                  {isImageDataUrl(aspiration.attachmentData) ? (
+                    <a href={aspiration.attachmentData} target="_blank" rel="noreferrer">
+                      <img
+                        src={aspiration.attachmentData}
+                        alt={aspiration.attachmentName || 'Bukti aspirasi'}
+                        className="max-h-48 rounded-lg border border-navy-100 object-contain"
+                      />
+                    </a>
+                  ) : (
+                    <a
+                      href={aspiration.attachmentData}
+                      download={aspiration.attachmentName || 'bukti-aspirasi'}
+                      className="text-xs font-semibold text-gold-700 hover:text-gold-600"
+                    >
+                      Unduh {aspiration.attachmentName || 'dokumen bukti'}
+                    </a>
+                  )}
+                </div>
+              )}
             </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>

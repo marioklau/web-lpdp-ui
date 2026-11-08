@@ -247,10 +247,8 @@ body {
 }
 
 .jejak-map-pin[data-motion='off'] .map-station {
-  height: auto;
+  height: min(36rem, 92svh);
   scroll-snap-align: center;
-  padding-top: 6rem;
-  padding-bottom: 7rem;
 }
 
 .jejak-map-pin[data-motion='off'] .map-card,

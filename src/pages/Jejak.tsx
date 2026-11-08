@@ -2,7 +2,7 @@ import { ArrowDown, Download, Instagram, Linkedin, Mail } from 'lucide-react';
 import { WhatsAppIcon } from '@/components/BrandIcons';
 import JourneyMap from '@/components/jejak/JourneyMap';
 import { useContent } from '@/lib/contentContext';
-import { JEJAK_HIGHLIGHTS, JEJAK_PHOTOS, SUTAN } from '@/lib/jejak';
+import { JEJAK_HIGHLIGHTS, JEJAK_PHOTOS, STUDIO_PHOTOS, SUTAN } from '@/lib/jejak';
 
 export default function Jejak() {
   const { homepage } = useContent();
@@ -48,7 +48,7 @@ export default function Jejak() {
             <img
               src={JEJAK_PHOTOS.portrait}
               alt={SUTAN.familiarName}
-              className="relative aspect-[3/4] w-full rounded-[2rem] border border-gold-400/40 object-cover object-top shadow-card"
+              className="relative aspect-[3/4] w-full rounded-[2rem] border border-gold-400/40 object-cover object-top shadow-card sm:aspect-[4/5]"
             />
             <p className="absolute bottom-4 left-4 right-4 rounded-xl bg-navy-950/80 px-4 py-3 text-sm backdrop-blur-sm">
               <span className="block font-semibold">{SUTAN.familiarName}</span>
@@ -63,17 +63,21 @@ export default function Jejak() {
       <section className="relative overflow-hidden bg-navy-950 py-20 sm:py-28">
         <div className="pointer-events-none absolute -left-20 top-0 h-72 w-72 rounded-full bg-gold-400/10 blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-center gap-8 lg:grid-cols-2">
-            <img
-              src={JEJAK_PHOTOS.classroom}
-              alt="Sutan Dami presentasi di kelas magister tentang Satu Data Kemendagri"
-              className="h-72 w-full rounded-3xl object-cover sm:h-96"
-            />
-            <img
-              src={JEJAK_PHOTOS.together}
-              alt="Foto bersama penerima beasiswa LPDP"
-              className="h-72 w-full rounded-3xl object-cover sm:h-96"
-            />
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
+            {STUDIO_PHOTOS.map((photo, index) => (
+              <figure
+                key={photo.src}
+                className={`overflow-hidden rounded-2xl ${
+                  index < 2 ? 'border border-gold-400/30' : 'border border-white/10'
+                }`}
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  className="aspect-[3/4] w-full object-cover object-top sm:aspect-[4/5]"
+                />
+              </figure>
+            ))}
           </div>
 
           <div className="mt-12 max-w-3xl">

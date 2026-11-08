@@ -1,4 +1,5 @@
 import { GraduationCap, Instagram, Link2, MapPin } from 'lucide-react';
+import BallotMark from '@/components/BallotMark';
 import { WhatsAppIcon } from '@/components/BrandIcons';
 import { useContent } from '@/lib/contentContext';
 import type { Page } from '@/types';
@@ -38,15 +39,18 @@ export default function Footer({ onNavigate }: FooterProps) {
                 { id: 'home', label: 'Beranda' },
                 { id: 'jejak', label: 'Jejak Sutan' },
                 { id: 'peta', label: 'Peta Awardee' },
+                { id: 'pasar', label: 'Pasar Awardee' },
                 { id: 'kos', label: 'Katalog Kos' },
+                { id: 'aspirasi', label: 'Aspirasi & Kontak' },
                 { id: 'surat', label: 'Layanan Pengajuan Dana' },
                 { id: 'admin', label: 'Admin' },
               ].map((l) => (
                 <li key={l.id}>
                   <button
                     onClick={() => onNavigate(l.id as Page)}
-                    className="text-navy-300 hover:text-gold-300 transition-colors"
+                    className="inline-flex items-center gap-2 text-navy-300 hover:text-gold-300 transition-colors"
                   >
+                    <BallotMark />
                     {l.label}
                   </button>
                 </li>
