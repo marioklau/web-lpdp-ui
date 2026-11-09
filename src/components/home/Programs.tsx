@@ -54,18 +54,18 @@ export default function Programs() {
           </p>
         </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:gap-6">
           {programs.map((p) => {
             const Icon = iconMap[p.icon] ?? FileText;
             return (
               <div
                 key={p.id}
-                className="group relative rounded-2xl border border-navy-100 bg-navy-50/50 p-7 transition-all hover:bg-white hover:shadow-card hover:-translate-y-1"
+                className="group relative rounded-2xl border border-navy-100 bg-navy-50/50 p-5 transition-all hover:bg-white hover:shadow-card hover:-translate-y-1 lg:p-7"
               >
-                <span className="grid place-items-center h-12 w-12 rounded-xl bg-navy-900 text-gold-300 mb-5 transition-transform group-hover:scale-110">
+                <span className="mb-4 grid h-11 w-11 place-items-center rounded-xl bg-navy-900 text-gold-300 transition-transform group-hover:scale-110 lg:mb-5 lg:h-12 lg:w-12">
                   <Icon className="h-6 w-6" />
                 </span>
-                <h3 className="font-serif text-lg font-semibold text-navy-900">
+                <h3 className="font-serif text-base font-semibold text-navy-900 lg:text-lg">
                   {p.title}
                 </h3>
                 <p className="mt-2 text-sm text-navy-600 leading-relaxed">
